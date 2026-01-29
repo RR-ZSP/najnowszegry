@@ -297,13 +297,26 @@
     }
     .help{ margin-top: 6px; font-size: 12px; color: var(--muted); }
 
+    /* checkbox “pokaż hasło” */
+    .showPassRow{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-top:8px;
+      font-weight:700;
+      font-size:12px;
+      color: var(--muted);
+      user-select:none;
+    }
+    .showPassRow input{ width:auto; padding:0; }
+
     .actions{
       grid-column: 1 / -1;
       display:flex;
       gap: 12px;
       flex-wrap:wrap;
       align-items:center;
-      justify-content:space-between;
+      justify-content:flex-end;
       padding-top: 2px;
     }
     .btn{
@@ -545,15 +558,10 @@
       background: rgba(255,255,255,.92);
       border: 1px solid rgba(31,42,68,.10);
       font-size: 13px;
-      font-weight: 800;
-      color: #2b2f3a;
-    }
-    .windowActions{
-      margin-top: 14px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      fontcoZvu:{
+      max-width: 980px;
+      margin: 0 auto;
+      color: rgba(255,255,255,.75);
     }
   </style>
 </head>
@@ -566,10 +574,10 @@
   <div id="page1" class="page active">
     <header class="wrap">
 
-      <!-- Obraz z załącznika -->
+      <!-- Obraz tła: plik w tym samym folderze co index.html -->
       <section class="banner" aria-label="Galeria gier">
-        <img src="tloGier.png" alt="Galeria gier" />
-        
+        <img id="galleryImg" src="tloGier.png" alt="Galeria gier" />
+       
       </section>
 
       <div class="top">
@@ -684,16 +692,25 @@
             <div class="help">Możesz zostawić puste 🙂</div>
           </div>
 
+          <!-- NOWE: USTAW HASŁO -->
+          <div class="full">
+            <label for="haslo">USTAW HASŁO <span class="req">*</span></label>
+            <input id="haslo" name="haslo" type="password" placeholder="Wpisz hasło" required />
+            <div class="help">Hasło nie powinno być łatwe do zgadnięcia.</div>
+            <label class="showPassRow" for="showPass">
+              <input type="checkbox" id="showPass">
+              Pokaż hasło
+            </label>
+          </div>
+
           <div class="full">
             <label for="adres">Adres <span class="req">*</span></label>
             <textarea id="adres" name="adres" placeholder="Ulica, numer, miasto" required></textarea>
           </div>
 
           <div class="actions">
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-left:auto;">
-              <button class="btn secondary" type="reset">🧼 Wyczyść</button>
-              <button class="btn primary" type="submit">🚀 Wyślij</button>
-            </div>
+            <button class="btn secondary" type="reset">🧼 Wyczyść</button>
+            <button class="btn primary" type="submit">🚀 Wyślij</button>
           </div>
         </form>
       </section>
@@ -739,7 +756,7 @@
           <div class="safeBox">
             <h3>Krótko dla ucznia klasy 3 👧🧒</h3>
             <ul class="safeList">
-              <li><b>Nie podawaj</b> adresu, daty urodzenia i telefonu na nieznanych stronach.</li>
+              <li><b>Nie podawaj</b> adresu, daty urodzenia, telefonu i hasła na nieznanych stronach.</li>
               <li>Gdy strona chce dużo danych — <b>zawołaj dorosłego</b> (rodzic/nauczyciel).</li>
               <li>Nie klikaj w podejrzane linki od obcych.</li>
               <li>Gdy coś wygląda dziwnie — <b>zamknij stronę</b> i powiedz dorosłemu.</li>
@@ -747,19 +764,87 @@
           </div>
 
           <div class="windowActions">
-            <button class="btn secondary" id="backBtn">⬅ Wróć</button>
-            <button class="btn primary" id="clearBtn">🧼 Wyczyść dane (demo)</button>
-          </div>
+			  <button class="btn secondary" id="backBtn">⬅ Wróć</button>
+			  <button class="btn secondary" id="lessonBtn">📘 PRZEJDŹ DO LEKCJI</button>
+			  <button class="btn primary" id="clearBtn">🧼 Wyczyść dane (demo)</button>
+			</div>
+
         </div>
       </div>
     </div>
 
-    <footer style="text-align:center; color: rgba(255,255,255,.75);">
+    <footer class="footerDark">
       To jest ekran edukacyjny — ma uczyć o wyłudzaniu danych w internecie.
     </footer>
   </div>
 
+<!-- STRONA 3: LEKCJA -->
+  <div id="page3" class="page">
+  <div class="wrap" style="padding: 26px 18px 44px;">
+    <section class="formCard" style="overflow:hidden;">
+      <div class="formHead">
+        <strong>📘 Lekcja: Nie daj się oszukać w internecie</strong>
+        <span class="tip">dla klasy 3</span>
+      </div>
+
+      <div style="padding:18px; line-height:1.55; color: var(--ink);">
+        <h2 style="margin:0 0 10px; font-size:20px;">Co to jest wyłudzanie danych?</h2>
+        <p style="margin:0 0 12px;">
+          To sytuacja, gdy ktoś udaje miłą stronę lub konkurs i prosi o Twoje dane.
+          Potem może ich użyć do złych rzeczy.
+        </p>
+
+        <div class="safeBox">
+          <h3>🛡 Zasada 3 pytań</h3>
+          <ul class="safeList">
+            <li><b>Kto</b> prosi o moje dane?</li>
+            <li><b>Po co</b> mu te dane?</li>
+            <li><b>Czy muszę</b> je podawać?</li>
+          </ul>
+        </div>
+
+        <div class="dataBox">
+          <h3>🚫 Tych danych nie podawaj na nieznanych stronach</h3>
+          <div class="chips" style="margin-top:10px;">
+            <div class="chip">Adres</div>
+            <div class="chip">Data urodzenia</div>
+            <div class="chip">Telefon</div>
+            <div class="chip">Hasło</div>
+            <div class="chip">Dane rodziców</div>
+          </div>
+        </div>
+
+        <div class="safeBox">
+          <h3>✅ Co zrobić, gdy strona pyta o dużo danych?</h3>
+          <ul class="safeList">
+            <li>Nie wpisuj nic więcej.</li>
+            <li>Zawołaj dorosłego (rodzic/nauczyciel).</li>
+            <li>Zamknij stronę, jeśli wygląda podejrzanie.</li>
+          </ul>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:14px; flex-wrap:wrap;">
+          <button class="btn secondary" id="lessonBackBtn">⬅ Wróć do alarmu</button>
+          <button class="btn primary" id="lessonHomeBtn">🏠 Wróć do formularza</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Pamiętaj: jeśli nie jesteś pewny — pytaj dorosłego.
+    </footer>
+  </div>
+</div>
+
+
   <script>
+  
+const lessonBtn = document.getElementById('lessonBtn');
+
+lessonBtn.addEventListener('click', () => {
+  window.location.href = "bezpieczenstwo_1slajdy.html";
+});
+
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
 
@@ -769,6 +854,23 @@
     const backBtn = document.getElementById('backBtn');
     const clearBtn = document.getElementById('clearBtn');
     const closeX = document.getElementById('closeX');
+
+    // pokaż/ukryj hasło
+    const pass = document.getElementById('haslo');
+    const showPass = document.getElementById('showPass');
+    showPass.addEventListener('change', () => {
+      pass.type = showPass.checked ? 'text' : 'password';
+    });
+
+    // odporne ładowanie tła (próbuje różnych nazw)
+    const img = document.getElementById('galleryImg');
+    const candidates = ["tloGier.png","tłoGier.png","tloGier.PNG","tłoGier.PNG","tloGier.png.png","tłoGier.png.png"];
+    let idx = 0;
+    img.onerror = () => {
+      idx++;
+      if (idx < candidates.length) img.src = candidates[idx];
+      else img.alt = "Nie znaleziono pliku tła. Sprawdź nazwę i rozszerzenie.";
+    };
 
     function showPage(n){
       page1.classList.toggle('active', n === 1);
@@ -783,7 +885,8 @@
         ["Nazwisko", data.nazwisko],
         ["Data urodzenia", data.dataUr],
         ["Adres", data.adres],
-        ["Telefon", data.telefon || "(brak)"]
+        ["Telefon", data.telefon || "(brak)"],
+        ["Hasło", data.haslo ? "********" : "(brak)"]
       ];
       for (const [label, value] of items){
         const el = document.createElement("div");
@@ -807,12 +910,12 @@
     clearBtn.addEventListener('click', () => {
       localStorage.removeItem("formularz_ucznia_demo");
       form.reset();
-      renderChips({ imie:"", nazwisko:"", dataUr:"", adres:"", telefon:"" });
+      renderChips({ imie:"", nazwisko:"", dataUr:"", adres:"", telefon:"", haslo:"" });
       alert("Dane (demo) wyczyszczone.");
       showPage(1);
     });
 
-    // jeśli było zapisane wcześniej
+    // wczytanie danych, jeśli były zapisane
     const saved = localStorage.getItem("formularz_ucznia_demo");
     if (saved) {
       try {
@@ -825,4 +928,5 @@
     }
   </script>
 </body>
-</html>
+
+to jest</html>
