@@ -32,7 +32,7 @@
       overflow-x:hidden;
     }
 
-    /* tło */
+    /* tło - bąble */
     .blob{
       position:fixed; inset:auto;
       width:220px; height:220px;
@@ -51,9 +51,32 @@
     .wrap{ max-width: 980px; margin: 0 auto; padding: 0 18px 40px; }
     header{ padding: 26px 18px 8px; }
 
-    /* strony (widoki) */
+    /* strony */
     .page{ display:none; }
     .page.active{ display:block; }
+
+    /* === STRONA 1: OBRAZ Z ZAŁĄCZNIKA === */
+    .banner{
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(31,42,68,.08);
+      backdrop-filter: blur(8px);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      margin-bottom: 16px;
+    }
+    .banner img{
+      width: 100%;
+      height: auto;
+      display:block;
+    }
+    .bannerNote{
+      padding: 10px 14px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid rgba(31,42,68,.07);
+      background: linear-gradient(90deg, rgba(79,124,255,.06), rgba(255,90,165,.05));
+    }
 
     .top{
       display:flex;
@@ -174,7 +197,7 @@
     }
     .artHead{
       display:flex;
-      justify-content:flex-start; /* bez tagów po prawej */
+      justify-content:flex-start;
       align-items:center;
       gap: 10px;
       padding: 12px 14px;
@@ -187,7 +210,6 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      gap: 12px;
       min-height: 110px;
     }
     .pixelFrame{
@@ -311,45 +333,6 @@
     .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
     .btn:active{ transform: translateY(0px) scale(.99); }
 
-    .status{
-      font-size: 13px;
-      color: var(--muted);
-      display:flex;
-      align-items:center;
-      gap: 8px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 6px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(31,42,68,.06);
-      border: 1px solid rgba(31,42,68,.08);
-      font-weight: 700;
-    }
-
-    /* konfetti */
-    .confetti{
-      position: fixed;
-      inset: 0;
-      pointer-events:none;
-      overflow:hidden;
-      z-index: 50;
-      display:none;
-    }
-    .confetti.show{ display:block; }
-    .piece{
-      position:absolute;
-      top:-12px;
-      width: 10px;
-      height: 14px;
-      border-radius: 4px;
-      opacity:.95;
-      animation: fall linear forwards;
-    }
-    @keyframes fall{ to { transform: translateY(110vh) rotate(540deg); opacity: 1; } }
-
     footer{
       padding: 14px 18px 28px;
       color: var(--muted);
@@ -357,45 +340,119 @@
       text-align:center;
     }
 
-    /* === STRONA 2: ostrzeżenie === */
-    .warningWrap{
-      padding: 32px 18px 44px;
+    /* === STRONA 2: “PRAWDZIWE” OKNO ALARMOWE === */
+    #page2{
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 600px at 50% 30%, rgba(255,59,79,.25), transparent 55%),
+        linear-gradient(180deg, #220007, #0f0002);
+      padding: 28px 18px 44px;
     }
-    .warningCard{
-      max-width: 860px;
+    .overlay{
+      max-width: 980px;
       margin: 0 auto;
-      border-radius: 28px;
-      border: 2px solid rgba(214,31,44,.35);
-      box-shadow: 0 30px 80px rgba(214,31,44,.18);
-      overflow:hidden;
-      background: linear-gradient(180deg, rgba(214,31,44,.08), rgba(255,59,79,.10));
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding-top: 22px;
     }
-    .warningTop{
-      padding: 18px 18px;
-      background: linear-gradient(135deg, var(--danger), var(--danger2));
-      color: #fff;
+
+    .alarmWindow{
+      width: min(860px, 100%);
+      border-radius: 20px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 40px 110px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      border: 2px solid rgba(255, 59, 79, .55);
+      animation: shakeTiny 1.6s ease-in-out infinite;
+    }
+
+    /* migająca ramka */
+    .alarmWindow::before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      border-radius: 20px;
+      pointer-events:none;
+      box-shadow:
+        inset 0 0 0 2px rgba(255,59,79,.65),
+        0 0 0 2px rgba(255,59,79,.18),
+        0 0 30px rgba(255,59,79,.35);
+      animation: blinkBorder .85s ease-in-out infinite;
+    }
+    @keyframes blinkBorder{
+      0%,100%{ opacity: .55; filter: saturate(1); }
+      50%{ opacity: 1; filter: saturate(1.35); }
+    }
+
+    @keyframes shakeTiny{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-1px); }
+    }
+
+    .titleBar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 12px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, var(--danger), var(--danger2));
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,.25);
     }
-    .warningTop strong{
-      font-size: 16px;
+    .titleLeft{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 900;
       letter-spacing: .2px;
+      user-select:none;
+    }
+    .titleLeft .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.85);
+      box-shadow: 0 0 0 3px rgba(255,255,255,.18);
+    }
+    .titleRight{
+      display:flex;
+      align-items:center;
+      gap: 10px;
     }
     .score{
       font-weight: 900;
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.25);
-      padding: 8px 12px;
+      padding: 6px 10px;
       border-radius: 999px;
       white-space: nowrap;
+      font-size: 12px;
+    }
+    .closeX{
+      width: 34px;
+      height: 30px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.30);
+      background: rgba(0,0,0,.12);
+      color: #fff;
+      font-weight: 900;
+      cursor:pointer;
+      line-height: 1;
+      display:grid;
+      place-items:center;
+      transition: transform .08s ease, filter .2s ease;
+    }
+    .closeX:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+    .closeX:active{ transform: translateY(0) scale(.98); }
+
+    .windowBody{
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,59,79,.06), rgba(255,255,255,0));
     }
 
-    .warningBody{
-      padding: 18px;
-      background: rgba(255,255,255,.88);
-    }
     .alarmRow{
       display:flex;
       align-items:center;
@@ -406,17 +463,18 @@
     .alarmIcon{
       width: 82px;
       height: 82px;
-      border-radius: 22px;
+      border-radius: 18px;
       display:grid;
       place-items:center;
       background: rgba(214,31,44,.10);
       border: 1px solid rgba(214,31,44,.18);
       box-shadow: inset 0 0 0 6px rgba(255,255,255,.55);
-      animation: siren 0.9s ease-in-out infinite;
+      animation: siren 0.7s ease-in-out infinite;
+      user-select:none;
     }
     @keyframes siren{
       0%,100%{ transform: rotate(-2deg) scale(1); }
-      50%{ transform: rotate(2deg) scale(1.02); }
+      50%{ transform: rotate(2deg) scale(1.03); }
     }
     .alarmIcon span{
       font-size: 42px;
@@ -443,7 +501,7 @@
 
     .safeBox{
       margin-top: 14px;
-      border-radius: 20px;
+      border-radius: 16px;
       border: 1px solid rgba(31,42,68,.10);
       background: rgba(79,124,255,.06);
       padding: 14px;
@@ -463,7 +521,7 @@
 
     .dataBox{
       margin-top: 12px;
-      border-radius: 20px;
+      border-radius: 16px;
       border: 1px solid rgba(214,31,44,.18);
       background: rgba(214,31,44,.06);
       padding: 14px;
@@ -482,16 +540,15 @@
     .chip{
       display:inline-flex;
       align-items:center;
-      gap: 8px;
       padding: 8px 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.92);
       border: 1px solid rgba(31,42,68,.10);
       font-size: 13px;
       font-weight: 800;
       color: #2b2f3a;
     }
-    .warningActions{
+    .windowActions{
       margin-top: 14px;
       display:flex;
       gap: 10px;
@@ -508,6 +565,15 @@
   <!-- STRONA 1 -->
   <div id="page1" class="page active">
     <header class="wrap">
+
+      <!-- Obraz z załącznika -->
+      <section class="banner" aria-label="Galeria gier">
+        <img src="tloGier.png" alt="Galeria gier" />
+        <div class="bannerNote">
+          To jest obraz tła (jak na portalu z grami). Formularz poniżej to demo do nauki bezpieczeństwa.
+        </div>
+      </section>
+
       <div class="top">
         <section class="hero">
           <div class="badge">🎮 Strefa Gier Szkolnych</div>
@@ -515,51 +581,23 @@
           <p class="subtitle">
             Wypełnij formularz czytelnie i spokojnie. Numer telefonu jest opcjonalny — tylko jeśli go masz.
           </p>
-          <div class="star" aria-hidden="true" title="Skacząca gwiazdka!">
-            <span>⭐</span>
-          </div>
+          <div class="star" aria-hidden="true"><span>⭐</span></div>
         </section>
 
         <section class="cards" aria-label="Mini-kafelki">
-          <div class="mini">
-            <div class="ico">🧠</div>
-            <div>
-              <h3>Gry logiczne</h3>
-              <p>Łamigłówki, pamięć i spryt.</p>
-            </div>
-          </div>
-          <div class="mini">
-            <div class="ico">🧩</div>
-            <div>
-              <h3>Układanki</h3>
-              <p>Składanie obrazków i wzorów.</p>
-            </div>
-          </div>
-          <div class="mini">
-            <div class="ico">📚</div>
-            <div>
-              <h3>Nauka przez zabawę</h3>
-              <p>Prosto, kolorowo i bez stresu.</p>
-            </div>
-          </div>
-          <div class="mini">
-            <div class="ico">🏆</div>
-            <div>
-              <h3>Odznaki</h3>
-              <p>Zdobywaj wirtualne nagrody.</p>
-            </div>
-          </div>
+          <div class="mini"><div class="ico">🧠</div><div><h3>Gry logiczne</h3><p>Łamigłówki, pamięć i spryt.</p></div></div>
+          <div class="mini"><div class="ico">🧩</div><div><h3>Układanki</h3><p>Składanie obrazków i wzorów.</p></div></div>
+          <div class="mini"><div class="ico">📚</div><div><h3>Nauka przez zabawę</h3><p>Prosto, kolorowo i bez stresu.</p></div></div>
+          <div class="mini"><div class="ico">🏆</div><div><h3>Odznaki</h3><p>Zdobywaj wirtualne nagrody.</p></div></div>
         </section>
       </div>
 
-      <!-- grafiki (bez tagów i bez podpisów pod obrazkami) -->
+      <!-- grafiki -->
       <section class="artRow" aria-label="Grafiki w stylu gry">
         <div class="artCard">
-          <div class="artHead">
-            <strong>🧱 Klocek</strong>
-          </div>
+          <div class="artHead"><strong>🧱 Klocek</strong></div>
           <div class="artBody">
-            <div class="pixelFrame" title="Klocek">
+            <div class="pixelFrame">
               <svg class="voxel" viewBox="0 0 64 64" aria-hidden="true">
                 <polygon points="16,10 32,2 48,10 32,18" fill="#6ad06a"/>
                 <polygon points="16,10 32,18 32,28 16,20" fill="#4fbf4f"/>
@@ -578,11 +616,9 @@
         </div>
 
         <div class="artCard">
-          <div class="artHead">
-            <strong>⚽ Piłka “26”</strong>
-          </div>
+          <div class="artHead"><strong>⚽ Piłka “26”</strong></div>
           <div class="artBody">
-            <div class="pixelFrame" title="Piłka 26">
+            <div class="pixelFrame">
               <svg class="ball" viewBox="0 0 64 64" aria-hidden="true">
                 <circle cx="32" cy="32" r="22" fill="#ffffff"/>
                 <circle cx="32" cy="32" r="22" fill="none" stroke="#1f2a44" stroke-width="2" opacity="0.25"/>
@@ -600,11 +636,9 @@
         </div>
 
         <div class="artCard">
-          <div class="artHead">
-            <strong>🙂 Klockowy kolega</strong>
-          </div>
+          <div class="artHead"><strong>🙂 Klockowy kolega</strong></div>
           <div class="artBody">
-            <div class="pixelFrame" title="Klockowy kolega">
+            <div class="pixelFrame">
               <svg class="buddy" viewBox="0 0 64 64" aria-hidden="true">
                 <rect x="18" y="10" width="28" height="22" rx="4" fill="#ffd5a6"/>
                 <rect x="18" y="10" width="28" height="10" rx="4" fill="#6b4a2e" opacity="0.9"/>
@@ -658,12 +692,7 @@
           </div>
 
           <div class="actions">
-            <div class="status">
-              <span class="pill">✨ Wskazówka: wpisuj czytelnie</span>
-              <span id="msg" aria-live="polite"></span>
-            </div>
-
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-left:auto;">
               <button class="btn secondary" type="reset">🧼 Wyczyść</button>
               <button class="btn primary" type="submit">🚀 Wyślij</button>
             </div>
@@ -672,65 +701,64 @@
       </section>
 
       <footer>
-        © Wesołe Gry Szkolne — demo do nauki bezpieczeństwa w internecie.
+        © Demo edukacyjne — uczymy się, że dane osobowe trzeba chronić.
       </footer>
     </header>
-
-    <div class="confetti" id="confetti" aria-hidden="true"></div>
   </div>
 
-  <!-- STRONA 2 (ostrzeżenie) -->
+  <!-- STRONA 2 -->
   <div id="page2" class="page">
-    <div class="warningWrap">
-      <div class="warningCard" role="alert" aria-live="assertive">
-        <div class="warningTop">
-          <strong>ALARM !!!</strong>
-          <div class="score">bezpieczna = 0</div>
+    <div class="overlay">
+      <div class="alarmWindow" role="alert" aria-live="assertive">
+        <div class="titleBar">
+          <div class="titleLeft">
+            <span class="dot"></span>
+            <span>ALARM — UWAGA!</span>
+          </div>
+          <div class="titleRight">
+            <div class="score">bezpieczna = 0</div>
+            <button class="closeX" id="closeX" aria-label="Zamknij">X</button>
+          </div>
         </div>
 
-        <div class="warningBody">
+        <div class="windowBody">
           <div class="alarmRow">
             <div class="alarmIcon" aria-hidden="true"><span>🚨</span></div>
             <div>
               <h2 class="warningTitle">Właśnie udostępniłeś swoje dane oszustom!!!</h2>
               <p class="warningText">
-                <span class="bigBang">Uwaga!</span> Jeśli strona jest fałszywa, ktoś może wykorzystać Twoje dane.
+                <span class="bigBang">Możesz stracić swoje dane!</span>
+                Czy zastanowiłeś się, o jakie dane poprosił formularz i czy strona jest bezpieczna?
               </p>
             </div>
           </div>
 
-          <div class="warningText" style="margin-top:10px;">
-            Czy zastanowiłeś się, o jakie dane poprosił formularz i czy strona jest bezpieczna?
-          </div>
-
           <div class="dataBox">
             <h3>Jakie dane podałeś?</h3>
-            <div class="chips" id="dataChips">
-              <!-- uzupełniane z JS -->
-            </div>
+            <div class="chips" id="dataChips"></div>
           </div>
 
           <div class="safeBox">
             <h3>Krótko dla ucznia klasy 3 👧🧒</h3>
             <ul class="safeList">
-              <li><b>Nie podawaj</b> w internecie adresu, daty urodzenia i telefonu na nieznanych stronach.</li>
-              <li>Gdy formularz pyta o dużo danych — <b>zawołaj dorosłego</b> (rodzica, nauczyciela).</li>
-              <li>Nie klikaj w podejrzane linki z wiadomości od obcych.</li>
-              <li>Jeśli coś Cię niepokoi — <b>zamknij stronę</b> i powiedz dorosłemu.</li>
+              <li><b>Nie podawaj</b> adresu, daty urodzenia i telefonu na nieznanych stronach.</li>
+              <li>Gdy strona chce dużo danych — <b>zawołaj dorosłego</b> (rodzic/nauczyciel).</li>
+              <li>Nie klikaj w podejrzane linki od obcych.</li>
+              <li>Gdy coś wygląda dziwnie — <b>zamknij stronę</b> i powiedz dorosłemu.</li>
             </ul>
           </div>
 
-          <div class="warningActions">
+          <div class="windowActions">
             <button class="btn secondary" id="backBtn">⬅ Wróć</button>
             <button class="btn primary" id="clearBtn">🧼 Wyczyść dane (demo)</button>
           </div>
         </div>
       </div>
-
-      <footer style="text-align:center;">
-        To jest ekran edukacyjny — ma uczyć, że dane osobowe trzeba chronić.
-      </footer>
     </div>
+
+    <footer style="text-align:center; color: rgba(255,255,255,.75);">
+      To jest ekran edukacyjny — ma uczyć o wyłudzaniu danych w internecie.
+    </footer>
   </div>
 
   <script>
@@ -738,38 +766,16 @@
     const page2 = document.getElementById('page2');
 
     const form = document.getElementById('kidForm');
-    const msg = document.getElementById('msg');
-    const confetti = document.getElementById('confetti');
-
     const dataChips = document.getElementById('dataChips');
+
     const backBtn = document.getElementById('backBtn');
     const clearBtn = document.getElementById('clearBtn');
+    const closeX = document.getElementById('closeX');
 
     function showPage(n){
       page1.classList.toggle('active', n === 1);
       page2.classList.toggle('active', n === 2);
       window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-
-    function launchConfetti() {
-      confetti.innerHTML = "";
-      confetti.classList.add("show");
-
-      const pieces = 70;
-      for (let i = 0; i < pieces; i++) {
-        const p = document.createElement("div");
-        p.className = "piece";
-        p.style.left = (Math.random() * 100) + "vw";
-        p.style.animationDuration = (1.6 + Math.random() * 1.5) + "s";
-        p.style.animationDelay = (Math.random() * 0.12) + "s";
-        const size = 8 + Math.random() * 10;
-        p.style.width = Math.max(6, size * 0.55) + "px";
-        p.style.height = Math.max(8, size) + "px";
-        const colors = ["#4f7cff", "#ff5aa5", "#ffd54a", "#1fbf75", "#8f5bff"];
-        p.style.background = colors[Math.floor(Math.random() * colors.length)];
-        confetti.appendChild(p);
-      }
-      setTimeout(() => confetti.classList.remove("show"), 1200);
     }
 
     function renderChips(data){
@@ -791,29 +797,14 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      // demo: zapis lokalny (jak wcześniej) — i przejście na stronę ostrzegawczą
       const data = Object.fromEntries(new FormData(form).entries());
       localStorage.setItem("formularz_ucznia_demo", JSON.stringify(data));
-
-      msg.textContent = "✅ Wysłano (demo).";
-      msg.style.color = "#1fbf75";
-
-      // mała animacja + przejście
-      launchConfetti();
       renderChips(data);
       showPage(2);
     });
 
-    form.addEventListener('reset', () => {
-      msg.textContent = "";
-      msg.style.color = "";
-      localStorage.removeItem("formularz_ucznia_demo");
-    });
-
-    backBtn.addEventListener('click', () => {
-      showPage(1);
-    });
+    backBtn.addEventListener('click', () => showPage(1));
+    closeX.addEventListener('click', () => showPage(1));
 
     clearBtn.addEventListener('click', () => {
       localStorage.removeItem("formularz_ucznia_demo");
@@ -823,7 +814,7 @@
       showPage(1);
     });
 
-    // wczytanie danych, jeśli były zapisane
+    // jeśli było zapisane wcześniej
     const saved = localStorage.getItem("formularz_ucznia_demo");
     if (saved) {
       try {
