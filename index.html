@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wesołe Gry Szkolne — Formularz</title>
+  <style>
+    :root{
+      --bg1:#f7fbff;
+      --bg2:#fff7fd;
+      --card:#ffffff;
+      --ink:#1f2a44;
+      --muted:#5b6b86;
+      --accent:#4f7cff;
+      --accent2:#ff5aa5;
+      --ok:#1fbf75;
+      --shadow: 0 18px 50px rgba(31,42,68,.12);
+      --radius: 22px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(79,124,255,.18), transparent 60%),
+        radial-gradient(800px 520px at 85% 15%, rgba(255,90,165,.16), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* „Naklejki” w tle */
+    .blob{
+      position:fixed; inset:auto;
+      width:220px; height:220px;
+      border-radius: 50%;
+      filter: blur(0px);
+      opacity:.25;
+      z-index:-1;
+      animation: floaty 8s ease-in-out infinite;
+    }
+    .blob.b1{ left:-60px; top:120px; background: conic-gradient(from 90deg, #4f7cff, #8f5bff, #4f7cff); }
+    .blob.b2{ right:-70px; top:260px; width:260px; height:260px; background: conic-gradient(from 0deg, #ff5aa5, #ffd54a, #ff5aa5); animation-duration: 10s; }
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0) rotate(0deg); }
+      50%{ transform: translateY(-18px) rotate(6deg); }
+    }
+
+    header{
+      padding: 26px 18px 8px;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 18px 40px;
+    }
+    .top{
+      display:flex;
+      gap:18px;
+      align-items:stretch;
+      flex-wrap:wrap;
+    }
+    .hero{
+      flex: 1 1 380px;
+      background: rgba(255,255,255,.68);
+      border: 1px solid rgba(31,42,68,.08);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(79,124,255,.12);
+      border: 1px dashed rgba(79,124,255,.35);
+      font-weight:700;
+      color:#2b4bb5;
+      width: fit-content;
+    }
+    .title{
+      margin: 12px 0 8px;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height:1.05;
+      letter-spacing: -0.5px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height:1.45;
+      max-width: 52ch;
+    }
+
+    /* Animowana gwiazdka (zabawna) */
+    .star{
+      position:absolute;
+      right: 18px;
+      top: 14px;
+      width: 84px;
+      height: 84px;
+      display:grid;
+      place-items:center;
+      transform-origin:center;
+      animation: bounceSpin 2.2s ease-in-out infinite;
+      user-select:none;
+    }
+    .star span{
+      font-size: 56px;
+      filter: drop-shadow(0 10px 16px rgba(31,42,68,.18));
+    }
+    @keyframes bounceSpin{
+      0%,100%{ transform: translateY(0) rotate(-8deg); }
+      50%{ transform: translateY(10px) rotate(10deg) scale(1.03); }
+    }
+
+    .cards{
+      flex: 1 1 380px;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .mini{
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(31,42,68,.08);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(31,42,68,.10);
+      padding: 14px;
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      min-height: 82px;
+    }
+    .mini .ico{
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      font-size: 22px;
+      background: linear-gradient(135deg, rgba(79,124,255,.22), rgba(255,90,165,.18));
+      border: 1px solid rgba(31,42,68,.08);
+    }
+    .mini h3{ margin:0; font-size: 14px; }
+    .mini p{ margin:4px 0 0; font-size: 12px; color: var(--muted); line-height: 1.25; }
+
+    @media (max-width: 700px){
+      .cards{ grid-template-columns: 1fr; }
+      .star{ right: 10px; }
+    }
+
+    /* Formularz */
+    .formCard{
+      margin-top: 18px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(31,42,68,.08);
+      overflow:hidden;
+    }
+    .formHead{
+      padding: 16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      background: linear-gradient(90deg, rgba(79,124,255,.14), rgba(255,90,165,.10));
+      border-bottom: 1px solid rgba(31,42,68,.07);
+    }
+    .formHead strong{
+      font-size: 16px;
+      letter-spacing:.2px;
+    }
+    .tip{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    form{
+      padding: 18px;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .full{ grid-column: 1 / -1; }
+    label{
+      display:block;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+    .req{
+      font-weight: 800;
+      color: var(--accent2);
+      margin-left: 6px;
+    }
+    input, textarea{
+      width:100%;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 2px solid rgba(31,42,68,.12);
+      outline: none;
+      font-size: 15px;
+      transition: transform .06s ease, border-color .2s ease, box-shadow .2s ease;
+      background: #fff;
+    }
+    textarea{ min-height: 88px; resize: vertical; }
+    input:focus, textarea:focus{
+      border-color: rgba(79,124,255,.65);
+      box-shadow: 0 0 0 5px rgba(79,124,255,.12);
+      transform: translateY(-1px);
+    }
+    .help{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .actions{
+      grid-column: 1 / -1;
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      padding-top: 2px;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing:.2px;
+      transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+    .btn.primary{
+      color:white;
+      background: linear-gradient(135deg, var(--accent), #7b57ff);
+      box-shadow: 0 12px 28px rgba(79,124,255,.22);
+    }
+    .btn.secondary{
+      color: var(--ink);
+      background: rgba(31,42,68,.06);
+      border: 1px solid rgba(31,42,68,.10);
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+
+    .status{
+      font-size: 13px;
+      color: var(--muted);
+      display:flex;
+      align-items:center;
+      gap: 8px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(31,42,68,.06);
+      border: 1px solid rgba(31,42,68,.08);
+      font-weight: 700;
+    }
+
+    /* Konfetti */
+    .confetti{
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index: 50;
+      display:none;
+    }
+    .confetti.show{ display:block; }
+    .piece{
+      position:absolute;
+      top:-12px;
+      width: 10px;
+      height: 14px;
+      border-radius: 4px;
+      opacity:.95;
+      animation: fall linear forwards;
+    }
+    @keyframes fall{
+      to { transform: translateY(110vh) rotate(540deg); opacity: 1; }
+    }
+
+    footer{
+      padding: 14px 18px 28px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+
+  <header class="wrap">
+    <div class="top">
+      <section class="hero">
+        <div class="badge">🎮 Strefa Gier Szkolnych</div>
+        <h1 class="title">Witaj! Zapisz się do zabawy 🎉</h1>
+        <p class="subtitle">
+          Wypełnij formularz czytelnie i spokojnie. Numer telefonu jest opcjonalny — tylko jeśli go masz.
+        </p>
+        <div class="star" aria-hidden="true" title="Skacząca gwiazdka!">
+          <span>⭐</span>
+        </div>
+      </section>
+
+      <section class="cards" aria-label="Mini-kafelki">
+        <div class="mini">
+          <div class="ico">🧠</div>
+          <div>
+            <h3>Gry logiczne</h3>
+            <p>Łamigłówki, pamięć i spryt.</p>
+          </div>
+        </div>
+        <div class="mini">
+          <div class="ico">🧩</div>
+          <div>
+            <h3>Układanki</h3>
+            <p>Składanie obrazków i wzorów.</p>
+          </div>
+        </div>
+        <div class="mini">
+          <div class="ico">📚</div>
+          <div>
+            <h3>Nauka przez zabawę</h3>
+            <p>Prosto, kolorowo i bez stresu.</p>
+          </div>
+        </div>
+        <div class="mini">
+          <div class="ico">🏆</div>
+          <div>
+            <h3>Odznaki</h3>
+            <p>Zdobywaj wirtualne nagrody.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="formCard" aria-label="Formularz danych ucznia">
+      <div class="formHead">
+        <strong>📝 Formularz uczestnika</strong>
+        <span class="tip">Pola z <span style="color:#ff5aa5;font-weight:900">*</span> są wymagane</span>
+      </div>
+
+      <form id="kidForm" autocomplete="on">
+        <div>
+          <label for="imie">Imię <span class="req">*</span></label>
+          <input id="imie" name="imie" type="text" placeholder="np. Ania" required />
+        </div>
+
+        <div>
+          <label for="nazwisko">Nazwisko <span class="req">*</span></label>
+          <input id="nazwisko" name="nazwisko" type="text" placeholder="np. Kowalska" required />
+        </div>
+
+        <div>
+          <label for="dataUr">Data urodzenia <span class="req">*</span></label>
+          <input id="dataUr" name="dataUr" type="date" required />
+        </div>
+
+        <div>
+          <label for="telefon">Numer telefonu (jeśli posiadasz)</label>
+          <input id="telefon" name="telefon" type="tel" inputmode="tel"
+                 placeholder="np. 123 456 789" />
+          <div class="help">Możesz zostawić puste 🙂</div>
+        </div>
+
+        <div class="full">
+          <label for="adres">Adres <span class="req">*</span></label>
+          <textarea id="adres" name="adres" placeholder="Ulica, numer, miasto" required></textarea>
+        </div>
+
+        <div class="actions">
+          <div class="status">
+            <span class="pill">✨ Wskazówka: wpisuj czytelnie</span>
+            <span id="msg" aria-live="polite"></span>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn secondary" type="reset">🧼 Wyczyść</button>
+            <button class="btn primary" type="submit">🚀 Wyślij</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </header>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <footer>
+    © Wesołe Gry Szkolne — przykładowa strona HTML (bez wysyłania danych na serwer).
+  </footer>
+
+  <script>
+    const form = document.getElementById('kidForm');
+    const msg = document.getElementById('msg');
+    const confetti = document.getElementById('confetti');
+
+    function launchConfetti() {
+      confetti.innerHTML = "";
+      confetti.classList.add("show");
+
+      const pieces = 80;
+      for (let i = 0; i < pieces; i++) {
+        const p = document.createElement("div");
+        p.className = "piece";
+
+        // losowe pozycje i parametry animacji
+        const left = Math.random() * 100;
+        const dur = 1.8 + Math.random() * 1.6;
+        const delay = Math.random() * 0.15;
+        const size = 8 + Math.random() * 10;
+
+        p.style.left = left + "vw";
+        p.style.width = Math.max(6, size * 0.55) + "px";
+        p.style.height = Math.max(8, size) + "px";
+        p.style.animationDuration = dur + "s";
+        p.style.animationDelay = delay + "s";
+
+        // kilka wesołych kolorów
+        const colors = ["#4f7cff", "#ff5aa5", "#ffd54a", "#1fbf75", "#8f5bff"];
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        confetti.appendChild(p);
+      }
+
+      // schowaj po chwili
+      setTimeout(() => confetti.classList.remove("show"), 2200);
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Prosty "sukces" bez serwera
+      msg.textContent = "✅ Super! Formularz zapisany lokalnie (demo).";
+      msg.style.color = "#1fbf75";
+
+      // Zapis do localStorage (opcjonalnie – żeby nie zniknęło po odświeżeniu)
+      const data = Object.fromEntries(new FormData(form).entries());
+      localStorage.setItem("formularz_ucznia_demo", JSON.stringify(data));
+
+      launchConfetti();
+    });
+
+    form.addEventListener('reset', () => {
+      msg.textContent = "";
+      msg.style.color = "";
+      localStorage.removeItem("formularz_ucznia_demo");
+    });
+
+    // Wczytaj dane (jeśli były zapisane)
+    const saved = localStorage.getItem("formularz_ucznia_demo");
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        for (const [k, v] of Object.entries(data)) {
+          const el = form.elements.namedItem(k);
+          if (el) el.value = v;
+        }
+        msg.textContent = "💾 Wczytano wcześniej zapisane dane (demo).";
+      } catch {}
+    }
+  </script>
+</body>
+</html>
