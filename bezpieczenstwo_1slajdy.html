@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bezpieczeństwo w sieci — Slajdy + Quiz TAK/NIE (klasa 3)</title>
+  <title>Bezpieczeństwo w sieci — Slajdy + Quiz TAK/NIE + Teleturniej (klasa 3)</title>
   <style>
     :root{
       --bg1:#0b1020;
@@ -59,12 +59,14 @@
       margin:0;
       font-size: clamp(16px, 2.5vw, 22px);
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      letter-spacing:.2px;
     }
     .titles p{
       margin:2px 0 0;
       color:var(--muted);
       font-size:13px;
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      font-weight:700;
     }
     .topBtns{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
     .btn{
@@ -74,7 +76,7 @@
       padding:10px 12px;
       border-radius:14px;
       cursor:pointer;
-      font-weight:800;
+      font-weight:900;
       display:inline-flex;
       align-items:center;
       gap:8px;
@@ -104,26 +106,31 @@
       pointer-events:none;
     }
     .slide > *{ position:relative; }
+
     .kicker{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px; border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.08);
       color:var(--muted);
-      font-weight:900;
+      font-weight:1000;
       font-size:13px;
+      letter-spacing:.2px;
     }
     .bigTitle{
       margin:14px 0 6px;
       font-size: clamp(26px, 4.2vw, 44px);
       line-height:1.05;
+      letter-spacing:.2px;
     }
     .subtitle{
       margin:0 0 14px;
       color:var(--muted);
       font-size: clamp(15px, 2.0vw, 18px);
       max-width: 70ch;
+      font-weight:700;
     }
+
     .content{
       display:grid;
       grid-template-columns: 1.1fr .9fr;
@@ -131,6 +138,7 @@
       align-items:start;
     }
     @media (max-width: 820px){ .content{ grid-template-columns: 1fr; } }
+
     .card{
       border:1px solid var(--border);
       border-radius:20px;
@@ -143,6 +151,7 @@
       display:flex;
       align-items:center;
       gap:10px;
+      letter-spacing:.2px;
     }
     .emoji{
       width:44px;height:44px;border-radius:16px;
@@ -157,8 +166,10 @@
       padding-left: 20px;
       font-size: clamp(16px, 2.1vw, 18px);
       line-height:1.35;
+      font-weight:750;
     }
     .bullets li{ margin: 10px 0; }
+
     .ruleBox{ display:flex; flex-direction:column; gap:12px; }
     .rule{
       border:1px solid var(--border);
@@ -166,6 +177,7 @@
       background: rgba(255,255,255,.07);
       padding:14px 14px;
       font-size: clamp(16px, 2.1vw, 18px);
+      font-weight:900;
     }
     .chip{
       display:inline-block;
@@ -173,9 +185,10 @@
       padding:6px 10px;
       border-radius:999px;
       border:1px solid var(--border);
-      font-weight:900;
+      font-weight:1000;
       font-size:13px;
       background: rgba(255,255,255,.06);
+      letter-spacing:.2px;
     }
     .chip.ok{ color: var(--ok); }
     .chip.warn{ color: var(--warn); }
@@ -205,6 +218,7 @@
       gap:8px;
       align-items:center;
       flex-wrap:wrap;
+      font-weight:750;
     }
     .kbd{
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -214,100 +228,125 @@
       border:1px solid var(--border);
       background: rgba(255,255,255,.08);
       color:var(--text);
+      font-weight:900;
     }
-
     .fade{ animation: fadeIn .18s ease-out; }
     @keyframes fadeIn{ from{ opacity:0; transform: translateY(6px);} to{ opacity:1; transform: translateY(0);} }
 
-    /* Fullscreen badge */
     .fsBadge{
       position:fixed; right:14px; bottom:14px;
       padding:8px 10px; border-radius:999px;
       border:1px solid var(--border);
       background: rgba(0,0,0,.28);
       color:var(--muted);
-      font-weight:900;
+      font-weight:1000;
       font-size:12px;
       backdrop-filter: blur(6px);
       display:none;
     }
 
-    /* QUIZ MODAL */
-     /* QUIZ MODAL — poprawiona widoczność */
-.overlay{
-  position:fixed; inset:0;
-  /* było: rgba(0,0,0,.55) */
-  background: rgba(0,0,0,.78);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  display:none;
-  place-items:center;
-  padding:18px;
-  z-index:50;
-}
-
-.modal{
-  width:min(820px, 100%);
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.25);
-
-  /* było: bardzo przezroczyste */
-  background: rgba(20, 26, 42, .96); /* prawie nieprzezroczyste */
-  box-shadow: 0 24px 80px rgba(0,0,0,.55);
-
-  padding:18px;
-  position:relative;
-  overflow:hidden;
-}
-
-.modal::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  /* delikatny „połysk” ale bez psucia czytelności */
-  background: radial-gradient(900px 320px at 20% 0%, rgba(255,255,255,.10), transparent 60%);
-  opacity:.8;
-  pointer-events:none;
-}
-
-/* Pytanie w boksie — wyraźniejsze */
-.qBox{
-  margin-top:12px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.22);
-
-  /* było: rgba(0,0,0,.20) */
-  background: rgba(0,0,0,.55);
-
-  padding:14px;
-  font-size: clamp(18px, 3.2vw, 26px);
-  font-weight:900;
-  letter-spacing:.2px;
-}
-
-/* (Opcjonalnie) przyciski TAK/NIE bardziej „pełne” */
-.qBtn{
-  flex:1 1 160px;
-  padding:14px 14px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.25);
-
-  /* było: rgba(255,255,255,.10) */
-  background: rgba(255,255,255,.16);
-
-  font-weight:1000;
-  font-size:18px;
-  cursor:pointer;
-}
-.qBtn:hover{ background: rgba(255,255,255,.24); }
-
+    /* ===== QUIZ (ZAWSZE CAŁY — scroll w środku, jeśli trzeba) ===== */
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display:none;
+      place-items:center;
+      padding:18px;
+      z-index:50;
+    }
+    .modal{
+      width:min(820px, 100%);
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(20, 26, 42, .96);
+      box-shadow: 0 24px 80px rgba(0,0,0,.55);
+      position:relative;
+      overflow:hidden;
+      outline: 2px solid rgba(255,255,255,.08);
+      max-height: 90vh;
+      display:flex;
+      flex-direction:column;
+    }
+    .modal::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(900px 320px at 20% 0%, rgba(255,255,255,.10), transparent 60%);
+      opacity:.8;
+      pointer-events:none;
+    }
+    .modalTop{
+      position:relative;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      padding:18px 18px 10px;
+    }
+    .modalBody{
+      position:relative;
+      padding: 0 18px 14px;
+      overflow:auto;
+    }
+    .modalActions{
+      position:relative;
+      padding: 12px 18px 18px;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+      border-top:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+    }
+    .qTitle{
+      margin:0;
+      font-size: clamp(18px, 2.8vw, 24px);
+      line-height:1.15;
+      letter-spacing:.2px;
+    }
+    .qSub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-weight:900;
+      font-size:13px;
+    }
+    .qBox{
+      margin-top:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.55);
+      padding:14px;
+      font-size: clamp(18px, 3.2vw, 26px);
+      font-weight:1100;
+      letter-spacing:.2px;
+    }
+    .qBtns{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .qBtn{
+      flex:1 1 160px;
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.16);
+      font-weight:1100;
+      font-size:18px;
+      cursor:pointer;
+      color:#fff;
+    }
+    .qBtn:hover{ background: rgba(255,255,255,.24); }
     .qBtn.yes{ outline: 2px solid rgba(94,234,212,.25); }
     .qBtn.no{ outline: 2px solid rgba(251,113,133,.20); }
     .feedback{
       margin-top:12px;
       border-radius:18px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.10);
       padding:12px 14px;
       display:none;
       gap:10px;
@@ -317,19 +356,130 @@
       width:44px;height:44px;border-radius:16px;
       display:grid;place-items:center;
       background: rgba(255,255,255,.12);
-      border:1px solid var(--border);
+      border:1px solid rgba(255,255,255,.22);
       font-size:22px;
       flex:0 0 auto;
     }
-    .fbText strong{ display:block; margin-bottom:3px; }
-    .modalActions{
-      display:flex;
-      justify-content:flex-end;
-      gap:10px;
-      margin-top:12px;
-      flex-wrap:wrap;
+    .fbText strong{ display:block; margin-bottom:3px; font-weight:1100; }
+    .smallNote{ color:var(--muted); font-size:12px; margin-top:8px; font-weight:900; }
+
+    /* ===== TELETURNIEJ ===== */
+    .gamePanel{ display:grid; gap:12px; }
+    .scoreBoard{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    @media (max-width: 820px){ .scoreBoard{ grid-template-columns:1fr; } }
+
+    #gameShowMount{
+      padding:14px;
+      max-height: 60vh;
+      overflow:hidden;
     }
-    .smallNote{ color:var(--muted); font-size:12px; margin-top:8px; font-weight:700; }
+
+    .scoreCard{
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.35);
+      border-radius:18px;
+      padding:14px;
+    }
+    .scoreTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight:1100;
+      letter-spacing:.2px;
+    }
+    .scoreNum{
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight:1200;
+      margin-top:6px;
+    }
+    .scoreHint{
+      margin-top:6px;
+      color: rgba(255,255,255,.80);
+      font-size:13px;
+      font-weight:900;
+    }
+    .scoreBtns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .scoreBtn{
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.16);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:1100;
+    }
+    .scoreBtn:hover{ background: rgba(255,255,255,.24); }
+    .smallBtn{ padding:9px 10px; font-size:13px; opacity:.95; }
+
+    .phrasesBox{
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.28);
+      border-radius:18px;
+      padding:12px;
+      max-height: 32vh;
+      overflow:auto;
+    }
+    .phrasesBox h4{
+      margin:0 0 10px;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:1100;
+      letter-spacing:.2px;
+    }
+
+    /* KLUCZ: zawsze 1 kolumna */
+    .phrasesGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:6px;
+    }
+
+    .phraseItem{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px;
+      border-radius:14px;
+      border:1px dashed rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
+      font-weight:950;
+    }
+    .phraseItem input{
+      margin-top:2px;
+      transform: scale(1.2);
+      accent-color: white;
+      flex:0 0 auto;
+    }
+    .phraseText{ flex:1 1 auto; min-width:0; }
+    .phraseTag{
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.86);
+      font-weight:1100;
+      margin-left:auto;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+
+    /* przycisk na końcu */
+    .endActions{
+      margin: 10px 0 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
   </style>
 </head>
 
@@ -340,7 +490,7 @@
         <div class="logo" aria-hidden="true">🛡️</div>
         <div class="titles">
           <h1 id="headerTitle">Bezpieczeństwo w sieci — klasa 3</h1>
-          <p id="headerSub">Slajdy + Quiz TAK/NIE</p>
+          <p id="headerSub">Slajdy + Quiz TAK/NIE + Teleturniej</p>
         </div>
       </div>
       <div class="topBtns">
@@ -380,22 +530,24 @@
           <h3 class="qTitle">Quiz TAK / NIE</h3>
           <div class="qSub" id="qMeta">Pytanie do slajdu</div>
         </div>
-        <div class="kicker" id="qKicker">QUIZ</div>
+        <div class="kicker" id="qKicker">QUIZ TAK / NIE</div>
       </div>
 
-      <div class="qBox" id="qText">Czy to jest bezpieczne?</div>
+      <div class="modalBody">
+        <div class="qBox" id="qText">Czy to jest bezpieczne?</div>
 
-      <div class="qBtns">
-        <button class="qBtn yes" id="btnYes">TAK ✅</button>
-        <button class="qBtn no" id="btnNo">NIE ❌</button>
-      </div>
+        <div class="qBtns">
+          <button class="qBtn yes" id="btnYes">TAK ✅</button>
+          <button class="qBtn no" id="btnNo">NIE ❌</button>
+        </div>
 
-      <div class="feedback" id="feedback">
-        <div class="fbEmoji" id="fbEmoji">⭐</div>
-        <div class="fbText">
-          <strong id="fbStrong">Dobrze!</strong>
-          <div id="fbExplain">Wyjaśnienie.</div>
-          <div class="smallNote" id="fbNote">Kliknij „Dalej”, aby kontynuować.</div>
+        <div class="feedback" id="feedback">
+          <div class="fbEmoji" id="fbEmoji">⭐</div>
+          <div class="fbText">
+            <strong id="fbStrong">Dobrze!</strong>
+            <div id="fbExplain">Wyjaśnienie.</div>
+            <div class="smallNote">Kliknij „Dalej”, aby kontynuować.</div>
+          </div>
         </div>
       </div>
 
@@ -406,12 +558,14 @@
   </div>
 
   <script>
+    const AI_PAGE = "ai.html"; // <- docelowy plik dla przycisku na ostatnim slajdzie
+
     // ===== SLIDES =====
     const slides = [
       {
         kicker: "ZASADA LEKCJI",
         title: "STOP — POMYŚL — ZAPYTAJ DOROSŁEGO",
-        subtitle: "Gdy coś jest dziwne — nie klikam i mówię dorosłemu.",
+        subtitle: "W internecie działamy spokojnie i mądrze. Gdy coś jest dziwne — nie klikam i mówię dorosłemu.",
         emoji: "🛑",
         leftTitle: "Zapamiętaj",
         bullets: [
@@ -426,15 +580,15 @@
       {
         kicker: "ASPEKT 1",
         title: "Dane osobowe = skarb",
-        subtitle: "To informacje, po których ktoś może rozpoznać dziecko.",
+        subtitle: "To informacje, po których ktoś może rozpoznać dziecko. Skarbu nie rozdajesz!",
         emoji: "🧾",
         leftTitle: "Czego NIE podajemy?",
         bullets: [
-          "Nazwiska + szkoły/klasy",
-          "Adresu domu",
-          "Numeru telefonu",
-          "Lokalizacji (gdzie jestem)",
-          "Zdjęć dokumentów"
+          "Imię i nazwisko + szkoła/klasa",
+          "Adres domu",
+          "Numer telefonu",
+          "Lokalizacja (gdzie jestem)",
+          "Zdjęcia dokumentów"
         ],
         rightTitle: "Bezpieczna myśl",
         rule: "„Jeśli to mówi, kim jestem i gdzie jestem — to jest skarb.”",
@@ -443,7 +597,7 @@
       {
         kicker: "ASPEKT 2",
         title: "Hasła = sekret jak klucz",
-        subtitle: "Hasła nie podajemy nawet koledze.",
+        subtitle: "Hasła nie podajemy nawet koledze. Klucza do domu też byś nie oddał, prawda?",
         emoji: "🔐",
         leftTitle: "Zasady haseł",
         bullets: [
@@ -458,7 +612,7 @@
       {
         kicker: "ASPEKT 3",
         title: "Nieznajomi w internecie",
-        subtitle: "W sieci ktoś może udawać — dlatego nie podajemy danych.",
+        subtitle: "W sieci ktoś może udawać. Dlatego nie umawiamy się i nie podajemy danych.",
         emoji: "🧑‍🦱❓",
         leftTitle: "Co robię?",
         bullets: [
@@ -474,7 +628,7 @@
       {
         kicker: "ASPEKT 4",
         title: "Podejrzane linki i reklamy",
-        subtitle: "„Wygrałeś!” „Kliknij szybko!” — to często pułapki.",
+        subtitle: "„Wygrałeś!” „Kliknij szybko!” „Pobierz za darmo!” — to często pułapki.",
         emoji: "🖱️",
         leftTitle: "Trzy znaki ostrzegawcze",
         bullets: [
@@ -489,7 +643,7 @@
       {
         kicker: "ASPEKT 5",
         title: "Miłe i niemiłe zachowania",
-        subtitle: "W sieci też obowiązuje kultura.",
+        subtitle: "W sieci też obowiązuje kultura. Gdy ktoś jest niemiły — chronię siebie.",
         emoji: "💬",
         leftTitle: "Netykieta",
         bullets: [
@@ -504,13 +658,13 @@
       {
         kicker: "ASPEKT 6",
         title: "Zdjęcia i zgoda",
-        subtitle: "Zawsze pytamy o zgodę!",
+        subtitle: "Zdjęcia to też bezpieczeństwo. Zawsze pytamy o zgodę!",
         emoji: "📷",
         leftTitle: "Zasady zdjęć",
         bullets: [
           "Nie wrzucam zdjęć innych bez pytania.",
           "Nie wysyłam kompromitujących zdjęć.",
-          "Raz wrzucone może krążyć dalej."
+          "Pamiętam: raz wrzucone może krążyć dalej."
         ],
         rightTitle: "Proste zdanie",
         rule: "„Najpierw pytam: czy mogę?”",
@@ -518,8 +672,8 @@
       },
       {
         kicker: "ASPEKT 7",
-        title: "Czas ekranowy i przerwy",
-        subtitle: "Bezpieczeństwo to też dbanie o zdrowie.",
+        title: "Czas ekranowy i przerwy (zdrowie)",
+        subtitle: "Bezpieczeństwo to też dbanie o oczy, sen i humor.",
         emoji: "⏳",
         leftTitle: "Małe zasady",
         bullets: [
@@ -533,9 +687,83 @@
         chip: { text: "Zdrowie jest ważne", type: "ok" }
       },
       {
+        kicker: "BONUS 1",
+        title: "Detektyw emotek: jak się czuję po sieci?",
+        subtitle: "Bezpieczeństwo to też emocje. Jeśli po internecie czuję się gorzej — robię przerwę i mówię dorosłemu.",
+        emoji: "🕵️‍♂️",
+        leftTitle: "Mini-gra (30 sekund)",
+        bullets: [
+          "Pokaż palcami 1–4: 😊 (super) 😐 (ok) 😟 (smutno) 😡 (złość).",
+          "Jeśli pokazujesz 😟 lub 😡 → robimy przerwę.",
+          "Uczucia są ważne i normalne."
+        ],
+        rightTitle: "Zasada",
+        rule: "„Gdy czuję się gorzej po sieci → PRZERWA + DOROSŁY.”",
+        chip: { text: "Dbam o siebie", type: "ok" }
+      },
+      {
+        kicker: "BONUS 2",
+        title: "Zdanie STOP: czy to prosi o dane?",
+        subtitle: "Ćwiczymy rozpoznawanie próśb o dane. Gdy ktoś prosi o prywatne informacje — zatrzymuję się.",
+        emoji: "🛑",
+        leftTitle: "Gra na gesty",
+        bullets: [
+          "Gdy słyszysz prośbę o dane → zrób rękami X (STOP).",
+          "Gdy to pytanie neutralne → kciuk w górę.",
+          "Gdy nie wiesz → ✋ i mówisz: „Pytam dorosłego!”"
+        ],
+        rightTitle: "Przykład",
+        rule: "„Podaj numer telefonu / adres / hasło” → STOP!",
+        chip: { text: "Nie podaję danych", type: "warn" }
+      },
+      {
+        kicker: "BONUS 3",
+        title: "Zgoda na zdjęcie: czerwone / zielone światło",
+        subtitle: "Zdjęcia innych osób wymagają zgody. Sprawdźmy to w ruchu!",
+        emoji: "🚦",
+        leftTitle: "Gra ruchowa",
+        bullets: [
+          "ZIELONE = krok do przodu (bezpieczne).",
+          "CZERWONE = krok do tyłu (niebezpieczne).",
+          "Sytuacje: „pytam o zgodę” (zielone) / „wrzucam bez pytania” (czerwone)."
+        ],
+        rightTitle: "Zasada",
+        rule: "„Najpierw pytam: czy mogę?”",
+        chip: { text: "Szanuję innych", type: "ok" }
+      },
+      {
+        kicker: "BONUS 4 — TELETURNIEJ",
+        title: "Teleturniej: Kto bezpieczniejszy? (A vs B)",
+        subtitle: "Dwie drużyny. 10 haseł. Za dobrą decyzję punkt! Prowadzący przyznaje punkt kliknięciem.",
+        emoji: "📺",
+        leftTitle: "Zasady gry",
+        bullets: [
+          "Dzielimy klasę na Drużynę A i Drużynę B.",
+          "Czytam hasło — drużyny pokazują: 👍 OK / 👎 NIE OK / ✋ „Pytam dorosłego”.",
+          "Punkt dostaje drużyna, która szybciej i poprawnie zareaguje.",
+          "Gramy 10 haseł. Wygrywa drużyna z większą liczbą punktów!"
+        ],
+        isGameShow: true
+      },
+      {
+        kicker: "BONUS 5",
+        title: "Misja SUPERBOHATERA: 3 ruchy obrony",
+        subtitle: "Gdy w sieci dzieje się coś złego — robimy trzy proste ruchy jak superbohater.",
+        emoji: "🦸",
+        leftTitle: "Trzy ruchy (wszyscy razem)",
+        bullets: [
+          "1) TARCZA 🛡️ — robię STOP (ręce jak tarcza)",
+          "2) KROK W TYŁ 👣 — zamykam/wychodzę",
+          "3) SYGNAŁ 📢 — mówię dorosłemu"
+        ],
+        rightTitle: "Hasło drużyny",
+        rule: "„TARCZA — KROK W TYŁ — SYGNAŁ!”",
+        chip: { text: "Mam supermoc!", type: "ok" }
+      },
+      {
         kicker: "FINAŁ",
         title: "Kodeks Bezpiecznego Internauty",
-        subtitle: "Powtórzcie i zróbcie plakat 🙂",
+        subtitle: "Możecie powtórzyć głośno i zrobić plakat w klasie 🙂",
         emoji: "⭐",
         leftTitle: "Nasze zasady (6)",
         bullets: [
@@ -552,17 +780,20 @@
       }
     ];
 
-    // ===== QUIZ (TAK/NIE) =====
-    // Pytania do slajdów: indeks = numer slajdu
-    // (Slajd 0 = start, slajd ostatni = finał — bez quizu)
+    // ===== QUIZ TAK/NIE (wyświetlany “po slajdzie”, czyli przed przejściem dalej) =====
     const quiz = {
       1: { q: "Czy wolno podawać w grze swój adres domu?", a: "N", explain: "Nie. Adres to dana osobowa — skarb. Zawsze chronimy takie informacje." },
       2: { q: "Czy mogę podać koledze swoje hasło, bo jest najlepszym kolegą?", a: "N", explain: "Nie. Hasło to sekret jak klucz. Hasła nie podajemy nikomu." },
       3: { q: "Czy w internecie każdy jest na pewno tym, za kogo się podaje?", a: "N", explain: "Nie. Ktoś może udawać, dlatego nie podajemy danych i pytamy dorosłego." },
-      4: { q: "Czy warto kliknąć reklamę „Wygrałeś! Kliknij szybko!”?", a: "N", explain: "Nie. To znak ostrzegawczy: nagroda + pośpiech. Najlepiej zamknąć i nie klikać." },
+      4: { q: "Czy warto kliknąć reklamę „Wygrałeś! Kliknij szybko!”?", a: "N", explain: "Nie. Pośpiech i nagroda to często pułapki. Najlepiej zamknąć i nie klikać." },
       5: { q: "Gdy ktoś jest niemiły w sieci, czy najlepiej mu odpisać i się kłócić?", a: "N", explain: "Nie. Nie odpisujemy. Robimy screen, blokujemy i mówimy dorosłemu." },
-      6: { q: "Czy mogę wrzucić zdjęcie kolegi bez pytania, jeśli jest śmieszne?", a: "N", explain: "Nie. Zawsze pytamy o zgodę. Raz wrzucone może krążyć dalej." },
-      7: { q: "Czy przerwy od ekranu pomagają oczom i głowie?", a: "T", explain: "Tak. Przerwy, ruch i odpoczynek dla oczu to też bezpieczeństwo." }
+      6: { q: "Czy mogę wrzucić zdjęcie kolegi bez pytania, jeśli jest fajne?", a: "N", explain: "Nie. Zawsze pytamy o zgodę, bo to prywatność." },
+      7: { q: "Czy przerwy od ekranu pomagają oczom i głowie?", a: "T", explain: "Tak. Przerwy, ruch i odpoczynek dla oczu to też bezpieczeństwo." },
+      8: { q: "Czy gdy po internecie czuję złość lub smutek, warto zrobić przerwę i powiedzieć dorosłemu?", a: "T", explain: "Tak. Emocje mówią, że potrzebujesz przerwy i wsparcia." },
+      9: { q: "Czy mogę podać numer telefonu w grze, jeśli ktoś obieca prezent?", a: "N", explain: "Nie. Numer telefonu to dane osobowe — nie podajemy go." },
+      10:{ q: "Czy zawsze pytamy o zgodę, zanim wrzucimy czyjeś zdjęcie?", a: "T", explain: "Tak. Zgoda jest obowiązkowa — to szacunek i bezpieczeństwo." },
+      11:{ q: "Czy jeśli nie jestem pewny w internecie, mogę wybrać ✋ „Pytam dorosłego”?", a: "T", explain: "Tak. Gdy masz wątpliwości, nie klikaj — pytaj dorosłego." },
+      12:{ q: "Czy plan superbohatera to: STOP (tarcza) → zamknij/wyjdź → powiedz dorosłemu?", a: "T", explain: "Tak. To prosta i bezpieczna procedura." }
     };
 
     // ===== UI HOOKS =====
@@ -572,6 +803,7 @@
     const headerTitle = document.getElementById('headerTitle');
     const headerSub = document.getElementById('headerSub');
 
+    // QUIZ elements
     const quizOverlay = document.getElementById('quizOverlay');
     const qMeta = document.getElementById('qMeta');
     const qKicker = document.getElementById('qKicker');
@@ -584,7 +816,7 @@
     const fbExplain = document.getElementById('fbExplain');
     const btnContinue = document.getElementById('btnContinue');
 
-    let pendingNext = null; // funkcja do wykonania po quizie
+    let pendingNext = null;
     let quizOpen = false;
 
     function chipClass(type){
@@ -608,16 +840,114 @@
     function miniQuestion(i){
       const qs = [
         "Co robisz, gdy coś wydaje się dziwne w internecie?",
-        "Czy numer telefonu to dana osobowa?",
+        "Czy adres domu to dana osobowa?",
         "Czy hasło można komuś podać?",
         "Co robisz, gdy pisze obca osoba?",
-        "Jakie są znaki ostrzegawcze reklam?",
+        "Jakie są 3 znaki ostrzegawcze reklam?",
         "Co robisz, gdy ktoś jest niemiły?",
         "Czy zawsze pytamy o zgodę na zdjęcia?",
         "Co pomaga w przerwach od ekranu?",
+        "Jaką emotkę pokazujesz po sieci i co robisz, gdy jest 😟?",
+        "Jak reagujesz na prośbę o numer telefonu/adres/hasło?",
+        "Co oznacza czerwone światło w naszej grze?",
+        "W teleturnieju: za co dostaje się punkt?",
+        "Pokaż ruch „TARCZA” i powiedz, co oznacza.",
         "Powiedz jedną zasadę z kodeksu."
       ];
       return qs[i] || "Powiedz jedną ważną zasadę bezpieczeństwa w sieci.";
+    }
+
+    // ===== GAME SHOW STATE =====
+    let gameState = { a: 0, b: 0, played: Array(10).fill(false) };
+    const gamePhrases = [
+      { text: "Podaj hasło do gry — dam ci prezent", tag: "PUŁAPKA ❌" },
+      { text: "Nie wiem → pytam dorosłego", tag: "DOBRE ✅" },
+      { text: "Kliknij szybko! Wygrałeś!", tag: "PUŁAPKA ❌" },
+      { text: "Ustaw prywatność / konto prywatne", tag: "DOBRE ✅" },
+      { text: "Wyślij adres, to ci wyślę nagrodę", tag: "PUŁAPKA ❌" },
+      { text: "Zablokuj niemiłą osobę", tag: "DOBRE ✅" },
+      { text: "Wyślij swoje zdjęcie obcej osobie", tag: "PUŁAPKA ❌" },
+      { text: "Zrób przerwę, gdy czujesz złość", tag: "DOBRE ✅" },
+      { text: "Podaj numer telefonu na czacie", tag: "PUŁAPKA ❌" },
+      { text: "Powiedz dorosłemu, gdy coś cię przestraszy", tag: "DOBRE ✅" }
+    ];
+    let lastAction = null;
+
+    function safeTag(p){
+      return (p && typeof p.tag === "string" && p.tag.trim().length) ? p.tag : "";
+    }
+
+    function mountGameShow(){
+      const mount = document.getElementById("gameShowMount");
+      if(!mount) return;
+
+      mount.innerHTML = `
+        <div class="gamePanel">
+          <div class="scoreBoard">
+            <div class="scoreCard">
+              <div class="scoreTitle">Drużyna A <span class="phraseTag">A</span></div>
+              <div class="scoreNum" id="scoreA">${gameState.a}</div>
+              <div class="scoreBtns">
+                <button class="scoreBtn" id="aPlus">A +1</button>
+              </div>
+              <div class="scoreHint">Punkt za szybką i poprawną decyzję 👍/👎/✋</div>
+            </div>
+
+            <div class="scoreCard">
+              <div class="scoreTitle">Drużyna B <span class="phraseTag">B</span></div>
+              <div class="scoreNum" id="scoreB">${gameState.b}</div>
+              <div class="scoreBtns">
+                <button class="scoreBtn" id="bPlus">B +1</button>
+              </div>
+              <div class="scoreHint">Prowadzący przyznaje punkt kliknięciem</div>
+            </div>
+          </div>
+
+          <div class="scoreBtns">
+            <button class="scoreBtn smallBtn" id="undo">↩ Cofnij punkt</button>
+            <button class="scoreBtn smallBtn" id="reset">⟲ Reset</button>
+          </div>
+
+          <div class="phrasesBox">
+            <h4>🗣️ 10 haseł do przeczytania (przewiń listę)</h4>
+            <div class="phrasesGrid">
+              ${gamePhrases.map((p, i) => `
+                <label class="phraseItem">
+                  <input type="checkbox" ${gameState.played[i] ? "checked" : ""} data-i="${i}">
+                  <span class="phraseText">${i+1}) ${p.text}</span>
+                  ${safeTag(p) ? `<span class="phraseTag">${safeTag(p)}</span>` : ``}
+                </label>
+              `).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+
+      const scoreA = mount.querySelector("#scoreA");
+      const scoreB = mount.querySelector("#scoreB");
+      const updateScores = () => { scoreA.textContent = gameState.a; scoreB.textContent = gameState.b; };
+
+      mount.querySelector("#aPlus").addEventListener("click", () => { gameState.a += 1; lastAction = "a"; updateScores(); });
+      mount.querySelector("#bPlus").addEventListener("click", () => { gameState.b += 1; lastAction = "b"; updateScores(); });
+
+      mount.querySelector("#undo").addEventListener("click", () => {
+        if(lastAction === "a" && gameState.a > 0) gameState.a -= 1;
+        if(lastAction === "b" && gameState.b > 0) gameState.b -= 1;
+        lastAction = null; updateScores();
+      });
+
+      mount.querySelector("#reset").addEventListener("click", () => {
+        gameState = { a: 0, b: 0, played: Array(10).fill(false) };
+        lastAction = null;
+        mountGameShow();
+      });
+
+      mount.querySelectorAll('input[type="checkbox"][data-i]').forEach(cb => {
+        cb.addEventListener("change", (e) => {
+          const i = Number(e.target.getAttribute("data-i"));
+          gameState.played[i] = e.target.checked;
+        });
+      });
     }
 
     function render(){
@@ -629,36 +959,60 @@
       void slideEl.offsetWidth;
       slideEl.classList.add('fade');
 
+      const isLast = (idx === slides.length - 1);
+
+      const endButton = isLast ? `
+        <div class="endActions">
+          <button class="btn" id="goAi">➡️ Przejdź do AI (ai.html)</button>
+        </div>
+      ` : ``;
+
+      const rightColumn = s.isGameShow ? `
+        <div class="ruleBox">
+          <div id="gameShowMount" class="card"></div>
+        </div>
+      ` : `
+        <div class="ruleBox">
+          <div class="card">
+            <h3><span class="emoji" aria-hidden="true">🧠</span>${s.rightTitle}</h3>
+            <div class="rule">${s.rule}</div>
+            <span class="${chipClass(s.chip.type)}">${s.chip.text}</span>
+          </div>
+
+          <div class="card">
+            <h3><span class="emoji" aria-hidden="true">🎯</span>Mini-pytanie do klasy</h3>
+            <div class="rule">${miniQuestion(idx)}</div>
+          </div>
+        </div>
+      `;
+
       slideEl.innerHTML = `
         <div class="kicker">${s.kicker}</div>
-        <h2 class="bigTitle">${s.emoji} ${s.title}</h2>
+        <h2 class="bigTitle">${s.emoji ? (s.emoji + " ") : ""}${s.title}</h2>
         <p class="subtitle">${s.subtitle}</p>
+        ${endButton}
 
         <div class="content">
           <div class="card">
-            <h3><span class="emoji" aria-hidden="true">${s.emoji}</span>${s.leftTitle}</h3>
+            <h3><span class="emoji" aria-hidden="true">${s.emoji || "📌"}</span>${s.leftTitle}</h3>
             <ul class="bullets">
               ${s.bullets.map(b => `<li>${b}</li>`).join("")}
             </ul>
           </div>
 
-          <div class="ruleBox">
-            <div class="card">
-              <h3><span class="emoji" aria-hidden="true">🧠</span>${s.rightTitle}</h3>
-              <div class="rule">${s.rule}</div>
-              <span class="${chipClass(s.chip.type)}">${s.chip.text}</span>
-            </div>
-
-            <div class="card">
-              <h3><span class="emoji" aria-hidden="true">🎯</span>Mini-pytanie do klasy</h3>
-              <div class="rule">${miniQuestion(idx)}</div>
-            </div>
-          </div>
+          ${rightColumn}
         </div>
       `;
 
       renderDots();
       updateNavButtons();
+
+      if (s.isGameShow) mountGameShow();
+
+      if (isLast) {
+        const btn = document.getElementById("goAi");
+        if (btn) btn.addEventListener("click", () => { window.location.href = AI_PAGE; });
+      }
     }
 
     function updateNavButtons(){
@@ -677,19 +1031,16 @@
     function go(i, opts={}){
       idx = Math.max(0, Math.min(slides.length - 1, i));
       render();
-      // skakanie kropkami omija quiz (żeby prowadzący mógł wrócić/ przeskoczyć)
-      // jeśli wolisz, żeby quiz wymuszał się też przy kropkach — usuń tę linijkę.
       if(opts.fromDot) closeQuiz();
     }
 
     function shouldQuizForSlide(slideIndex){
-      // bez quizu na slajdzie 0 (start) i ostatnim (finał)
       if(slideIndex === 0) return false;
       if(slideIndex === slides.length - 1) return false;
       return !!quiz[slideIndex];
     }
 
-    // ===== QUIZ LOGIC =====
+    // ===== QUIZ =====
     function openQuizFor(slideIndex, onContinue){
       const q = quiz[slideIndex];
       if(!q){ onContinue?.(); return; }
@@ -705,7 +1056,6 @@
       btnContinue.disabled = true;
 
       quizOverlay.style.display = "grid";
-      // fokus (pomocne w klasie)
       btnYes.focus();
     }
 
@@ -732,7 +1082,6 @@
         fbExplain.textContent = "Podpowiedź: przypomnij sobie zasadę z tego slajdu. " + q.explain;
       }
 
-      // pozwalamy iść dalej nawet po błędzie (żeby prowadzący decydował)
       btnContinue.disabled = false;
       btnContinue.focus();
     }
@@ -745,25 +1094,19 @@
       fn?.();
     });
 
-    // ===== NAVIGATION (with quiz on next) =====
     function next(){
       if(idx >= slides.length - 1) return;
-
       const target = idx + 1;
 
-      // quiz pojawia się po slajdzie, czyli PRZED przejściem do następnego:
-      // (użytkownik chciał: "po każdym slajdzie 1 pytanie")
       if(shouldQuizForSlide(idx) && !quizOpen){
         openQuizFor(idx, ()=>go(target));
         return;
       }
-
       go(target);
     }
 
     function prev(){
       if(idx <= 0) return;
-      // cofanie bez quizu (żeby dało się wrócić)
       go(idx - 1);
     }
 
@@ -804,7 +1147,6 @@
         if(e.key.toLowerCase() === "n") btnNo.click();
         return;
       }
-
       if(e.key === "ArrowRight") next();
       if(e.key === "ArrowLeft") prev();
       if(e.key.toLowerCase() === "f") toggleFs();
@@ -825,7 +1167,6 @@
       startX = null;
     }, {passive:true});
 
-    // Close quiz when clicking outside modal
     quizOverlay.addEventListener('click', (e)=>{
       if(e.target === quizOverlay) closeQuiz();
     });
