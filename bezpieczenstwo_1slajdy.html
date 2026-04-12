@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bezpieczeństwo w sieci — Slajdy + Quiz TAK/NIE + Teleturniej (klasa 3)</title>
+  <title>Bezpieczeństwo w sieci — Slajdy + Quiz TAK/NIE + Teleturniej (klasa 4)</title>
   <style>
     :root{
       --bg1:#0b1020;
@@ -20,8 +20,10 @@
       --warn:#fbbf24;
       --bad:#fb7185;
     }
+
     *{ box-sizing:border-box; }
     html, body{ height:100%; }
+
     body{
       margin:0;
       color:var(--text);
@@ -33,11 +35,13 @@
         linear-gradient(180deg, var(--bg2), var(--bg1));
       overflow:hidden;
     }
+
     .app{
       height:100%;
       display:grid;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows:auto 1fr auto;
     }
+
     header{
       padding:18px 18px 10px;
       display:flex;
@@ -45,30 +49,50 @@
       justify-content:space-between;
       gap:12px;
     }
+
     .brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+
     .logo{
-      width:44px;height:44px;border-radius:16px;
-      display:grid;place-items:center;
+      width:44px;
+      height:44px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
       background: rgba(255,255,255,.14);
       border:1px solid var(--border);
       box-shadow: var(--shadow);
-      font-size:22px; flex:0 0 auto;
+      font-size:22px;
+      flex:0 0 auto;
     }
+
     .titles{ min-width:0; }
+
     .titles h1{
       margin:0;
       font-size: clamp(16px, 2.5vw, 22px);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
       letter-spacing:.2px;
     }
+
     .titles p{
       margin:2px 0 0;
       color:var(--muted);
       font-size:13px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
       font-weight:700;
     }
-    .topBtns{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+
+    .topBtns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
     .btn{
       border:1px solid var(--border);
       background: var(--btn);
@@ -83,20 +107,28 @@
       user-select:none;
       backdrop-filter: blur(6px);
     }
+
     .btn:hover{ background: var(--btnHover); }
 
-    .stage{ position:relative; padding: 10px 18px 0; display:grid; place-items:center; }
+    .stage{
+      position:relative;
+      padding:10px 18px 0;
+      display:grid;
+      place-items:center;
+    }
+
     .slide{
       width:min(980px, 100%);
-      min-height: min(560px, calc(100vh - 220px));
+      min-height:min(560px, calc(100vh - 220px));
       background: linear-gradient(180deg, var(--card), var(--card2));
       border:1px solid var(--border);
       border-radius:26px;
       box-shadow: var(--shadow);
-      padding: 22px 22px 18px;
+      padding:20px 20px 16px;
       position:relative;
       overflow:hidden;
     }
+
     .slide::before{
       content:"";
       position:absolute;
@@ -105,11 +137,15 @@
       opacity:.9;
       pointer-events:none;
     }
+
     .slide > *{ position:relative; }
 
     .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px; border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.08);
       color:var(--muted);
@@ -117,68 +153,88 @@
       font-size:13px;
       letter-spacing:.2px;
     }
+
     .bigTitle{
-      margin:14px 0 6px;
-      font-size: clamp(26px, 4.2vw, 44px);
+      margin:12px 0 6px;
+      font-size: clamp(24px, 4vw, 40px);
       line-height:1.05;
       letter-spacing:.2px;
     }
+
     .subtitle{
-      margin:0 0 14px;
+      margin:0 0 12px;
       color:var(--muted);
-      font-size: clamp(15px, 2.0vw, 18px);
-      max-width: 70ch;
+      font-size: clamp(14px, 1.8vw, 17px);
+      max-width: 68ch;
       font-weight:700;
+      line-height:1.28;
     }
 
     .content{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:16px;
+      grid-template-columns: 1.05fr .95fr;
+      gap:14px;
       align-items:start;
     }
-    @media (max-width: 820px){ .content{ grid-template-columns: 1fr; } }
+
+    @media (max-width: 820px){
+      .content{ grid-template-columns: 1fr; }
+    }
 
     .card{
       border:1px solid var(--border);
       border-radius:20px;
       background: rgba(255,255,255,.08);
-      padding:16px;
+      padding:14px;
     }
+
     .card h3{
       margin:0 0 10px;
-      font-size:18px;
+      font-size:17px;
       display:flex;
       align-items:center;
       gap:10px;
       letter-spacing:.2px;
     }
+
     .emoji{
-      width:44px;height:44px;border-radius:16px;
-      display:grid;place-items:center;
+      width:42px;
+      height:42px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
       background: rgba(255,255,255,.12);
       border:1px solid var(--border);
-      font-size:22px;
+      font-size:21px;
       flex:0 0 auto;
     }
+
     .bullets{
       margin:0;
-      padding-left: 20px;
-      font-size: clamp(16px, 2.1vw, 18px);
-      line-height:1.35;
+      padding-left:20px;
+      font-size: clamp(15px, 2vw, 17px);
+      line-height:1.28;
       font-weight:750;
     }
-    .bullets li{ margin: 10px 0; }
 
-    .ruleBox{ display:flex; flex-direction:column; gap:12px; }
+    .bullets li{ margin:8px 0; }
+
+    .ruleBox{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
     .rule{
       border:1px solid var(--border);
       border-radius:18px;
       background: rgba(255,255,255,.07);
-      padding:14px 14px;
-      font-size: clamp(16px, 2.1vw, 18px);
+      padding:13px 14px;
+      font-size: clamp(15px, 2vw, 17px);
       font-weight:900;
+      line-height:1.3;
     }
+
     .chip{
       display:inline-block;
       margin-top:10px;
@@ -190,27 +246,41 @@
       background: rgba(255,255,255,.06);
       letter-spacing:.2px;
     }
+
     .chip.ok{ color: var(--ok); }
     .chip.warn{ color: var(--warn); }
     .chip.bad{ color: var(--bad); }
 
     footer{
-      padding: 12px 18px 18px;
+      padding:12px 18px 18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
     }
+
     .nav{ display:flex; gap:10px; align-items:center; }
-    .progress{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center; }
+
+    .progress{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
     .dot{
-      width:12px;height:12px;border-radius:999px;
+      width:12px;
+      height:12px;
+      border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.10);
       cursor:pointer;
     }
+
     .dot.active{ background: rgba(255,255,255,.85); }
+
     .hint{
       color:var(--muted);
       font-size:13px;
@@ -220,6 +290,7 @@
       flex-wrap:wrap;
       font-weight:750;
     }
+
     .kbd{
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size:12px;
@@ -230,12 +301,20 @@
       color:var(--text);
       font-weight:900;
     }
+
     .fade{ animation: fadeIn .18s ease-out; }
-    @keyframes fadeIn{ from{ opacity:0; transform: translateY(6px);} to{ opacity:1; transform: translateY(0);} }
+
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(6px);}
+      to{ opacity:1; transform: translateY(0);}
+    }
 
     .fsBadge{
-      position:fixed; right:14px; bottom:14px;
-      padding:8px 10px; border-radius:999px;
+      position:fixed;
+      right:14px;
+      bottom:14px;
+      padding:8px 10px;
+      border-radius:999px;
       border:1px solid var(--border);
       background: rgba(0,0,0,.28);
       color:var(--muted);
@@ -245,9 +324,9 @@
       display:none;
     }
 
-    /* ===== QUIZ (ZAWSZE CAŁY — scroll w środku, jeśli trzeba) ===== */
     .overlay{
-      position:fixed; inset:0;
+      position:fixed;
+      inset:0;
       background: rgba(0,0,0,.78);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
@@ -256,6 +335,7 @@
       padding:18px;
       z-index:50;
     }
+
     .modal{
       width:min(820px, 100%);
       border-radius:24px;
@@ -269,6 +349,7 @@
       display:flex;
       flex-direction:column;
     }
+
     .modal::before{
       content:"";
       position:absolute;
@@ -277,6 +358,7 @@
       opacity:.8;
       pointer-events:none;
     }
+
     .modalTop{
       position:relative;
       display:flex;
@@ -285,14 +367,16 @@
       gap:12px;
       padding:18px 18px 10px;
     }
+
     .modalBody{
       position:relative;
-      padding: 0 18px 14px;
+      padding:0 18px 14px;
       overflow:auto;
     }
+
     .modalActions{
       position:relative;
-      padding: 12px 18px 18px;
+      padding:12px 18px 18px;
       display:flex;
       justify-content:flex-end;
       gap:10px;
@@ -300,18 +384,21 @@
       border-top:1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.14);
     }
+
     .qTitle{
       margin:0;
       font-size: clamp(18px, 2.8vw, 24px);
       line-height:1.15;
       letter-spacing:.2px;
     }
+
     .qSub{
       margin:6px 0 0;
       color:var(--muted);
       font-weight:900;
       font-size:13px;
     }
+
     .qBox{
       margin-top:12px;
       border-radius:18px;
@@ -322,12 +409,14 @@
       font-weight:1100;
       letter-spacing:.2px;
     }
+
     .qBtns{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
       margin-top:14px;
     }
+
     .qBtn{
       flex:1 1 160px;
       padding:14px 14px;
@@ -339,9 +428,11 @@
       cursor:pointer;
       color:#fff;
     }
+
     .qBtn:hover{ background: rgba(255,255,255,.24); }
     .qBtn.yes{ outline: 2px solid rgba(94,234,212,.25); }
     .qBtn.no{ outline: 2px solid rgba(251,113,133,.20); }
+
     .feedback{
       margin-top:12px;
       border-radius:18px;
@@ -352,21 +443,43 @@
       gap:10px;
       align-items:flex-start;
     }
+
     .fbEmoji{
-      width:44px;height:44px;border-radius:16px;
-      display:grid;place-items:center;
+      width:44px;
+      height:44px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
       background: rgba(255,255,255,.12);
       border:1px solid rgba(255,255,255,.22);
       font-size:22px;
       flex:0 0 auto;
     }
-    .fbText strong{ display:block; margin-bottom:3px; font-weight:1100; }
-    .smallNote{ color:var(--muted); font-size:12px; margin-top:8px; font-weight:900; }
 
-    /* ===== TELETURNIEJ ===== */
+    .fbText strong{
+      display:block;
+      margin-bottom:3px;
+      font-weight:1100;
+    }
+
+    .smallNote{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:8px;
+      font-weight:900;
+    }
+
     .gamePanel{ display:grid; gap:12px; }
-    .scoreBoard{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    @media (max-width: 820px){ .scoreBoard{ grid-template-columns:1fr; } }
+
+    .scoreBoard{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    @media (max-width: 820px){
+      .scoreBoard{ grid-template-columns:1fr; }
+    }
 
     #gameShowMount{
       padding:14px;
@@ -380,6 +493,7 @@
       border-radius:18px;
       padding:14px;
     }
+
     .scoreTitle{
       display:flex;
       align-items:center;
@@ -388,23 +502,27 @@
       font-weight:1100;
       letter-spacing:.2px;
     }
+
     .scoreNum{
       font-size: clamp(34px, 5vw, 54px);
       font-weight:1200;
       margin-top:6px;
     }
+
     .scoreHint{
       margin-top:6px;
       color: rgba(255,255,255,.80);
       font-size:13px;
       font-weight:900;
     }
+
     .scoreBtns{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       margin-top:10px;
     }
+
     .scoreBtn{
       border:1px solid rgba(255,255,255,.25);
       background: rgba(255,255,255,.16);
@@ -414,6 +532,7 @@
       cursor:pointer;
       font-weight:1100;
     }
+
     .scoreBtn:hover{ background: rgba(255,255,255,.24); }
     .smallBtn{ padding:9px 10px; font-size:13px; opacity:.95; }
 
@@ -425,6 +544,7 @@
       max-height: 32vh;
       overflow:auto;
     }
+
     .phrasesBox h4{
       margin:0 0 10px;
       font-size:16px;
@@ -435,7 +555,6 @@
       letter-spacing:.2px;
     }
 
-    /* KLUCZ: zawsze 1 kolumna */
     .phrasesGrid{
       display:grid;
       grid-template-columns: 1fr;
@@ -452,13 +571,19 @@
       background: rgba(255,255,255,.06);
       font-weight:950;
     }
+
     .phraseItem input{
       margin-top:2px;
       transform: scale(1.2);
       accent-color: white;
       flex:0 0 auto;
     }
-    .phraseText{ flex:1 1 auto; min-width:0; }
+
+    .phraseText{
+      flex:1 1 auto;
+      min-width:0;
+    }
+
     .phraseTag{
       font-size:12px;
       padding:3px 8px;
@@ -472,7 +597,6 @@
       flex:0 0 auto;
     }
 
-    /* przycisk na końcu */
     .endActions{
       margin: 10px 0 14px;
       display:flex;
@@ -489,7 +613,7 @@
       <div class="brand">
         <div class="logo" aria-hidden="true">🛡️</div>
         <div class="titles">
-          <h1 id="headerTitle">Bezpieczeństwo w sieci — klasa 3</h1>
+          <h1 id="headerTitle">Bezpieczeństwo w sieci — klasa 4</h1>
           <p id="headerSub">Slajdy + Quiz TAK/NIE + Teleturniej</p>
         </div>
       </div>
@@ -522,7 +646,6 @@
 
   <div class="fsBadge" id="fsBadge">Tryb pełnoekranowy</div>
 
-  <!-- QUIZ OVERLAY -->
   <div class="overlay" id="quizOverlay" role="dialog" aria-modal="true" aria-label="Quiz TAK/NIE">
     <div class="modal">
       <div class="modalTop">
@@ -558,97 +681,95 @@
   </div>
 
   <script>
-    const AI_PAGE = "ai.html"; // <- docelowy plik dla przycisku na ostatnim slajdzie
+    const AI_PAGE = "ai.html";
 
-    // ===== SLIDES =====
     const slides = [
       {
         kicker: "ZASADA LEKCJI",
         title: "STOP — POMYŚL — ZAPYTAJ DOROSŁEGO",
-        subtitle: "W internecie działamy spokojnie i mądrze. Gdy coś jest dziwne — nie klikam i mówię dorosłemu.",
+        subtitle: "W sieci działamy spokojnie. Gdy coś jest dziwne, nie klikam i proszę dorosłego o pomoc.",
         emoji: "🛑",
         leftTitle: "Zapamiętaj",
         bullets: [
-          "Gdy ktoś prosi o dane → mówię: „Nie!”",
-          "Gdy coś straszy lub obiecuje nagrodę → zamykam okno.",
-          "Gdy ktoś jest niemiły → nie odpisuję, blokuję, mówię dorosłemu."
+          "Gdy ktoś prosi o dane — mówię: „Nie”.",
+          "Gdy coś straszy lub obiecuje nagrodę — zamykam.",
+          "Gdy ktoś jest niemiły — nie odpisuję, blokuję, mówię dorosłemu."
         ],
-        rightTitle: "Trzy super kroki",
+        rightTitle: "Trzy kroki",
         rule: "1) STOP  2) POMYŚL  3) ZAPYTAJ DOROSŁEGO",
-        chip: { text: "To działa zawsze!", type: "ok" }
+        chip: { text: "To działa zawsze", type: "ok" }
       },
       {
         kicker: "ASPEKT 1",
         title: "Dane osobowe = skarb",
-        subtitle: "To informacje, po których ktoś może rozpoznać dziecko. Skarbu nie rozdajesz!",
+        subtitle: "To informacje, po których ktoś może cię rozpoznać albo odnaleźć.",
         emoji: "🧾",
-        leftTitle: "Czego NIE podajemy?",
+        leftTitle: "Czego nie podajemy?",
         bullets: [
-          "Imię i nazwisko + szkoła/klasa",
-          "Adres domu",
-          "Numer telefonu",
-          "Lokalizacja (gdzie jestem)",
-          "Zdjęcia dokumentów"
+          "Imienia i nazwiska razem ze szkołą lub klasą.",
+          "Adresu domu i numeru telefonu.",
+          "Lokalizacji: gdzie jestem albo dokąd idę.",
+          "Zdjęć dokumentów i kart."
         ],
         rightTitle: "Bezpieczna myśl",
-        rule: "„Jeśli to mówi, kim jestem i gdzie jestem — to jest skarb.”",
-        chip: { text: "Pytam dorosłego", type: "warn" }
+        rule: "„Jeśli po tym można mnie znaleźć — tego nie podaję.”",
+        chip: { text: "Chronię swoje dane", type: "warn" }
       },
       {
         kicker: "ASPEKT 2",
         title: "Hasła = sekret jak klucz",
-        subtitle: "Hasła nie podajemy nawet koledze. Klucza do domu też byś nie oddał, prawda?",
+        subtitle: "Hasło chroni konto tak jak klucz chroni dom.",
         emoji: "🔐",
         leftTitle: "Zasady haseł",
         bullets: [
-          "Hasło jest tajne — nie udostępniam go nikomu.",
-          "Lepsze hasło jest dłuższe i ma różne znaki.",
-          "Gdy ktoś prosi o hasło → mówię dorosłemu."
+          "Hasło jest tajne — nie podaję go nikomu.",
+          "Dłuższe hasło jest zwykle lepsze.",
+          "Gdy ktoś prosi o hasło — od razu mówię dorosłemu."
         ],
-        rightTitle: "Zdanie-hasło (przykład)",
-        rule: "„LubięKoty!Mam3Klocki” (długie = lepsze)",
+        rightTitle: "Przykład",
+        rule: "„LubięKoty!Mam3Klocki” — długie i łatwiejsze do zapamiętania.",
         chip: { text: "Hasło to klucz", type: "ok" }
       },
       {
         kicker: "ASPEKT 3",
         title: "Nieznajomi w internecie",
-        subtitle: "W sieci ktoś może udawać. Dlatego nie umawiamy się i nie podajemy danych.",
+        subtitle: "W sieci ktoś może udawać inną osobę, dlatego trzeba uważać.",
         emoji: "🧑‍🦱❓",
         leftTitle: "Co robię?",
         bullets: [
           "Nie podaję danych i nie przechodzę na prywatne rozmowy.",
           "Nie wysyłam zdjęć obcym osobom.",
           "Nie umawiam się na spotkania.",
-          "Gdy coś jest dziwne → dorosły."
+          "Gdy coś jest dziwne — proszę dorosłego o pomoc."
         ],
         rightTitle: "Proste zdanie",
         rule: "„Nie rozmawiam z obcymi o prywatnych sprawach.”",
-        chip: { text: "STOP i dorosły", type: "warn" }
+        chip: { text: "Uważam na nieznajomych", type: "warn" }
       },
       {
         kicker: "ASPEKT 4",
         title: "Podejrzane linki i reklamy",
-        subtitle: "„Wygrałeś!” „Kliknij szybko!” „Pobierz za darmo!” — to często pułapki.",
+        subtitle: "Nagroda, pośpiech i straszenie to częste znaki ostrzegawcze.",
         emoji: "🖱️",
-        leftTitle: "Trzy znaki ostrzegawcze",
+        leftTitle: "Trzy sygnały alarmowe",
         bullets: [
-          "Nagroda „za darmo”",
-          "Pośpiech: „kliknij już!”",
-          "Straszenie: „konto zablokowane!”"
+          "„Wygrałeś coś za darmo!”",
+          "„Kliknij natychmiast!”",
+          "„Twoje konto będzie zablokowane!”"
         ],
         rightTitle: "Co robię?",
         rule: "Zamykam okno. Nie klikam. Pytam dorosłego.",
-        chip: { text: "Nie klikam!", type: "bad" }
+        chip: { text: "Nie klikam w pułapki", type: "bad" }
       },
       {
         kicker: "ASPEKT 5",
         title: "Miłe i niemiłe zachowania",
-        subtitle: "W sieci też obowiązuje kultura. Gdy ktoś jest niemiły — chronię siebie.",
+        subtitle: "W sieci obowiązuje ta sama kultura co w klasie.",
         emoji: "💬",
         leftTitle: "Netykieta",
         bullets: [
-          "Piszę tak, jakbym mówił w klasie.",
-          "Nie obrażam, nie wyśmiewam.",
+          "Piszę z szacunkiem.",
+          "Nie obrażam i nie wyśmiewam.",
           "Pomagam, gdy ktoś potrzebuje wsparcia."
         ],
         rightTitle: "Gdy ktoś jest niemiły",
@@ -658,13 +779,13 @@
       {
         kicker: "ASPEKT 6",
         title: "Zdjęcia i zgoda",
-        subtitle: "Zdjęcia to też bezpieczeństwo. Zawsze pytamy o zgodę!",
+        subtitle: "Zdjęcia też są częścią prywatności. Najpierw pytam.",
         emoji: "📷",
         leftTitle: "Zasady zdjęć",
         bullets: [
           "Nie wrzucam zdjęć innych bez pytania.",
           "Nie wysyłam kompromitujących zdjęć.",
-          "Pamiętam: raz wrzucone może krążyć dalej."
+          "Pamiętam: raz opublikowane może krążyć dalej."
         ],
         rightTitle: "Proste zdanie",
         rule: "„Najpierw pytam: czy mogę?”",
@@ -672,44 +793,42 @@
       },
       {
         kicker: "ASPEKT 7",
-        title: "Czas ekranowy i przerwy (zdrowie)",
-        subtitle: "Bezpieczeństwo to też dbanie o oczy, sen i humor.",
+        title: "Czas ekranowy i przerwy",
+        subtitle: "Bezpieczeństwo to też dbanie o oczy, sen i samopoczucie.",
         emoji: "⏳",
         leftTitle: "Małe zasady",
         bullets: [
-          "Robię przerwy i ruszam się.",
-          "Patrzę daleko przez chwilę (odpoczynek oczu).",
-          "Przed snem mniej ekranów.",
-          "Gdy czuję złość lub zmęczenie — robię przerwę."
+          "Robię krótkie przerwy i ruszam się.",
+          "Patrzę przez chwilę daleko, żeby odpoczęły oczy.",
+          "Przed snem ograniczam ekran.",
+          "Gdy jestem zmęczony lub zły — odkładam telefon."
         ],
-        rightTitle: "Mini-rytuał 30 sekund",
+        rightTitle: "Mini-rytuał",
         rule: "Wstań • przeciągnij się • 10 spokojnych oddechów",
-        chip: { text: "Zdrowie jest ważne", type: "ok" }
+        chip: { text: "Dbam o zdrowie", type: "ok" }
       },
-	  
-	  // --- DODATKOWE 5 SLAJDÓW (wklej przed slajdem FINAŁ) ---
-{
-  kicker: "BONUS 1",
-  title: "Detektyw emotek: jak się czuję po sieci?",
-  subtitle: "Bezpieczeństwo to też emocje. Jeśli po internecie czuję się gorzej — robię przerwę i mówię dorosłemu.",
-  emoji: "🕵️‍♂️",
-  leftTitle: "Mini-gra (30 sekund)",
-  bullets: [
-    "Pokaż palcami 1–4: 😊 (super) 😐 (ok) 😟 (smutno) 😡 (złość).",
-    "Jeśli pokazujesz 😟 lub 😡 → robimy przerwę.",
-    "Pamiętaj: uczucia są ważne i normalne."
-  ],
-  rightTitle: "Zasada",
-  rule: "„Gdy czuję się gorzej po sieci → PRZERWA + DOROSŁY.”",
-  chip: { text: "Dbam o siebie", type: "ok" }
-},
-{
-  kicker: "BONUS 2",
-  title: "Zdanie STOP: kto prosi o dane?",
-  subtitle: "Ćwiczymy rozpoznawanie próśb o dane. Gdy ktoś prosi o prywatne informacje — zatrzymuję się.",
-  emoji: "🛑",
-  leftTitle: "Gra na gesty 👍 = OK / 👎 = NIE OK",
-  bullets: [
+      {
+        kicker: "BONUS 1",
+        title: "Detektyw emocji po sieci",
+        subtitle: "Po internecie też można czuć radość, złość albo smutek. To ważna wskazówka.",
+        emoji: "🕵️‍♂️",
+        leftTitle: "Mini-gra",
+        bullets: [
+          "Pokaż palcami: 😊 😐 😟 😡",
+          "Jeśli czuję 😟 albo 😡 — robię przerwę.",
+          "Gdy coś mnie przytłacza — mówię dorosłemu."
+        ],
+        rightTitle: "Zasada",
+        rule: "„Gdy po sieci czuję się gorzej — robię przerwę i szukam wsparcia.”",
+        chip: { text: "Dbam o siebie", type: "ok" }
+      },
+      {
+  "kicker": "BONUS 2",
+  "title": "Zdanie STOP: kto prosi o dane?",
+  "subtitle": "Ćwiczymy rozpoznawanie próśb o dane. Gdy ktoś prosi o prywatne informacje — zatrzymuję się.",
+  "emoji": "🛑",
+  "leftTitle": "Gra na gesty 👍 = OK / 👎 = NIE OK",
+  "bullets": [
     "Podaj swój numer telefonu, to wyślę ci nagrodę.",
     "Napisz, gdzie mieszkasz, to dostarczymy prezent.",
     "Wyślij swoje hasło, żebym mógł ci pomóc w grze.",
@@ -718,146 +837,84 @@
     "Napisz, o której wracasz dziś do domu.",
     "Podaj numer telefonu mamy albo taty, żebym się z nimi skontaktował."
   ],
-  rightTitle: "Przykład zdania",
-  rule: "„Podaj numer telefonu / adres / hasło” → STOP!",
-  chip: { text: "Nie podaję danych", type: "warn" }
+  "rightTitle": "Przykład zdania",
+  "rule": "„Podaj numer telefonu / adres / hasło” → STOP!",
+  "chip": { "text": "Nie podaję danych", "type": "warn" }
 },
-{
-  kicker: "BONUS 3",
-  title: "Zgoda na zdjęcie: czerwone / zielone światło",
-  subtitle: "Zdjęcia innych osób wymagają zgody. Sprawdźmy to w ruchu!",
-  emoji: "🚦",
-  leftTitle: "Gra ruchowa",
-  bullets: [
-    "ZIELONE = krok do przodu (bezpieczne).",
-    "CZERWONE = krok do tyłu (niebezpieczne).",
-    "Sytuacje: „pytam o zgodę” (zielone) / „wrzucam bez pytania” (czerwone)."
-  ],
-  rightTitle: "Zasada",
-  rule: "„Najpierw pytam: czy mogę?”",
-  chip: { text: "Szanuję innych", type: "ok" }
-},
-// --- PODMIANA BONUS 4 ---
-{
-  kicker: "BONUS 4",
-  title: "Gra „Hasło czy bajka?” (SZYBKI TEST)",
-  subtitle: "Czas na zabawę w rozpoznawanie bezpiecznych i niebezpiecznych haseł. Odpowiadamy błyskawicznie!",
-  emoji: "🎲",
-  leftTitle: "Jak gramy? (1 minuta)",
-  bullets: [
-    "Ja czytam hasło, a Wy pokazujecie: 👍 = OK / 👎 = NIE OK",
-    "Jeśli nie jesteś pewny → pokaż ✋ i mówisz: „Pytam dorosłego!”",
-    "Gramy szybko: 8 haseł = 1 runda."
-  ],
-  rightTitle: "Hasła do rundy",
-  rule: "1) „Podaj hasło” ❌  2) „Zapytaj rodzica” ✅  3) „Kliknij szybko!” ❌  4) „Ustaw prywatność” ✅  5) „Wyślij adres” ❌  6) „Zablokuj” ✅",
-  chip: { text: "Ćwiczę refleks", type: "ok" }
-},
-
-// --- PODMIANA BONUS 5 ---
-{
-  kicker: "BONUS 5",
-  title: "Misja SUPERBOHATERA: 3 ruchy obrony",
-  subtitle: "Gdy w sieci dzieje się coś złego — robimy trzy proste ruchy jak superbohater. To zapamiętasz na zawsze!",
-  emoji: "🦸",
-  leftTitle: "Trzy ruchy (wszyscy razem)",
-  bullets: [
-    "1) TARCZA 🛡️ — robię STOP (ręce jak tarcza)",
-    "2) KROK W TYŁ 👣 — zamykam/wychodzę",
-    "3) SYGNAŁ 📢 — mówię dorosłemu"
-  ],
-  rightTitle: "Hasło drużyny",
-  rule: "„TARCZA — KROK W TYŁ — SYGNAŁ!”",
-  chip: { text: "Mam supermoc!", type: "ok" }
-},
-
-	  
-	  
-      {
-        kicker: "BONUS 1",
-        title: "Detektyw emotek: jak się czuję po sieci?",
-        subtitle: "Bezpieczeństwo to też emocje. Jeśli po internecie czuję się gorzej — robię przerwę i mówię dorosłemu.",
-        emoji: "🕵️‍♂️",
-        leftTitle: "Mini-gra (30 sekund)",
-        bullets: [
-          "Pokaż palcami 1–4: 😊 (super) 😐 (ok) 😟 (smutno) 😡 (złość).",
-          "Jeśli pokazujesz 😟 lub 😡 → robimy przerwę.",
-          "Uczucia są ważne i normalne."
-        ],
-        rightTitle: "Zasada",
-        rule: "„Gdy czuję się gorzej po sieci → PRZERWA + DOROSŁY.”",
-        chip: { text: "Dbam o siebie", type: "ok" }
-      },
-      {
-        kicker: "BONUS 2",
-        title: "Zdanie STOP: czy to prosi o dane?",
-        subtitle: "Ćwiczymy rozpoznawanie próśb o dane. Gdy ktoś prosi o prywatne informacje — zatrzymuję się.",
-        emoji: "🛑",
-        leftTitle: "Gra na gesty",
-        bullets: [
-          "Gdy słyszysz prośbę o dane → zrób rękami X (STOP).",
-          "Gdy to pytanie neutralne → kciuk w górę.",
-          "Gdy nie wiesz → ✋ i mówisz: „Pytam dorosłego!”"
-        ],
-        rightTitle: "Przykład",
-        rule: "„Podaj numer telefonu / adres / hasło” → STOP!",
-        chip: { text: "Nie podaję danych", type: "warn" }
-      },
       {
         kicker: "BONUS 3",
-        title: "Zgoda na zdjęcie: czerwone / zielone światło",
-        subtitle: "Zdjęcia innych osób wymagają zgody. Sprawdźmy to w ruchu!",
-        emoji: "🚦",
-        leftTitle: "Gra ruchowa",
+        title: "Foto-decyzje: wrzucasz czy pytasz?",
+        subtitle: "Uwaga, zdjęcia raz wrzucone do sieci zostają tam na bardzo długo.",
+        emoji: "📸",
+        leftTitle: "Jak gramy?",
         bullets: [
-          "ZIELONE = krok do przodu (bezpieczne).",
-          "CZERWONE = krok do tyłu (niebezpieczne).",
-          "Sytuacje: „pytam o zgodę” (zielone) / „wrzucam bez pytania” (czerwone)."
+          "->Nasze gesty",
+          "👍 = OK",
+		  "👎 = NIE OK",
+		  "✋ = najpierw pytam.",
+          "Liczy się decyzja i dobre uzasadnienie.",
+         "<span style='color:#fbbf24; font-weight:900;'>Najważniejsze pytanie: czy była zgoda?</span>"
+
         ],
-        rightTitle: "Zasada",
-        rule: "„Najpierw pytam: czy mogę?”",
-        chip: { text: "Szanuję innych", type: "ok" }
+        rightTitle: "Zasada klasy 4",
+        rule: "„Nie publikuję zdjęcia innej osoby bez jej zgody.”",
+        chip: { text: "Najpierw pytam", type: "ok" }
+      },
+      {
+        kicker: "BONUS 4",
+        title: "Gra „Hasło czy bajka?”",
+        subtitle: "Szybki test: rozpoznaj dobrą radę i internetową pułapkę.",
+        emoji: "🎲",
+        leftTitle: "Jak gramy?",
+        bullets: [
+          "👍 = dobra rada",
+          "👎 = zły pomysł lub pułapka",
+          "✋ = nie jestem pewny, pytam dorosłego"
+        ],
+        rightTitle: "Przykłady",
+        rule: "„Podaj hasło” ❌  •  „Ustaw prywatność” ✅  •  „Kliknij szybko!” ❌",
+        chip: { text: "Ćwiczę refleks", type: "ok" }
       },
       {
         kicker: "BONUS 4 — TELETURNIEJ",
         title: "Teleturniej: Kto bezpieczniejszy? (A vs B)",
-        subtitle: "Dwie drużyny. 10 haseł. Za dobrą decyzję punkt! Prowadzący przyznaje punkt kliknięciem.",
+        subtitle: "Dwie drużyny, 10 haseł i punkt za dobrą decyzję.",
         emoji: "📺",
         leftTitle: "Zasady gry",
         bullets: [
           "Dzielimy klasę na Drużynę A i Drużynę B.",
-          "Czytam hasło — drużyny pokazują: 👍 OK / 👎 NIE OK / ✋ „Pytam dorosłego”.",
-          "Punkt dostaje drużyna, która szybciej i poprawnie zareaguje.",
-          "Gramy 10 haseł. Wygrywa drużyna z większą liczbą punktów!"
+          "Po każdym haśle drużyny pokazują: 👍 / 👎 / ✋.",
+          "Punkt dostaje drużyna, która zareaguje dobrze i szybko.",
+          "Wygrywa drużyna z większą liczbą punktów."
         ],
         isGameShow: true
       },
       {
         kicker: "BONUS 5",
         title: "Misja SUPERBOHATERA: 3 ruchy obrony",
-        subtitle: "Gdy w sieci dzieje się coś złego — robimy trzy proste ruchy jak superbohater.",
+        subtitle: "Gdy w sieci dzieje się coś złego, działamy według prostego planu.",
         emoji: "🦸",
-        leftTitle: "Trzy ruchy (wszyscy razem)",
+        leftTitle: "Trzy ruchy",
         bullets: [
-          "1) TARCZA 🛡️ — robię STOP (ręce jak tarcza)",
-          "2) KROK W TYŁ 👣 — zamykam/wychodzę",
+          "1) TARCZA 🛡️ — robię STOP",
+          "2) KROK W TYŁ 👣 — zamykam lub wychodzę",
           "3) SYGNAŁ 📢 — mówię dorosłemu"
         ],
         rightTitle: "Hasło drużyny",
         rule: "„TARCZA — KROK W TYŁ — SYGNAŁ!”",
-        chip: { text: "Mam supermoc!", type: "ok" }
+        chip: { text: "Mam plan działania", type: "ok" }
       },
       {
         kicker: "FINAŁ",
         title: "Kodeks Bezpiecznego Internauty",
-        subtitle: "Możecie powtórzyć głośno i zrobić plakat w klasie 🙂",
+        subtitle: "Powtórzmy najważniejsze zasady na koniec lekcji.",
         emoji: "⭐",
-        leftTitle: "Nasze zasady (6)",
+        leftTitle: "Nasze zasady",
         bullets: [
           "Nie podaję danych i haseł.",
           "Nie klikam podejrzanych linków.",
-          "Nie rozmawiam z nieznajomymi o prywatnych sprawach.",
-          "Gdy ktoś jest niemiły — nie odpisuję, blokuję, mówię dorosłemu.",
+          "Nie rozmawiam z obcymi o prywatnych sprawach.",
+          "Gdy ktoś jest niemiły — blokuję i mówię dorosłemu.",
           "Pytam o zgodę na zdjęcia.",
           "Robię przerwy od ekranu."
         ],
@@ -867,30 +924,27 @@
       }
     ];
 
-    // ===== QUIZ TAK/NIE (wyświetlany “po slajdzie”, czyli przed przejściem dalej) =====
     const quiz = {
-      1: { q: "Czy wolno podawać w grze swój adres domu?", a: "N", explain: "Nie. Adres to dana osobowa — skarb. Zawsze chronimy takie informacje." },
-      2: { q: "Czy mogę podać koledze swoje hasło, bo jest najlepszym kolegą?", a: "N", explain: "Nie. Hasło to sekret jak klucz. Hasła nie podajemy nikomu." },
-      3: { q: "Czy w internecie każdy jest na pewno tym, za kogo się podaje?", a: "N", explain: "Nie. Ktoś może udawać, dlatego nie podajemy danych i pytamy dorosłego." },
-      4: { q: "Czy warto kliknąć reklamę „Wygrałeś! Kliknij szybko!”?", a: "N", explain: "Nie. Pośpiech i nagroda to często pułapki. Najlepiej zamknąć i nie klikać." },
-      5: { q: "Gdy ktoś jest niemiły w sieci, czy najlepiej mu odpisać i się kłócić?", a: "N", explain: "Nie. Nie odpisujemy. Robimy screen, blokujemy i mówimy dorosłemu." },
-      6: { q: "Czy mogę wrzucić zdjęcie kolegi bez pytania, jeśli jest fajne?", a: "N", explain: "Nie. Zawsze pytamy o zgodę, bo to prywatność." },
-      7: { q: "Czy przerwy od ekranu pomagają oczom i głowie?", a: "T", explain: "Tak. Przerwy, ruch i odpoczynek dla oczu to też bezpieczeństwo." },
-      8: { q: "Czy gdy po internecie czuję złość lub smutek, warto zrobić przerwę i powiedzieć dorosłemu?", a: "T", explain: "Tak. Emocje mówią, że potrzebujesz przerwy i wsparcia." },
-      9: { q: "Czy mogę podać numer telefonu w grze, jeśli ktoś obieca prezent?", a: "N", explain: "Nie. Numer telefonu to dane osobowe — nie podajemy go." },
-      10:{ q: "Czy zawsze pytamy o zgodę, zanim wrzucimy czyjeś zdjęcie?", a: "T", explain: "Tak. Zgoda jest obowiązkowa — to szacunek i bezpieczeństwo." },
-      11:{ q: "Czy jeśli nie jestem pewny w internecie, mogę wybrać ✋ „Pytam dorosłego”?", a: "T", explain: "Tak. Gdy masz wątpliwości, nie klikaj — pytaj dorosłego." },
-      12:{ q: "Czy plan superbohatera to: STOP (tarcza) → zamknij/wyjdź → powiedz dorosłemu?", a: "T", explain: "Tak. To prosta i bezpieczna procedura." }
+      1:  { q: "Czy wolno podawać w grze swój adres domu?", a: "N", explain: "Nie. Adres to dana osobowa i trzeba go chronić." },
+      2:  { q: "Czy mogę podać koledze swoje hasło, bo mu ufam?", a: "N", explain: "Nie. Hasło jest tajne i nie podajemy go nikomu." },
+      3:  { q: "Czy w internecie każdy jest na pewno tym, za kogo się podaje?", a: "N", explain: "Nie. Ktoś może udawać, dlatego trzeba uważać." },
+      4:  { q: "Czy warto kliknąć reklamę „Wygrałeś! Kliknij szybko!”?", a: "N", explain: "Nie. To częsta pułapka." },
+      5:  { q: "Gdy ktoś jest niemiły w sieci, najlepiej się z nim pokłócić?", a: "N", explain: "Nie. Lepiej nie odpisywać, tylko zablokować i powiedzieć dorosłemu." },
+      6:  { q: "Czy mogę wrzucić zdjęcie kolegi bez pytania, jeśli jest śmieszne?", a: "N", explain: "Nie. Zawsze pytamy o zgodę." },
+      7:  { q: "Czy przerwy od ekranu pomagają oczom i głowie?", a: "T", explain: "Tak. Przerwy są ważne dla zdrowia." },
+      8:  { q: "Gdy po internecie czuję złość lub smutek, warto zrobić przerwę?", a: "T", explain: "Tak. Emocje to sygnał, że warto odpocząć i porozmawiać." },
+      9:  { q: "Czy mogę podać numer telefonu, jeśli ktoś obieca prezent?", a: "N", explain: "Nie. Numer telefonu to dana osobowa." },
+      10: { q: "Czy przed wrzuceniem czyjegoś zdjęcia trzeba mieć zgodę?", a: "T", explain: "Tak. To kwestia prywatności i szacunku." },
+      11: { q: "Czy gdy nie jestem pewny, mogę wybrać: „Pytam dorosłego”?", a: "T", explain: "Tak. To bardzo dobra decyzja." },
+      12: { q: "Czy plan superbohatera to: STOP → wyjdź → powiedz dorosłemu?", a: "T", explain: "Tak. To prosty i bezpieczny plan działania." }
     };
 
-    // ===== UI HOOKS =====
     let idx = 0;
     const slideEl = document.getElementById('slide');
     const dotsEl = document.getElementById('dots');
     const headerTitle = document.getElementById('headerTitle');
     const headerSub = document.getElementById('headerSub');
 
-    // QUIZ elements
     const quizOverlay = document.getElementById('quizOverlay');
     const qMeta = document.getElementById('qMeta');
     const qKicker = document.getElementById('qKicker');
@@ -930,33 +984,33 @@
         "Czy adres domu to dana osobowa?",
         "Czy hasło można komuś podać?",
         "Co robisz, gdy pisze obca osoba?",
-        "Jakie są 3 znaki ostrzegawcze reklam?",
+        "Jakie są znaki ostrzegawcze reklam?",
         "Co robisz, gdy ktoś jest niemiły?",
         "Czy zawsze pytamy o zgodę na zdjęcia?",
         "Co pomaga w przerwach od ekranu?",
-        "Jaką emotkę pokazujesz po sieci i co robisz, gdy jest 😟?",
-        "Jak reagujesz na prośbę o numer telefonu/adres/hasło?",
-        "Co oznacza czerwone światło w naszej grze?",
-        "W teleturnieju: za co dostaje się punkt?",
+        "Co robisz, gdy po sieci czujesz złość albo smutek?",
+        "Jak reagujesz na prośbę o numer telefonu lub adres?",
+        "Jaka jest najważniejsza zasada przy zdjęciach?",
+        "Jak rozpoznasz dobrą radę i pułapkę?",
+        "W teleturnieju: za co przyznajemy punkt?",
         "Pokaż ruch „TARCZA” i powiedz, co oznacza.",
         "Powiedz jedną zasadę z kodeksu."
       ];
       return qs[i] || "Powiedz jedną ważną zasadę bezpieczeństwa w sieci.";
     }
 
-    // ===== GAME SHOW STATE =====
     let gameState = { a: 0, b: 0, played: Array(10).fill(false) };
     const gamePhrases = [
-      { text: "Podaj hasło do gry — dam ci prezent", tag: "PUŁAPKA ❌" },
-      { text: "Nie wiem → pytam dorosłego", tag: "DOBRE ✅" },
-      { text: "Kliknij szybko! Wygrałeś!", tag: "PUŁAPKA ❌" },
-      { text: "Ustaw prywatność / konto prywatne", tag: "DOBRE ✅" },
-      { text: "Wyślij adres, to ci wyślę nagrodę", tag: "PUŁAPKA ❌" },
-      { text: "Zablokuj niemiłą osobę", tag: "DOBRE ✅" },
-      { text: "Wyślij swoje zdjęcie obcej osobie", tag: "PUŁAPKA ❌" },
-      { text: "Zrób przerwę, gdy czujesz złość", tag: "DOBRE ✅" },
-      { text: "Podaj numer telefonu na czacie", tag: "PUŁAPKA ❌" },
-      { text: "Powiedz dorosłemu, gdy coś cię przestraszy", tag: "DOBRE ✅" }
+      { text: "Podaj hasło do gry — dam ci prezent", tag: "❓" },
+      { text: "Nie wiem → pytam dorosłego", tag: "❓" },
+      { text: "Kliknij szybko! Wygrałeś!", tag: "❓" },
+      { text: "Ustaw prywatność konta", tag: "❓" },
+      { text: "Wyślij adres, to dam nagrodę", tag: "❓" },
+      { text: "Zablokuj niemiłą osobę", tag: "❓" },
+      { text: "Wyślij zdjęcie obcej osobie", tag: "❓" },
+      { text: "Zrób przerwę, gdy czujesz złość", tag: "❓" },
+      { text: "Podaj numer telefonu na czacie", tag: "❓" },
+      { text: "Powiedz dorosłemu, gdy coś cię przestraszy", tag: "❓" }
     ];
     let lastAction = null;
 
@@ -977,7 +1031,7 @@
               <div class="scoreBtns">
                 <button class="scoreBtn" id="aPlus">A +1</button>
               </div>
-              <div class="scoreHint">Punkt za szybką i poprawną decyzję 👍/👎/✋</div>
+              <div class="scoreHint">Punkt za szybką i poprawną decyzję</div>
             </div>
 
             <div class="scoreCard">
@@ -996,7 +1050,7 @@
           </div>
 
           <div class="phrasesBox">
-            <h4>🗣️ 10 haseł do przeczytania (przewiń listę)</h4>
+            <h4>🗣️ 10 haseł do przeczytania</h4>
             <div class="phrasesGrid">
               ${gamePhrases.map((p, i) => `
                 <label class="phraseItem">
@@ -1020,7 +1074,8 @@
       mount.querySelector("#undo").addEventListener("click", () => {
         if(lastAction === "a" && gameState.a > 0) gameState.a -= 1;
         if(lastAction === "b" && gameState.b > 0) gameState.b -= 1;
-        lastAction = null; updateScores();
+        lastAction = null;
+        updateScores();
       });
 
       mount.querySelector("#reset").addEventListener("click", () => {
@@ -1086,7 +1141,6 @@
               ${s.bullets.map(b => `<li>${b}</li>`).join("")}
             </ul>
           </div>
-
           ${rightColumn}
         </div>
       `;
@@ -1109,9 +1163,14 @@
       prevBtn.disabled = (idx === 0);
       nextBtn.disabled = (idx === slides.length - 1);
 
-      [prevBtn, nextBtn].forEach(b=>{
-        if(b.disabled){ b.style.opacity=.55; b.style.cursor="not-allowed"; }
-        else { b.style.opacity=1; b.style.cursor="pointer"; }
+      [prevBtn, nextBtn].forEach(b => {
+        if(b.disabled){
+          b.style.opacity = .55;
+          b.style.cursor = "not-allowed";
+        } else {
+          b.style.opacity = 1;
+          b.style.cursor = "pointer";
+        }
       });
     }
 
@@ -1127,7 +1186,6 @@
       return !!quiz[slideIndex];
     }
 
-    // ===== QUIZ =====
     function openQuizFor(slideIndex, onContinue){
       const q = quiz[slideIndex];
       if(!q){ onContinue?.(); return; }
@@ -1201,9 +1259,10 @@
     document.getElementById('prev').addEventListener('click', prev);
     document.getElementById('btnStart').addEventListener('click', () => { closeQuiz(); go(0); });
 
-    // ===== FULLSCREEN =====
     const fsBadge = document.getElementById('fsBadge');
+
     function isFs(){ return !!document.fullscreenElement; }
+
     async function toggleFs(){
       if(!isFs()){
         await document.documentElement.requestFullscreen?.();
@@ -1212,6 +1271,7 @@
       }
       updateFsUI();
     }
+
     function updateFsUI(){
       const btn = document.getElementById('btnFs');
       if(isFs()){
@@ -1222,10 +1282,10 @@
         fsBadge.style.display = "none";
       }
     }
+
     document.getElementById('btnFs').addEventListener('click', toggleFs);
     document.addEventListener('fullscreenchange', updateFsUI);
 
-    // ===== KEYBOARD =====
     document.addEventListener('keydown', (e) => {
       if(quizOpen){
         if(e.key === "Escape") closeQuiz();
@@ -1234,6 +1294,7 @@
         if(e.key.toLowerCase() === "n") btnNo.click();
         return;
       }
+
       if(e.key === "ArrowRight") next();
       if(e.key === "ArrowLeft") prev();
       if(e.key.toLowerCase() === "f") toggleFs();
@@ -1241,7 +1302,6 @@
       if(e.key === "End") go(slides.length - 1);
     });
 
-    // Touch swipe
     let startX = null;
     document.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
     document.addEventListener('touchend', (e) => {
@@ -1249,12 +1309,13 @@
       const endX = e.changedTouches[0].clientX;
       const dx = endX - startX;
       if(Math.abs(dx) > 60){
-        if(dx < 0) next(); else prev();
+        if(dx < 0) next();
+        else prev();
       }
       startX = null;
     }, {passive:true});
 
-    quizOverlay.addEventListener('click', (e)=>{
+    quizOverlay.addEventListener('click', (e) => {
       if(e.target === quizOverlay) closeQuiz();
     });
 
