@@ -3,1324 +3,368 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bezpieczeństwo w sieci — Slajdy + Quiz TAK/NIE + Teleturniej (klasa 4)</title>
+  <title>Bezpieczeństwo w sieci — aktywna wersja dla ucznia</title>
   <style>
     :root{
-      --bg1:#0b1020;
-      --bg2:#14224b;
-      --card:rgba(255,255,255,.10);
-      --card2:rgba(255,255,255,.08);
-      --border:rgba(255,255,255,.18);
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.78);
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
-      --btn: rgba(255,255,255,.14);
-      --btnHover: rgba(255,255,255,.22);
-      --ok:#5eead4;
-      --warn:#fbbf24;
-      --bad:#fb7185;
+      --bg1:#0b1020; --bg2:#162a5e; --card:rgba(255,255,255,.10); --card2:rgba(255,255,255,.07);
+      --border:rgba(255,255,255,.20); --text:#fff; --muted:rgba(255,255,255,.78); --good:#5eead4;
+      --warn:#fbbf24; --bad:#fb7185; --shadow:0 22px 60px rgba(0,0,0,.35);
     }
-
-    *{ box-sizing:border-box; }
-    html, body{ height:100%; }
-
-    body{
-      margin:0;
-      color:var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(900px 600px at 20% 10%, rgba(122,162,255,.35), transparent 60%),
-        radial-gradient(900px 600px at 90% 20%, rgba(94,234,212,.18), transparent 55%),
-        radial-gradient(900px 600px at 50% 100%, rgba(251,191,36,.12), transparent 60%),
-        linear-gradient(180deg, var(--bg2), var(--bg1));
-      overflow:hidden;
-    }
-
-    .app{
-      height:100%;
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-    }
-
-    header{
-      padding:18px 18px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .brand{ display:flex; align-items:center; gap:12px; min-width:0; }
-
-    .logo{
-      width:44px;
-      height:44px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      background: rgba(255,255,255,.14);
-      border:1px solid var(--border);
-      box-shadow: var(--shadow);
-      font-size:22px;
-      flex:0 0 auto;
-    }
-
-    .titles{ min-width:0; }
-
-    .titles h1{
-      margin:0;
-      font-size: clamp(16px, 2.5vw, 22px);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      letter-spacing:.2px;
-    }
-
-    .titles p{
-      margin:2px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      font-weight:700;
-    }
-
-    .topBtns{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .btn{
-      border:1px solid var(--border);
-      background: var(--btn);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
-      cursor:pointer;
-      font-weight:900;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      user-select:none;
-      backdrop-filter: blur(6px);
-    }
-
-    .btn:hover{ background: var(--btnHover); }
-
-    .stage{
-      position:relative;
-      padding:10px 18px 0;
-      display:grid;
-      place-items:center;
-    }
-
-    .slide{
-      width:min(980px, 100%);
-      min-height:min(560px, calc(100vh - 220px));
-      background: linear-gradient(180deg, var(--card), var(--card2));
-      border:1px solid var(--border);
-      border-radius:26px;
-      box-shadow: var(--shadow);
-      padding:20px 20px 16px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .slide::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(900px 320px at 20% 0%, rgba(255,255,255,.12), transparent 60%);
-      opacity:.9;
-      pointer-events:none;
-    }
-
-    .slide > *{ position:relative; }
-
-    .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.08);
-      color:var(--muted);
-      font-weight:1000;
-      font-size:13px;
-      letter-spacing:.2px;
-    }
-
-    .bigTitle{
-      margin:12px 0 6px;
-      font-size: clamp(24px, 4vw, 40px);
-      line-height:1.05;
-      letter-spacing:.2px;
-    }
-
-    .subtitle{
-      margin:0 0 12px;
-      color:var(--muted);
-      font-size: clamp(14px, 1.8vw, 17px);
-      max-width: 68ch;
-      font-weight:700;
-      line-height:1.28;
-    }
-
-    .content{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:14px;
-      align-items:start;
-    }
-
-    @media (max-width: 820px){
-      .content{ grid-template-columns: 1fr; }
-    }
-
-    .card{
-      border:1px solid var(--border);
-      border-radius:20px;
-      background: rgba(255,255,255,.08);
-      padding:14px;
-    }
-
-    .card h3{
-      margin:0 0 10px;
-      font-size:17px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      letter-spacing:.2px;
-    }
-
-    .emoji{
-      width:42px;
-      height:42px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      background: rgba(255,255,255,.12);
-      border:1px solid var(--border);
-      font-size:21px;
-      flex:0 0 auto;
-    }
-
-    .bullets{
-      margin:0;
-      padding-left:20px;
-      font-size: clamp(15px, 2vw, 17px);
-      line-height:1.28;
-      font-weight:750;
-    }
-
-    .bullets li{ margin:8px 0; }
-
-    .ruleBox{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .rule{
-      border:1px solid var(--border);
-      border-radius:18px;
-      background: rgba(255,255,255,.07);
-      padding:13px 14px;
-      font-size: clamp(15px, 2vw, 17px);
-      font-weight:900;
-      line-height:1.3;
-    }
-
-    .chip{
-      display:inline-block;
-      margin-top:10px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      font-weight:1000;
-      font-size:13px;
-      background: rgba(255,255,255,.06);
-      letter-spacing:.2px;
-    }
-
-    .chip.ok{ color: var(--ok); }
-    .chip.warn{ color: var(--warn); }
-    .chip.bad{ color: var(--bad); }
-
-    footer{
-      padding:12px 18px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    .nav{ display:flex; gap:10px; align-items:center; }
-
-    .progress{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-
-    .dot{
-      width:12px;
-      height:12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.10);
-      cursor:pointer;
-    }
-
-    .dot.active{ background: rgba(255,255,255,.85); }
-
-    .hint{
-      color:var(--muted);
-      font-size:13px;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
-      font-weight:750;
-    }
-
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size:12px;
-      padding:2px 6px;
-      border-radius:8px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.08);
-      color:var(--text);
-      font-weight:900;
-    }
-
-    .fade{ animation: fadeIn .18s ease-out; }
-
-    @keyframes fadeIn{
-      from{ opacity:0; transform: translateY(6px);}
-      to{ opacity:1; transform: translateY(0);}
-    }
-
-    .fsBadge{
-      position:fixed;
-      right:14px;
-      bottom:14px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.28);
-      color:var(--muted);
-      font-weight:1000;
-      font-size:12px;
-      backdrop-filter: blur(6px);
-      display:none;
-    }
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.78);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      display:none;
-      place-items:center;
-      padding:18px;
-      z-index:50;
-    }
-
-    .modal{
-      width:min(820px, 100%);
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,.25);
-      background: rgba(20, 26, 42, .96);
-      box-shadow: 0 24px 80px rgba(0,0,0,.55);
-      position:relative;
-      overflow:hidden;
-      outline: 2px solid rgba(255,255,255,.08);
-      max-height: 90vh;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .modal::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(900px 320px at 20% 0%, rgba(255,255,255,.10), transparent 60%);
-      opacity:.8;
-      pointer-events:none;
-    }
-
-    .modalTop{
-      position:relative;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:12px;
-      padding:18px 18px 10px;
-    }
-
-    .modalBody{
-      position:relative;
-      padding:0 18px 14px;
-      overflow:auto;
-    }
-
-    .modalActions{
-      position:relative;
-      padding:12px 18px 18px;
-      display:flex;
-      justify-content:flex-end;
-      gap:10px;
-      flex-wrap:wrap;
-      border-top:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.14);
-    }
-
-    .qTitle{
-      margin:0;
-      font-size: clamp(18px, 2.8vw, 24px);
-      line-height:1.15;
-      letter-spacing:.2px;
-    }
-
-    .qSub{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-weight:900;
-      font-size:13px;
-    }
-
-    .qBox{
-      margin-top:12px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.22);
-      background: rgba(0,0,0,.55);
-      padding:14px;
-      font-size: clamp(18px, 3.2vw, 26px);
-      font-weight:1100;
-      letter-spacing:.2px;
-    }
-
-    .qBtns{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-
-    .qBtn{
-      flex:1 1 160px;
-      padding:14px 14px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.25);
-      background: rgba(255,255,255,.16);
-      font-weight:1100;
-      font-size:18px;
-      cursor:pointer;
-      color:#fff;
-    }
-
-    .qBtn:hover{ background: rgba(255,255,255,.24); }
-    .qBtn.yes{ outline: 2px solid rgba(94,234,212,.25); }
-    .qBtn.no{ outline: 2px solid rgba(251,113,133,.20); }
-
-    .feedback{
-      margin-top:12px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.10);
-      padding:12px 14px;
-      display:none;
-      gap:10px;
-      align-items:flex-start;
-    }
-
-    .fbEmoji{
-      width:44px;
-      height:44px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      background: rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.22);
-      font-size:22px;
-      flex:0 0 auto;
-    }
-
-    .fbText strong{
-      display:block;
-      margin-bottom:3px;
-      font-weight:1100;
-    }
-
-    .smallNote{
-      color:var(--muted);
-      font-size:12px;
-      margin-top:8px;
-      font-weight:900;
-    }
-
-    .gamePanel{ display:grid; gap:12px; }
-
-    .scoreBoard{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-
-    @media (max-width: 820px){
-      .scoreBoard{ grid-template-columns:1fr; }
-    }
-
-    #gameShowMount{
-      padding:14px;
-      max-height: 60vh;
-      overflow:hidden;
-    }
-
-    .scoreCard{
-      border:1px solid rgba(255,255,255,.25);
-      background: rgba(0,0,0,.35);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .scoreTitle{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-weight:1100;
-      letter-spacing:.2px;
-    }
-
-    .scoreNum{
-      font-size: clamp(34px, 5vw, 54px);
-      font-weight:1200;
-      margin-top:6px;
-    }
-
-    .scoreHint{
-      margin-top:6px;
-      color: rgba(255,255,255,.80);
-      font-size:13px;
-      font-weight:900;
-    }
-
-    .scoreBtns{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-
-    .scoreBtn{
-      border:1px solid rgba(255,255,255,.25);
-      background: rgba(255,255,255,.16);
-      color:#fff;
-      padding:10px 12px;
-      border-radius:14px;
-      cursor:pointer;
-      font-weight:1100;
-    }
-
-    .scoreBtn:hover{ background: rgba(255,255,255,.24); }
-    .smallBtn{ padding:9px 10px; font-size:13px; opacity:.95; }
-
-    .phrasesBox{
-      border:1px solid rgba(255,255,255,.25);
-      background: rgba(0,0,0,.28);
-      border-radius:18px;
-      padding:12px;
-      max-height: 32vh;
-      overflow:auto;
-    }
-
-    .phrasesBox h4{
-      margin:0 0 10px;
-      font-size:16px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:1100;
-      letter-spacing:.2px;
-    }
-
-    .phrasesGrid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:6px;
-    }
-
-    .phraseItem{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      padding:10px;
-      border-radius:14px;
-      border:1px dashed rgba(255,255,255,.20);
-      background: rgba(255,255,255,.06);
-      font-weight:950;
-    }
-
-    .phraseItem input{
-      margin-top:2px;
-      transform: scale(1.2);
-      accent-color: white;
-      flex:0 0 auto;
-    }
-
-    .phraseText{
-      flex:1 1 auto;
-      min-width:0;
-    }
-
-    .phraseTag{
-      font-size:12px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.86);
-      font-weight:1100;
-      margin-left:auto;
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-
-    .endActions{
-      margin: 10px 0 14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);
+      background:radial-gradient(900px 600px at 15% 10%, rgba(122,162,255,.32), transparent 60%),
+                 radial-gradient(900px 600px at 90% 15%, rgba(94,234,212,.18), transparent 58%),
+                 linear-gradient(180deg,var(--bg2),var(--bg1)); overflow:hidden}
+    .app{height:100%;display:grid;grid-template-rows:auto auto 1fr auto}
+    header{padding:16px 18px 8px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    .brand{display:flex;gap:12px;align-items:center}.logo{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;
+      background:rgba(255,255,255,.14);border:1px solid var(--border);font-size:24px;box-shadow:var(--shadow)}
+    h1{margin:0;font-size:clamp(18px,2.8vw,26px)} .sub{margin:3px 0 0;color:var(--muted);font-weight:800;font-size:13px}
+    .topBtns,.nav{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{border:1px solid var(--border);background:rgba(255,255,255,.12);color:#fff;padding:10px 13px;border-radius:14px;cursor:pointer;font-weight:900}
+    .btn:hover{background:rgba(255,255,255,.20)} .btn:disabled{opacity:.55;cursor:not-allowed}
+    .scoreBar{padding:0 18px 8px;display:grid;grid-template-columns:1.1fr .9fr .9fr;gap:10px}
+    .pill{border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.09);padding:10px 12px;font-weight:900}
+    .stage{padding:6px 18px 0;display:grid;place-items:center}
+    .slide{width:min(1050px,100%);min-height:min(600px,calc(100vh - 210px));background:linear-gradient(180deg,var(--card),var(--card2));
+      border:1px solid var(--border);border-radius:28px;box-shadow:var(--shadow);padding:18px;overflow:auto}
+    .kicker{display:inline-flex;padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.08);font-size:13px;font-weight:1000;color:var(--muted)}
+    .bigTitle{margin:12px 0 6px;font-size:clamp(25px,4vw,40px);line-height:1.05}
+    .subtitle{margin:0 0 14px;color:var(--muted);font-size:clamp(14px,1.8vw,17px);font-weight:700;max-width:70ch}
+    .content{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{border:1px solid var(--border);border-radius:20px;background:rgba(255,255,255,.08);padding:14px}
+    .card h3{margin:0 0 10px;font-size:18px;display:flex;gap:10px;align-items:center}.emoji{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid var(--border);font-size:22px}
+    .bullets{margin:0;padding-left:20px;font-size:17px;line-height:1.3;font-weight:780}.bullets li{margin:8px 0}
+    .choices,.missionBtns,.memoryGrid{display:grid;gap:10px}.choice,.missionBtn,.memoryCard{border:1px solid var(--border);background:rgba(255,255,255,.10);color:#fff;border-radius:16px;padding:12px 14px;cursor:pointer;font-weight:900;text-align:left}
+    .choice:hover,.missionBtn:hover,.memoryCard:hover{background:rgba(255,255,255,.18)}
+    .choice.done,.missionBtn.done{opacity:.75}.feedback{margin-top:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--border);display:none;font-weight:900}
+    .good{background:rgba(94,234,212,.14)} .bad{background:rgba(251,113,133,.14)} .warn{background:rgba(251,191,36,.16)}
+    .badgeWrap{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.badge{padding:7px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.08);font-size:13px;font-weight:1000}
+    .missionBox{display:grid;gap:12px}.missionStatus{font-size:14px;color:var(--muted);font-weight:900}
+    .memoryGrid{grid-template-columns:repeat(2,1fr)} .memoryCard{min-height:72px;display:grid;place-items:center;font-size:17px}
+    .memoryCard.revealed{background:rgba(94,234,212,.18)} .memoryCard.matched{background:rgba(94,234,212,.28);cursor:default}
+    .dots{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}.dot{width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid var(--border);cursor:pointer}.dot.active{background:#fff}
+    footer{padding:12px 18px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .hint{color:var(--muted);font-size:13px;font-weight:800}
+    @media (max-width: 860px){.content,.scoreBar{grid-template-columns:1fr}.slide{min-height:min(600px,calc(100vh - 250px))}.memoryGrid{grid-template-columns:1fr 1fr}}
   </style>
 </head>
-
 <body>
-  <div class="app">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden="true">🛡️</div>
-        <div class="titles">
-          <h1 id="headerTitle">Bezpieczeństwo w sieci — klasa 4</h1>
-          <p id="headerSub">Slajdy + Quiz TAK/NIE + Teleturniej</p>
-        </div>
-      </div>
-      <div class="topBtns">
-        <button class="btn" id="btnFs" title="Pełny ekran (F)">⛶ Pełny ekran</button>
-        <button class="btn" id="btnStart" title="Wróć do początku">⟲ Start</button>
-      </div>
-    </header>
-
-    <main class="stage">
-      <section class="slide fade" id="slide"></section>
-    </main>
-
-    <footer>
-      <div class="nav">
-        <button class="btn" id="prev" title="Poprzedni (←)">← Wstecz</button>
-        <button class="btn" id="next" title="Następny (→)">Dalej →</button>
-      </div>
-
-      <div class="progress" id="dots" aria-label="Postęp slajdów"></div>
-
-      <div class="hint">
-        Sterowanie:
-        <span class="kbd">←</span><span class="kbd">→</span>
-        <span class="kbd">F</span> pełny ekran
-        <span class="kbd">Esc</span> wyjście
-      </div>
-    </footer>
-  </div>
-
-  <div class="fsBadge" id="fsBadge">Tryb pełnoekranowy</div>
-
-  <div class="overlay" id="quizOverlay" role="dialog" aria-modal="true" aria-label="Quiz TAK/NIE">
-    <div class="modal">
-      <div class="modalTop">
-        <div>
-          <h3 class="qTitle">Quiz TAK / NIE</h3>
-          <div class="qSub" id="qMeta">Pytanie do slajdu</div>
-        </div>
-        <div class="kicker" id="qKicker">QUIZ TAK / NIE</div>
-      </div>
-
-      <div class="modalBody">
-        <div class="qBox" id="qText">Czy to jest bezpieczne?</div>
-
-        <div class="qBtns">
-          <button class="qBtn yes" id="btnYes">TAK ✅</button>
-          <button class="qBtn no" id="btnNo">NIE ❌</button>
-        </div>
-
-        <div class="feedback" id="feedback">
-          <div class="fbEmoji" id="fbEmoji">⭐</div>
-          <div class="fbText">
-            <strong id="fbStrong">Dobrze!</strong>
-            <div id="fbExplain">Wyjaśnienie.</div>
-            <div class="smallNote">Kliknij „Dalej”, aby kontynuować.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modalActions">
-        <button class="btn" id="btnContinue" disabled>➡️ Dalej</button>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="logo">🛡️</div>
+      <div>
+        <h1 id="headerTitle">Bezpieczeństwo w sieci — aktywny uczeń</h1>
+        <div class="sub">Punkty • odznaki • misje • decyzje</div>
       </div>
     </div>
-  </div>
+    <div class="topBtns">
+      <button class="btn" id="resetAll">⟲ Reset gry</button>
+      <button class="btn" id="fullscreenBtn">⛶ Pełny ekran</button>
+    </div>
+  </header>
 
-  <script>
-    const AI_PAGE = "ai.html";
+  <section class="scoreBar">
+    <div class="pill">⭐ Punkty: <span id="points">0</span></div>
+    <div class="pill">🏅 Odznaki: <span id="badgesCount">0</span></div>
+    <div class="pill">🎯 Ukończone misje: <span id="missionsCount">0</span>/6</div>
+  </section>
 
-    const slides = [
-      {
-        kicker: "ZASADA LEKCJI",
-        title: "STOP — POMYŚL — ZAPYTAJ DOROSŁEGO",
-        subtitle: "W sieci działamy spokojnie. Gdy coś jest dziwne, nie klikam i proszę dorosłego o pomoc.",
-        emoji: "🛑",
-        leftTitle: "Zapamiętaj",
-        bullets: [
-          "Gdy ktoś prosi o dane — mówię: „Nie”.",
-          "Gdy coś straszy lub obiecuje nagrodę — zamykam.",
-          "Gdy ktoś jest niemiły — nie odpisuję, blokuję, mówię dorosłemu."
-        ],
-        rightTitle: "Trzy kroki",
-        rule: "1) STOP  2) POMYŚL  3) ZAPYTAJ DOROSŁEGO",
-        chip: { text: "To działa zawsze", type: "ok" }
-      },
-      {
-        kicker: "ASPEKT 1",
-        title: "Dane osobowe = skarb",
-        subtitle: "To informacje, po których ktoś może cię rozpoznać albo odnaleźć.",
-        emoji: "🧾",
-        leftTitle: "Czego nie podajemy?",
-        bullets: [
-          "Imienia i nazwiska razem ze szkołą lub klasą.",
-          "Adresu domu i numeru telefonu.",
-          "Lokalizacji: gdzie jestem albo dokąd idę.",
-          "Zdjęć dokumentów i kart."
-        ],
-        rightTitle: "Bezpieczna myśl",
-        rule: "„Jeśli po tym można mnie znaleźć — tego nie podaję.”",
-        chip: { text: "Chronię swoje dane", type: "warn" }
-      },
-      {
-        kicker: "ASPEKT 2",
-        title: "Hasła = sekret jak klucz",
-        subtitle: "Hasło chroni konto tak jak klucz chroni dom.",
-        emoji: "🔐",
-        leftTitle: "Zasady haseł",
-        bullets: [
-          "Hasło jest tajne — nie podaję go nikomu.",
-          "Dłuższe hasło jest zwykle lepsze.",
-          "Gdy ktoś prosi o hasło — od razu mówię dorosłemu."
-        ],
-        rightTitle: "Przykład",
-        rule: "„LubięKoty!Mam3Klocki” — długie i łatwiejsze do zapamiętania.",
-        chip: { text: "Hasło to klucz", type: "ok" }
-      },
-      {
-        kicker: "ASPEKT 3",
-        title: "Nieznajomi w internecie",
-        subtitle: "W sieci ktoś może udawać inną osobę, dlatego trzeba uważać.",
-        emoji: "🧑‍🦱❓",
-        leftTitle: "Co robię?",
-        bullets: [
-          "Nie podaję danych i nie przechodzę na prywatne rozmowy.",
-          "Nie wysyłam zdjęć obcym osobom.",
-          "Nie umawiam się na spotkania.",
-          "Gdy coś jest dziwne — proszę dorosłego o pomoc."
-        ],
-        rightTitle: "Proste zdanie",
-        rule: "„Nie rozmawiam z obcymi o prywatnych sprawach.”",
-        chip: { text: "Uważam na nieznajomych", type: "warn" }
-      },
-      {
-        kicker: "ASPEKT 4",
-        title: "Podejrzane linki i reklamy",
-        subtitle: "Nagroda, pośpiech i straszenie to częste znaki ostrzegawcze.",
-        emoji: "🖱️",
-        leftTitle: "Trzy sygnały alarmowe",
-        bullets: [
-          "„Wygrałeś coś za darmo!”",
-          "„Kliknij natychmiast!”",
-          "„Twoje konto będzie zablokowane!”"
-        ],
-        rightTitle: "Co robię?",
-        rule: "Zamykam okno. Nie klikam. Pytam dorosłego.",
-        chip: { text: "Nie klikam w pułapki", type: "bad" }
-      },
-      {
-        kicker: "ASPEKT 5",
-        title: "Miłe i niemiłe zachowania",
-        subtitle: "W sieci obowiązuje ta sama kultura co w klasie.",
-        emoji: "💬",
-        leftTitle: "Netykieta",
-        bullets: [
-          "Piszę z szacunkiem.",
-          "Nie obrażam i nie wyśmiewam.",
-          "Pomagam, gdy ktoś potrzebuje wsparcia."
-        ],
-        rightTitle: "Gdy ktoś jest niemiły",
-        rule: "Nie odpisuję • robię screen • blokuję • mówię dorosłemu",
-        chip: { text: "To nie twoja wina", type: "warn" }
-      },
-      {
-        kicker: "ASPEKT 6",
-        title: "Zdjęcia i zgoda",
-        subtitle: "Zdjęcia też są częścią prywatności. Najpierw pytam.",
-        emoji: "📷",
-        leftTitle: "Zasady zdjęć",
-        bullets: [
-          "Nie wrzucam zdjęć innych bez pytania.",
-          "Nie wysyłam kompromitujących zdjęć.",
-          "Pamiętam: raz opublikowane może krążyć dalej."
-        ],
-        rightTitle: "Proste zdanie",
-        rule: "„Najpierw pytam: czy mogę?”",
-        chip: { text: "Szanuję innych", type: "ok" }
-      },
-      {
-        kicker: "ASPEKT 7",
-        title: "Czas ekranowy i przerwy",
-        subtitle: "Bezpieczeństwo to też dbanie o oczy, sen i samopoczucie.",
-        emoji: "⏳",
-        leftTitle: "Małe zasady",
-        bullets: [
-          "Robię krótkie przerwy i ruszam się.",
-          "Patrzę przez chwilę daleko, żeby odpoczęły oczy.",
-          "Przed snem ograniczam ekran.",
-          "Gdy jestem zmęczony lub zły — odkładam telefon."
-        ],
-        rightTitle: "Mini-rytuał",
-        rule: "Wstań • przeciągnij się • 10 spokojnych oddechów",
-        chip: { text: "Dbam o zdrowie", type: "ok" }
-      },
-      {
-        kicker: "BONUS 1",
-        title: "Detektyw emocji po sieci",
-        subtitle: "Po internecie też można czuć radość, złość albo smutek. To ważna wskazówka.",
-        emoji: "🕵️‍♂️",
-        leftTitle: "Mini-gra",
-        bullets: [
-          "Pokaż palcami: 😊 😐 😟 😡",
-          "Jeśli czuję 😟 albo 😡 — robię przerwę.",
-          "Gdy coś mnie przytłacza — mówię dorosłemu."
-        ],
-        rightTitle: "Zasada",
-        rule: "„Gdy po sieci czuję się gorzej — robię przerwę i szukam wsparcia.”",
-        chip: { text: "Dbam o siebie", type: "ok" }
-      },
-      {
-  "kicker": "BONUS 2",
-  "title": "Zdanie STOP: kto prosi o dane?",
-  "subtitle": "Ćwiczymy rozpoznawanie próśb o dane. Gdy ktoś prosi o prywatne informacje — zatrzymuję się.",
-  "emoji": "🛑",
-  "leftTitle": "Gra na gesty 👍 = OK / 👎 = NIE OK",
-  "bullets": [
-    "Podaj swój numer telefonu, to wyślę ci nagrodę.",
-    "Napisz, gdzie mieszkasz, to dostarczymy prezent.",
-    "Wyślij swoje hasło, żebym mógł ci pomóc w grze.",
-    "Podaj imię, nazwisko i szkołę, do której chodzisz.",
-    "Prześlij zdjęcie swojej legitymacji albo karty ucznia.",
-    "Napisz, o której wracasz dziś do domu.",
-    "Podaj numer telefonu mamy albo taty, żebym się z nimi skontaktował."
-  ],
-  "rightTitle": "Przykład zdania",
-  "rule": "„Podaj numer telefonu / adres / hasło” → STOP!",
-  "chip": { "text": "Nie podaję danych", "type": "warn" }
-},
-      {
-        kicker: "BONUS 3",
-        title: "Foto-decyzje: wrzucasz czy pytasz?",
-        subtitle: "Uwaga, zdjęcia raz wrzucone do sieci zostają tam na bardzo długo.",
-        emoji: "📸",
-        leftTitle: "Jak gramy?",
-        bullets: [
-          "->Nasze gesty",
-          "👍 = OK",
-		  "👎 = NIE OK",
-		  "✋ = najpierw pytam.",
-          "Liczy się decyzja i dobre uzasadnienie.",
-         "<span style='color:#fbbf24; font-weight:900;'>Najważniejsze pytanie: czy była zgoda?</span>"
+  <main class="stage"><section class="slide" id="slide"></section></main>
 
-        ],
-        rightTitle: "Zasada klasy 4",
-        rule: "„Nie publikuję zdjęcia innej osoby bez jej zgody.”",
-        chip: { text: "Najpierw pytam", type: "ok" }
-      },
-      {
-        kicker: "BONUS 4",
-        title: "Gra „Hasło czy bajka?”",
-        subtitle: "Szybki test: rozpoznaj dobrą radę i internetową pułapkę.",
-        emoji: "🎲",
-        leftTitle: "Jak gramy?",
-        bullets: [
-          "👍 = dobra rada",
-          "👎 = zły pomysł lub pułapka",
-          "✋ = nie jestem pewny, pytam dorosłego"
-        ],
-        rightTitle: "Przykłady",
-        rule: "„Podaj hasło” ❌  •  „Ustaw prywatność” ✅  •  „Kliknij szybko!” ❌",
-        chip: { text: "Ćwiczę refleks", type: "ok" }
-      },
-      {
-        kicker: "BONUS 4 — TELETURNIEJ",
-        title: "Teleturniej: Kto bezpieczniejszy? (A vs B)",
-        subtitle: "Dwie drużyny, 10 haseł i punkt za dobrą decyzję.",
-        emoji: "📺",
-        leftTitle: "Zasady gry",
-        bullets: [
-          "Dzielimy klasę na Drużynę A i Drużynę B.",
-          "Po każdym haśle drużyny pokazują: 👍 / 👎 / ✋.",
-          "Punkt dostaje drużyna, która zareaguje dobrze i szybko.",
-          "Wygrywa drużyna z większą liczbą punktów."
-        ],
-        isGameShow: true
-      },
-      {
-        kicker: "BONUS 5",
-        title: "Misja SUPERBOHATERA: 3 ruchy obrony",
-        subtitle: "Gdy w sieci dzieje się coś złego, działamy według prostego planu.",
-        emoji: "🦸",
-        leftTitle: "Trzy ruchy",
-        bullets: [
-          "1) TARCZA 🛡️ — robię STOP",
-          "2) KROK W TYŁ 👣 — zamykam lub wychodzę",
-          "3) SYGNAŁ 📢 — mówię dorosłemu"
-        ],
-        rightTitle: "Hasło drużyny",
-        rule: "„TARCZA — KROK W TYŁ — SYGNAŁ!”",
-        chip: { text: "Mam plan działania", type: "ok" }
-      },
-      {
-        kicker: "FINAŁ",
-        title: "Kodeks Bezpiecznego Internauty",
-        subtitle: "Powtórzmy najważniejsze zasady na koniec lekcji.",
-        emoji: "⭐",
-        leftTitle: "Nasze zasady",
-        bullets: [
-          "Nie podaję danych i haseł.",
-          "Nie klikam podejrzanych linków.",
-          "Nie rozmawiam z obcymi o prywatnych sprawach.",
-          "Gdy ktoś jest niemiły — blokuję i mówię dorosłemu.",
-          "Pytam o zgodę na zdjęcia.",
-          "Robię przerwy od ekranu."
-        ],
-        rightTitle: "Hasło na wyjście",
-        rule: "STOP — POMYŚL — ZAPYTAJ DOROSŁEGO",
-        chip: { text: "Brawo! 👏", type: "ok" }
+  <footer>
+    <div class="nav">
+      <button class="btn" id="prev">← Wstecz</button>
+      <button class="btn" id="next">Dalej →</button>
+    </div>
+    <div class="dots" id="dots"></div>
+    <div class="hint">Tu dziecko może się wykazać: wyborem, uzasadnieniem, pamięcią i refleksem.</div>
+  </footer>
+</div>
+<script>
+const slides = [
+  {
+    kicker:'START', title:'Misja: zostań Cyberbohaterem', emoji:'🦸',
+    subtitle:'Na każdej planszy uczeń coś robi: wybiera, zgaduje, reaguje albo zdobywa odznakę.',
+    leftTitle:'Jak zdobywasz punkty?', bullets:['Dobra decyzja = +1 punkt','Ukończona misja = +1 punkt','Nowa odznaka = powód do dumy'],
+    type:'intro'
+  },
+  {
+    kicker:'MISJA 1', title:'Dane osobowe', emoji:'🧾',
+    subtitle:'Wskaż, czego NIE powinno się podawać obcej osobie w sieci.',
+    leftTitle:'Szybka podpowiedź', bullets:['Adres domu','Numer telefonu','Hasło','Szkoła i klasa'],
+    type:'choices', badge:'Strażnik Danych',
+    question:'Która odpowiedź jest najlepsza?',
+    options:[
+      {text:'Podam adres, jeśli ktoś obieca prezent.', correct:false, explain:'Nie. Adres to dana osobowa.'},
+      {text:'Nie podam adresu ani telefonu.', correct:true, explain:'Tak. Dane osobowe chronimy.'},
+      {text:'Podam hasło, jeśli ktoś napisze miło.', correct:false, explain:'Nie. Hasło jest tajne.'}
+    ]
+  },
+  {
+    kicker:'MISJA 2', title:'Podejrzany link', emoji:'🖱️',
+    subtitle:'Tu liczy się refleks i myślenie. Wybierz najlepszą reakcję.',
+    leftTitle:'Sygnały alarmowe', bullets:['„Kliknij szybko!”','„Wygrałeś nagrodę!”','„Konto zaraz zniknie!”'],
+    type:'choices', badge:'Łowca Pułapek',
+    question:'Dostajesz komunikat: „Kliknij teraz i odbierz nagrodę!”. Co robisz?',
+    options:[
+      {text:'Klikam, bo może naprawdę wygrałem.', correct:false, explain:'To częsta pułapka.'},
+      {text:'Zamykam i pytam dorosłego.', correct:true, explain:'Brawo. Najpierw bezpieczeństwo.'},
+      {text:'Wysyłam dalej kolegom.', correct:false, explain:'Nie. Nie rozsyłamy pułapek.'}
+    ]
+  },
+  {
+    kicker:'MISJA 3', title:'Jak odpowiesz?', emoji:'💬',
+    subtitle:'Uczeń może się wykazać dobrą reakcją na trudną sytuację.',
+    leftTitle:'Scenka', bullets:['Ktoś obcy prosi o zdjęcie','Ktoś chce numer telefonu','Ktoś pisze niemiło'],
+    type:'mission', badge:'Mistrz Reakcji'
+  },
+  {
+    kicker:'MISJA 4', title:'Memory bezpieczeństwa', emoji:'🧠',
+    subtitle:'Połącz w pary zasadę i działanie.',
+    leftTitle:'Znajdź pary', bullets:['Hasło ↔ nie podaję','Zdjęcie ↔ pytam o zgodę','Strach ↔ mówię dorosłemu','Złość ↔ robię przerwę'],
+    type:'memory', badge:'Mistrz Pamięci'
+  },
+  {
+    kicker:'MISJA 5', title:'Prawda czy pułapka?', emoji:'🎲',
+    subtitle:'Tu dziecko pokazuje, że potrafi odróżnić dobrą radę od złej.',
+    leftTitle:'Zagadka', bullets:['Jedna odpowiedź jest dobra','Dwie to internetowe pułapki'],
+    type:'choices', badge:'Detektyw Sieci',
+    question:'Które zdanie jest najlepszą radą?',
+    options:[
+      {text:'Podaj hasło najlepszemu koledze.', correct:false, explain:'Nie. Hasło jest tajne.'},
+      {text:'Gdy nie wiesz, pytaj dorosłego.', correct:true, explain:'Tak. To bardzo dobra zasada.'},
+      {text:'Klikaj szybko, żeby nie stracić okazji.', correct:false, explain:'Nie. Pośpiech to znak pułapki.'}
+    ]
+  },
+  {
+    kicker:'MISJA 6', title:'Odznaka eksperta', emoji:'🏅',
+    subtitle:'Uczeń dostaje krótkie zagadki na myślenie i może sam podać odpowiedź ustnie.',
+    leftTitle:'Pytania dla eksperta', bullets:['Co zrobisz, gdy ktoś obcy chce twoje hasło?','Dlaczego trzeba pytać o zgodę na zdjęcie?','Co jest lepsze: szybkie kliknięcie czy spokojne myślenie?'],
+    type:'expert', badge:'Ekspert Bezpieczeństwa'
+  },
+  {
+    kicker:'FINAŁ', title:'Wynik Cyberbohatera', emoji:'⭐',
+    subtitle:'Na końcu uczeń widzi swój wynik i odznaki. Można zrobić klasowe podsumowanie.',
+    leftTitle:'Kodeks końcowy', bullets:['STOP','POMYŚL','ZAPYTAJ DOROSŁEGO'],
+    type:'summary'
+  }
+];
+
+let idx = 0;
+let points = 0;
+let badges = [];
+let missionsDone = new Set();
+let answered = {};
+let memoryState = { open: [], matched: [] };
+
+const slideEl = document.getElementById('slide');
+const pointsEl = document.getElementById('points');
+const badgesCountEl = document.getElementById('badgesCount');
+const missionsCountEl = document.getElementById('missionsCount');
+const dotsEl = document.getElementById('dots');
+
+function updateTop(){
+  pointsEl.textContent = points;
+  badgesCountEl.textContent = badges.length;
+  missionsCountEl.textContent = missionsDone.size;
+}
+function addPoint(n=1){ points += n; updateTop(); }
+function addBadge(name){ if(!badges.includes(name)){ badges.push(name); addPoint(1); updateTop(); } }
+function markMission(i){ if(!missionsDone.has(i)){ missionsDone.add(i); addPoint(1); updateTop(); } }
+function escapeHtml(s){ return s.replace(/[&<>\"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m])); }
+
+function renderDots(){
+  dotsEl.innerHTML='';
+  slides.forEach((_,i)=>{
+    const d=document.createElement('div'); d.className='dot'+(i===idx?' active':''); d.onclick=()=>{idx=i;render()}; dotsEl.appendChild(d);
+  });
+}
+
+function badgeList(){
+  return badges.length ? `<div class="badgeWrap">${badges.map(b=>`<span class="badge">🏅 ${b}</span>`).join('')}</div>` : `<div class="badgeWrap"><span class="badge">Jeszcze bez odznaki — zaraz coś zdobędziesz!</span></div>`;
+}
+
+function renderChoices(slide, i){
+  return `
+    <div class="card">
+      <h3><span class="emoji">🤔</span>${slide.question}</h3>
+      <div class="choices">
+        ${slide.options.map((o,oi)=>`<button class="choice ${answered[i] ? 'done':''}" data-opt="${oi}" ${answered[i] ? 'disabled':''}>${o.text}</button>`).join('')}
+      </div>
+      <div class="feedback" id="feedbackBox"></div>
+      <div class="badgeWrap"><span class="badge">Pokaż, że umiesz wybrać najlepiej</span></div>
+    </div>`;
+}
+
+function renderMission(){
+  return `
+  <div class="card">
+    <h3><span class="emoji">🎭</span>Wybierz najlepszą odpowiedź</h3>
+    <div class="missionBox">
+      <div class="missionStatus">Sytuacja: obca osoba pisze: „Wyślij numer telefonu i zdjęcie”.</div>
+      <div class="missionBtns">
+        <button class="missionBtn" data-m="0">„Dobrze, już wysyłam.”</button>
+        <button class="missionBtn" data-m="1">„Nie podaję takich rzeczy.”</button>
+        <button class="missionBtn" data-m="2">„Zapytam dorosłego i nic nie wyślę.”</button>
+      </div>
+      <div class="feedback" id="missionFeedback"></div>
+      <div class="badgeWrap"><span class="badge">Tu uczeń może uzasadnić swoją decyzję ustnie</span></div>
+    </div>
+  </div>`;
+}
+
+const memoryCards = [
+  {id:'haslo', text:'Hasło'}, {id:'haslo', text:'nie podaję'},
+  {id:'zdjecie', text:'Zdjęcie'}, {id:'zdjecie', text:'pytam o zgodę'},
+  {id:'strach', text:'Strach'}, {id:'strach', text:'mówię dorosłemu'},
+  {id:'zlosc', text:'Złość'}, {id:'zlosc', text:'robię przerwę'}
+];
+let shuffledMemory = [...memoryCards].sort(()=>Math.random()-0.5);
+
+function renderMemory(){
+  return `
+  <div class="card">
+    <h3><span class="emoji">🧠</span>Znajdź pary</h3>
+    <div class="memoryGrid">
+      ${shuffledMemory.map((c,idxCard)=>{
+        const revealed = memoryState.open.includes(idxCard) || memoryState.matched.includes(idxCard);
+        const matched = memoryState.matched.includes(idxCard);
+        return `<button class="memoryCard ${revealed?'revealed':''} ${matched?'matched':''}" data-card="${idxCard}" ${matched?'disabled':''}>${revealed ? c.text : '❓'}</button>`;
+      }).join('')}
+    </div>
+    <div class="feedback warn" style="display:block;margin-top:12px">Po znalezieniu wszystkich par uczeń zdobywa odznakę.</div>
+  </div>`;
+}
+
+function renderExpert(){
+  const riddles = [
+    'Co jest cenniejsze niż nagroda z reklamy i nie powinno trafić do obcych?',
+    'Jakie jedno słowo powinno się pojawić przed wrzuceniem czyjegoś zdjęcia?',
+    'Kto częściej wygrywa z pułapką: ten, kto klika szybko, czy ten, kto myśli spokojnie?'
+  ];
+  return `
+  <div class="card">
+    <h3><span class="emoji">🧩</span>Zagadki na myślenie</h3>
+    <ul class="bullets">${riddles.map(r=>`<li>${r}</li>`).join('')}</ul>
+    <div class="badgeWrap"><span class="badge">Uczeń odpowiada ustnie i klasa ocenia 👍</span></div>
+    <button class="btn" id="expertDone">Przyznaj odznakę eksperta</button>
+  </div>`;
+}
+
+function renderSummary(){
+  const title = points >= 10 ? 'Super Cyberbohater!' : points >= 6 ? 'Dobry Strażnik Sieci!' : 'Młody Odkrywca Bezpieczeństwa!';
+  return `
+  <div class="card">
+    <h3><span class="emoji">🏁</span>${title}</h3>
+    <div class="bullets" style="padding-left:20px">
+      <li>Zdobyte punkty: ${points}</li>
+      <li>Odznaki: ${badges.length}</li>
+      <li>Ukończone misje: ${missionsDone.size}/6</li>
+    </div>
+    ${badgeList()}
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="goAi">➡️ Przejdź do strony AI</button>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const s = slides[idx];
+  document.getElementById('headerTitle').textContent = `Bezpieczeństwo w sieci — slajd ${idx+1}/${slides.length}`;
+
+  let right = '';
+  if(s.type==='intro') right = `<div class="card"><h3><span class="emoji">🎯</span>Co tu działa?</h3><ul class="bullets"><li>Uczeń wybiera odpowiedź</li><li>Zdobywa punkty i odznaki</li><li>Może uzasadnić decyzję przed klasą</li></ul>${badgeList()}</div>`;
+  if(s.type==='choices') right = renderChoices(s, idx);
+  if(s.type==='mission') right = renderMission();
+  if(s.type==='memory') right = renderMemory();
+  if(s.type==='expert') right = renderExpert();
+  if(s.type==='summary') right = renderSummary();
+
+  slideEl.innerHTML = `
+    <div class="kicker">${s.kicker}</div>
+    <h2 class="bigTitle">${s.emoji} ${s.title}</h2>
+    <p class="subtitle">${s.subtitle}</p>
+    <div class="content">
+      <div class="card">
+        <h3><span class="emoji">${s.emoji}</span>${s.leftTitle}</h3>
+        <ul class="bullets">${s.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+      </div>
+      ${right}
+    </div>`;
+
+  document.getElementById('prev').disabled = idx===0;
+  document.getElementById('next').disabled = idx===slides.length-1;
+  renderDots();
+  bindInteractions();
+}
+
+function bindInteractions(){
+  const s = slides[idx];
+  if(s.type==='choices'){
+    slideEl.querySelectorAll('.choice').forEach(btn=>btn.addEventListener('click', e=>{
+      if(answered[idx]) return;
+      const opt = s.options[Number(e.currentTarget.dataset.opt)];
+      const fb = document.getElementById('feedbackBox');
+      answered[idx] = true;
+      if(opt.correct){
+        fb.className='feedback good'; fb.style.display='block'; fb.innerHTML=`✅ ${opt.explain}`;
+        addBadge(s.badge); markMission(idx);
+      } else {
+        fb.className='feedback bad'; fb.style.display='block'; fb.innerHTML=`❌ ${opt.explain}`;
       }
-    ];
-
-    const quiz = {
-      1:  { q: "Czy wolno podawać w grze swój adres domu?", a: "N", explain: "Nie. Adres to dana osobowa i trzeba go chronić." },
-      2:  { q: "Czy mogę podać koledze swoje hasło, bo mu ufam?", a: "N", explain: "Nie. Hasło jest tajne i nie podajemy go nikomu." },
-      3:  { q: "Czy w internecie każdy jest na pewno tym, za kogo się podaje?", a: "N", explain: "Nie. Ktoś może udawać, dlatego trzeba uważać." },
-      4:  { q: "Czy warto kliknąć reklamę „Wygrałeś! Kliknij szybko!”?", a: "N", explain: "Nie. To częsta pułapka." },
-      5:  { q: "Gdy ktoś jest niemiły w sieci, najlepiej się z nim pokłócić?", a: "N", explain: "Nie. Lepiej nie odpisywać, tylko zablokować i powiedzieć dorosłemu." },
-      6:  { q: "Czy mogę wrzucić zdjęcie kolegi bez pytania, jeśli jest śmieszne?", a: "N", explain: "Nie. Zawsze pytamy o zgodę." },
-      7:  { q: "Czy przerwy od ekranu pomagają oczom i głowie?", a: "T", explain: "Tak. Przerwy są ważne dla zdrowia." },
-      8:  { q: "Gdy po internecie czuję złość lub smutek, warto zrobić przerwę?", a: "T", explain: "Tak. Emocje to sygnał, że warto odpocząć i porozmawiać." },
-      9:  { q: "Czy mogę podać numer telefonu, jeśli ktoś obieca prezent?", a: "N", explain: "Nie. Numer telefonu to dana osobowa." },
-      10: { q: "Czy przed wrzuceniem czyjegoś zdjęcia trzeba mieć zgodę?", a: "T", explain: "Tak. To kwestia prywatności i szacunku." },
-      11: { q: "Czy gdy nie jestem pewny, mogę wybrać: „Pytam dorosłego”?", a: "T", explain: "Tak. To bardzo dobra decyzja." },
-      12: { q: "Czy plan superbohatera to: STOP → wyjdź → powiedz dorosłemu?", a: "T", explain: "Tak. To prosty i bezpieczny plan działania." }
-    };
-
-    let idx = 0;
-    const slideEl = document.getElementById('slide');
-    const dotsEl = document.getElementById('dots');
-    const headerTitle = document.getElementById('headerTitle');
-    const headerSub = document.getElementById('headerSub');
-
-    const quizOverlay = document.getElementById('quizOverlay');
-    const qMeta = document.getElementById('qMeta');
-    const qKicker = document.getElementById('qKicker');
-    const qText = document.getElementById('qText');
-    const btnYes = document.getElementById('btnYes');
-    const btnNo = document.getElementById('btnNo');
-    const feedback = document.getElementById('feedback');
-    const fbEmoji = document.getElementById('fbEmoji');
-    const fbStrong = document.getElementById('fbStrong');
-    const fbExplain = document.getElementById('fbExplain');
-    const btnContinue = document.getElementById('btnContinue');
-
-    let pendingNext = null;
-    let quizOpen = false;
-
-    function chipClass(type){
-      if(type === "ok") return "chip ok";
-      if(type === "warn") return "chip warn";
-      if(type === "bad") return "chip bad";
-      return "chip";
-    }
-
-    function renderDots(){
-      dotsEl.innerHTML = "";
-      slides.forEach((_, i) => {
-        const d = document.createElement('div');
-        d.className = "dot" + (i === idx ? " active" : "");
-        d.title = `Slajd ${i+1}`;
-        d.addEventListener('click', () => go(i, {fromDot:true}));
-        dotsEl.appendChild(d);
-      });
-    }
-
-    function miniQuestion(i){
-      const qs = [
-        "Co robisz, gdy coś wydaje się dziwne w internecie?",
-        "Czy adres domu to dana osobowa?",
-        "Czy hasło można komuś podać?",
-        "Co robisz, gdy pisze obca osoba?",
-        "Jakie są znaki ostrzegawcze reklam?",
-        "Co robisz, gdy ktoś jest niemiły?",
-        "Czy zawsze pytamy o zgodę na zdjęcia?",
-        "Co pomaga w przerwach od ekranu?",
-        "Co robisz, gdy po sieci czujesz złość albo smutek?",
-        "Jak reagujesz na prośbę o numer telefonu lub adres?",
-        "Jaka jest najważniejsza zasada przy zdjęciach?",
-        "Jak rozpoznasz dobrą radę i pułapkę?",
-        "W teleturnieju: za co przyznajemy punkt?",
-        "Pokaż ruch „TARCZA” i powiedz, co oznacza.",
-        "Powiedz jedną zasadę z kodeksu."
-      ];
-      return qs[i] || "Powiedz jedną ważną zasadę bezpieczeństwa w sieci.";
-    }
-
-    let gameState = { a: 0, b: 0, played: Array(10).fill(false) };
-    const gamePhrases = [
-      { text: "Podaj hasło do gry — dam ci prezent", tag: "❓" },
-      { text: "Nie wiem → pytam dorosłego", tag: "❓" },
-      { text: "Kliknij szybko! Wygrałeś!", tag: "❓" },
-      { text: "Ustaw prywatność konta", tag: "❓" },
-      { text: "Wyślij adres, to dam nagrodę", tag: "❓" },
-      { text: "Zablokuj niemiłą osobę", tag: "❓" },
-      { text: "Wyślij zdjęcie obcej osobie", tag: "❓" },
-      { text: "Zrób przerwę, gdy czujesz złość", tag: "❓" },
-      { text: "Podaj numer telefonu na czacie", tag: "❓" },
-      { text: "Powiedz dorosłemu, gdy coś cię przestraszy", tag: "❓" }
-    ];
-    let lastAction = null;
-
-    function safeTag(p){
-      return (p && typeof p.tag === "string" && p.tag.trim().length) ? p.tag : "";
-    }
-
-    function mountGameShow(){
-      const mount = document.getElementById("gameShowMount");
-      if(!mount) return;
-
-      mount.innerHTML = `
-        <div class="gamePanel">
-          <div class="scoreBoard">
-            <div class="scoreCard">
-              <div class="scoreTitle">Drużyna A <span class="phraseTag">A</span></div>
-              <div class="scoreNum" id="scoreA">${gameState.a}</div>
-              <div class="scoreBtns">
-                <button class="scoreBtn" id="aPlus">A +1</button>
-              </div>
-              <div class="scoreHint">Punkt za szybką i poprawną decyzję</div>
-            </div>
-
-            <div class="scoreCard">
-              <div class="scoreTitle">Drużyna B <span class="phraseTag">B</span></div>
-              <div class="scoreNum" id="scoreB">${gameState.b}</div>
-              <div class="scoreBtns">
-                <button class="scoreBtn" id="bPlus">B +1</button>
-              </div>
-              <div class="scoreHint">Prowadzący przyznaje punkt kliknięciem</div>
-            </div>
-          </div>
-
-          <div class="scoreBtns">
-            <button class="scoreBtn smallBtn" id="undo">↩ Cofnij punkt</button>
-            <button class="scoreBtn smallBtn" id="reset">⟲ Reset</button>
-          </div>
-
-          <div class="phrasesBox">
-            <h4>🗣️ 10 haseł do przeczytania</h4>
-            <div class="phrasesGrid">
-              ${gamePhrases.map((p, i) => `
-                <label class="phraseItem">
-                  <input type="checkbox" ${gameState.played[i] ? "checked" : ""} data-i="${i}">
-                  <span class="phraseText">${i+1}) ${p.text}</span>
-                  ${safeTag(p) ? `<span class="phraseTag">${safeTag(p)}</span>` : ``}
-                </label>
-              `).join("")}
-            </div>
-          </div>
-        </div>
-      `;
-
-      const scoreA = mount.querySelector("#scoreA");
-      const scoreB = mount.querySelector("#scoreB");
-      const updateScores = () => { scoreA.textContent = gameState.a; scoreB.textContent = gameState.b; };
-
-      mount.querySelector("#aPlus").addEventListener("click", () => { gameState.a += 1; lastAction = "a"; updateScores(); });
-      mount.querySelector("#bPlus").addEventListener("click", () => { gameState.b += 1; lastAction = "b"; updateScores(); });
-
-      mount.querySelector("#undo").addEventListener("click", () => {
-        if(lastAction === "a" && gameState.a > 0) gameState.a -= 1;
-        if(lastAction === "b" && gameState.b > 0) gameState.b -= 1;
-        lastAction = null;
-        updateScores();
-      });
-
-      mount.querySelector("#reset").addEventListener("click", () => {
-        gameState = { a: 0, b: 0, played: Array(10).fill(false) };
-        lastAction = null;
-        mountGameShow();
-      });
-
-      mount.querySelectorAll('input[type="checkbox"][data-i]').forEach(cb => {
-        cb.addEventListener("change", (e) => {
-          const i = Number(e.target.getAttribute("data-i"));
-          gameState.played[i] = e.target.checked;
-        });
-      });
-    }
-
-    function render(){
-      const s = slides[idx];
-      headerTitle.textContent = `Bezpieczeństwo w sieci — slajd ${idx+1}/${slides.length}`;
-      headerSub.textContent = s.title;
-
-      slideEl.classList.remove('fade');
-      void slideEl.offsetWidth;
-      slideEl.classList.add('fade');
-
-      const isLast = (idx === slides.length - 1);
-
-      const endButton = isLast ? `
-        <div class="endActions">
-          <button class="btn" id="goAi">➡️ Przejdź do AI (ai.html)</button>
-        </div>
-      ` : ``;
-
-      const rightColumn = s.isGameShow ? `
-        <div class="ruleBox">
-          <div id="gameShowMount" class="card"></div>
-        </div>
-      ` : `
-        <div class="ruleBox">
-          <div class="card">
-            <h3><span class="emoji" aria-hidden="true">🧠</span>${s.rightTitle}</h3>
-            <div class="rule">${s.rule}</div>
-            <span class="${chipClass(s.chip.type)}">${s.chip.text}</span>
-          </div>
-
-          <div class="card">
-            <h3><span class="emoji" aria-hidden="true">🎯</span>Mini-pytanie do klasy</h3>
-            <div class="rule">${miniQuestion(idx)}</div>
-          </div>
-        </div>
-      `;
-
-      slideEl.innerHTML = `
-        <div class="kicker">${s.kicker}</div>
-        <h2 class="bigTitle">${s.emoji ? (s.emoji + " ") : ""}${s.title}</h2>
-        <p class="subtitle">${s.subtitle}</p>
-        ${endButton}
-
-        <div class="content">
-          <div class="card">
-            <h3><span class="emoji" aria-hidden="true">${s.emoji || "📌"}</span>${s.leftTitle}</h3>
-            <ul class="bullets">
-              ${s.bullets.map(b => `<li>${b}</li>`).join("")}
-            </ul>
-          </div>
-          ${rightColumn}
-        </div>
-      `;
-
-      renderDots();
-      updateNavButtons();
-
-      if (s.isGameShow) mountGameShow();
-
-      if (isLast) {
-        const btn = document.getElementById("goAi");
-        if (btn) btn.addEventListener("click", () => { window.location.href = AI_PAGE; });
-      }
-    }
-
-    function updateNavButtons(){
-      const prevBtn = document.getElementById('prev');
-      const nextBtn = document.getElementById('next');
-
-      prevBtn.disabled = (idx === 0);
-      nextBtn.disabled = (idx === slides.length - 1);
-
-      [prevBtn, nextBtn].forEach(b => {
-        if(b.disabled){
-          b.style.opacity = .55;
-          b.style.cursor = "not-allowed";
-        } else {
-          b.style.opacity = 1;
-          b.style.cursor = "pointer";
-        }
-      });
-    }
-
-    function go(i, opts={}){
-      idx = Math.max(0, Math.min(slides.length - 1, i));
       render();
-      if(opts.fromDot) closeQuiz();
-    }
-
-    function shouldQuizForSlide(slideIndex){
-      if(slideIndex === 0) return false;
-      if(slideIndex === slides.length - 1) return false;
-      return !!quiz[slideIndex];
-    }
-
-    function openQuizFor(slideIndex, onContinue){
-      const q = quiz[slideIndex];
-      if(!q){ onContinue?.(); return; }
-
-      quizOpen = true;
-      pendingNext = onContinue;
-
-      qMeta.textContent = `Pytanie do slajdu ${slideIndex+1}: ${slides[slideIndex].title}`;
-      qKicker.textContent = "QUIZ TAK / NIE";
-      qText.textContent = q.q;
-
-      feedback.style.display = "none";
-      btnContinue.disabled = true;
-
-      quizOverlay.style.display = "grid";
-      btnYes.focus();
-    }
-
-    function closeQuiz(){
-      quizOpen = false;
-      pendingNext = null;
-      quizOverlay.style.display = "none";
-    }
-
-    function answerQuiz(ans){
-      const q = quiz[idx];
-      if(!q) return;
-
-      const correct = (ans === q.a);
-      feedback.style.display = "flex";
-
-      if(correct){
-        fbEmoji.textContent = "✅";
-        fbStrong.textContent = "Dobrze!";
-        fbExplain.textContent = q.explain;
-      }else{
-        fbEmoji.textContent = "❗";
-        fbStrong.textContent = "Prawie — spróbujmy jeszcze raz.";
-        fbExplain.textContent = "Podpowiedź: przypomnij sobie zasadę z tego slajdu. " + q.explain;
+      const renderedFb = document.getElementById('feedbackBox');
+      if(renderedFb){ renderedFb.className = fb.className; renderedFb.style.display='block'; renderedFb.innerHTML = fb.innerHTML; }
+    }));
+  }
+  if(s.type==='mission'){
+    slideEl.querySelectorAll('.missionBtn').forEach(btn=>btn.addEventListener('click', e=>{
+      if(answered[idx]) return;
+      const v = Number(e.currentTarget.dataset.m);
+      const fb = document.getElementById('missionFeedback');
+      answered[idx] = true;
+      if(v===2){ fb.className='feedback good'; fb.innerHTML='✅ Najlepiej: nic nie wysyłać i zapytać dorosłego.'; addBadge(s.badge); markMission(idx); }
+      else if(v===1){ fb.className='feedback warn'; fb.innerHTML='🟡 To już całkiem dobrze, ale najlepiej jeszcze powiedzieć dorosłemu.'; addPoint(1); }
+      else { fb.className='feedback bad'; fb.innerHTML='❌ Nie wysyłamy takich danych obcym.'; }
+      fb.style.display='block';
+      slideEl.querySelectorAll('.missionBtn').forEach(b=>b.disabled=true);
+    }));
+  }
+  if(s.type==='memory'){
+    slideEl.querySelectorAll('.memoryCard').forEach(btn=>btn.addEventListener('click', e=>{
+      const i = Number(e.currentTarget.dataset.card);
+      if(memoryState.matched.includes(i) || memoryState.open.includes(i) || memoryState.open.length===2) return;
+      memoryState.open.push(i); render();
+      if(memoryState.open.length===2){
+        const [a,b] = memoryState.open;
+        if(shuffledMemory[a].id === shuffledMemory[b].id){
+          memoryState.matched.push(a,b); memoryState.open=[]; render();
+          if(memoryState.matched.length===shuffledMemory.length){ addBadge(slides[idx].badge); markMission(idx); }
+        } else {
+          setTimeout(()=>{ memoryState.open=[]; render(); }, 700);
+        }
       }
+    }));
+  }
+  if(s.type==='expert'){
+    const btn = document.getElementById('expertDone');
+    if(btn) btn.addEventListener('click', ()=>{ if(!answered[idx]){ answered[idx]=true; addBadge(s.badge); markMission(idx); btn.textContent='✅ Odznaka przyznana'; btn.disabled=true; } });
+  }
+  if(s.type==='summary'){
+    const goAi = document.getElementById('goAi');
+    if(goAi) goAi.addEventListener('click', ()=>{ window.location.href = 'ai.html'; });
+  }
+}
 
-      btnContinue.disabled = false;
-      btnContinue.focus();
-    }
-
-    btnYes.addEventListener('click', ()=>answerQuiz("T"));
-    btnNo.addEventListener('click', ()=>answerQuiz("N"));
-    btnContinue.addEventListener('click', ()=>{
-      const fn = pendingNext;
-      closeQuiz();
-      fn?.();
-    });
-
-    function next(){
-      if(idx >= slides.length - 1) return;
-      const target = idx + 1;
-
-      if(shouldQuizForSlide(idx) && !quizOpen){
-        openQuizFor(idx, ()=>go(target));
-        return;
-      }
-      go(target);
-    }
-
-    function prev(){
-      if(idx <= 0) return;
-      go(idx - 1);
-    }
-
-    document.getElementById('next').addEventListener('click', next);
-    document.getElementById('prev').addEventListener('click', prev);
-    document.getElementById('btnStart').addEventListener('click', () => { closeQuiz(); go(0); });
-
-    const fsBadge = document.getElementById('fsBadge');
-
-    function isFs(){ return !!document.fullscreenElement; }
-
-    async function toggleFs(){
-      if(!isFs()){
-        await document.documentElement.requestFullscreen?.();
-      }else{
-        await document.exitFullscreen?.();
-      }
-      updateFsUI();
-    }
-
-    function updateFsUI(){
-      const btn = document.getElementById('btnFs');
-      if(isFs()){
-        btn.textContent = "⛶ Wyjdź z pełnego ekranu";
-        fsBadge.style.display = "block";
-      }else{
-        btn.textContent = "⛶ Pełny ekran";
-        fsBadge.style.display = "none";
-      }
-    }
-
-    document.getElementById('btnFs').addEventListener('click', toggleFs);
-    document.addEventListener('fullscreenchange', updateFsUI);
-
-    document.addEventListener('keydown', (e) => {
-      if(quizOpen){
-        if(e.key === "Escape") closeQuiz();
-        if(e.key === "Enter" && !btnContinue.disabled) btnContinue.click();
-        if(e.key.toLowerCase() === "t") btnYes.click();
-        if(e.key.toLowerCase() === "n") btnNo.click();
-        return;
-      }
-
-      if(e.key === "ArrowRight") next();
-      if(e.key === "ArrowLeft") prev();
-      if(e.key.toLowerCase() === "f") toggleFs();
-      if(e.key === "Home") go(0);
-      if(e.key === "End") go(slides.length - 1);
-    });
-
-    let startX = null;
-    document.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
-    document.addEventListener('touchend', (e) => {
-      if(startX === null || quizOpen) return;
-      const endX = e.changedTouches[0].clientX;
-      const dx = endX - startX;
-      if(Math.abs(dx) > 60){
-        if(dx < 0) next();
-        else prev();
-      }
-      startX = null;
-    }, {passive:true});
-
-    quizOverlay.addEventListener('click', (e) => {
-      if(e.target === quizOverlay) closeQuiz();
-    });
-
-    render();
-    updateFsUI();
-  </script>
+document.getElementById('prev').onclick=()=>{ if(idx>0){ idx--; render(); } };
+document.getElementById('next').onclick=()=>{ if(idx<slides.length-1){ idx++; render(); } };
+document.getElementById('resetAll').onclick=()=>{
+  idx=0; points=0; badges=[]; missionsDone=new Set(); answered={}; memoryState={open:[], matched:[]}; shuffledMemory=[...memoryCards].sort(()=>Math.random()-0.5); updateTop(); render();
+};
+document.getElementById('fullscreenBtn').onclick=()=>{ if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); } else { document.exitFullscreen?.(); } };
+document.addEventListener('keydown', e=>{ if(e.key==='ArrowRight' && idx<slides.length-1){idx++;render()} if(e.key==='ArrowLeft'&&idx>0){idx--;render()} });
+updateTop(); render();
+</script>
 </body>
 </html>
