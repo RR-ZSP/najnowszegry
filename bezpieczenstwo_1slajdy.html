@@ -176,26 +176,255 @@
 
 <script>
 const scratchTasks = [
-  {title:'Animowane przywitanie', goal:'Sekwencja zdarzeń i prosta animacja.', blocks:['kiedy kliknięto zieloną flagę','powiedz … przez … sek.','czekaj … sek.','idź do x: y:','pokaż / ukryj'], show:'estetyką animacji i kolejnością działań'},
-  {title:'Duszek sterowany strzałkami', goal:'Sterowanie z klawiatury.', blocks:['zawsze','jeżeli … to','klawisz … naciśnięty?','zmień x o …','zmień y o …'], show:'płynnością sterowania'},
-  {title:'Odbijająca się piłka', goal:'Ruch automatyczny.', blocks:['idź … kroków','jeżeli na krawędzi, odbij się','ustaw kierunek na …','zawsze'], show:'dobraniem prędkości i kierunku'},
-  {title:'Labirynt', goal:'Wykrywanie koloru i cofanie po błędzie.', blocks:['dotyka koloru …?','jeżeli … to','idź do x: y:','sterowanie klawiszami','tło jako labirynt'], show:'pomysłowym układem planszy'},
-  {title:'Quiz z 5 pytaniami', goal:'Dane od użytkownika i warunki.', blocks:['zapytaj … i czekaj','odpowiedź','jeżeli … to / w przeciwnym razie','zmienna „punkty”'], show:'poprawnym liczeniem punktów'},
-  {title:'Kalkulator dodawania', goal:'Operacje na danych.', blocks:['zapytaj … i czekaj','zmienne','ustaw [zmienna] na …','operator +','powiedz …'], show:'poprawnym pobieraniem i wykorzystaniem danych'},
-  {title:'Losowanie liczby i zgadywanie', goal:'Losowość i pętla do skutku.', blocks:['ustaw [liczba] na losuj od … do …','powtarzaj aż','zapytaj … i czekaj','porównania =, <, >'], show:'logiką podpowiedzi „za mało / za dużo”'},
-  {title:'Licznik czasu 10 sekund', goal:'Pętla z licznikiem.', blocks:['zmienna „czas”','powtarzaj','zmień [czas] o -1','czekaj 1 sek.','jeżeli … to'], show:'czytelnym przebiegiem odliczania'},
-  {title:'Instrument muzyczny', goal:'Dźwięk i interakcja.', blocks:['kiedy klawisz … naciśnięty','zagraj dźwięk …','lub zagraj nutę … przez … taktów'], show:'doborem dźwięków i układem instrumentu'},
-  {title:'Taniec z przebieraniem', goal:'Kostiumy i rytm.', blocks:['następny kostium','powtarzaj','obrót o … stopni','czekaj … sek.','dźwięk lub muzyka'], show:'synchronizacją ruchów'},
-  {title:'Klikacz punktów', goal:'Obsługa myszy i punktacja.', blocks:['kiedy ten duszek kliknięty','zmienna „punkty”','zmień [punkty] o 1','idź do losowego położenia'], show:'dynamiką gry'},
-  {title:'Gra „łap spadające przedmioty”', goal:'Współpraca dwóch duszków i wykrywanie dotknięcia.', blocks:['dotyka [koszyk]?','powtarzaj aż','zmień y o …','idź do losowego położenia','zmienna „wynik”'], show:'działaniem gry i tempem rozgrywki'},
-  {title:'Historyjka z komunikatami', goal:'Współpraca między duszkami.', blocks:['nadaj komunikat …','kiedy otrzymam …','powiedz …','czekaj … sek.'], show:'dobrą synchronizacją scenki'},
-  {title:'Rysowanie figur', goal:'Użycie rozszerzenia Pisak.', blocks:['przyłóż pisak','podnieś pisak','powtórz','idź … kroków','obróć o … stopni'], show:'dokładnością rysunku'},
-  {title:'Symulator sygnalizacji świetlnej', goal:'Zmiany stanu i logika sekwencji.', blocks:['następne tło albo kostiumy','czekaj … sek.','zawsze','ukryj/pokaż'], show:'poprawną kolejnością sygnałów'},
-  {title:'Prosta gra z życiami', goal:'Kilka zmiennych i warunek przegranej.', blocks:['zmienna „życia”','jeżeli dotyka … to','zmień [życia] o -1','jeżeli [życia = 0] to','zatrzymaj wszystko'], show:'logiką zakończenia gry'},
-  {title:'Generator śmiesznych zdań', goal:'Listy lub losowanie z przygotowanych zestawów.', blocks:['listy lub zmienne','losuj od … do …','połącz … z …','powiedz …'], show:'kreatywnością i poprawnym łączeniem tekstu'},
-  {title:'Teleporty na planszy', goal:'Wiele warunków i koordynaty.', blocks:['jeżeli dotyka koloru … to','idź do x: y:','sterowanie klawiszami','zawsze'], show:'zaprojektowaniem działania teleportów'},
-  {title:'Reakcja na głośność lub mikrofon', goal:'Wykorzystanie czujników.', blocks:['głośność','jeżeli … to','zmień rozmiar o … lub zmień y o …'], show:'ciekawym wykorzystaniem wejścia z otoczenia'},
-  {title:'Mini-gra z poziomami', goal:'Przejście do kolejnego etapu.', blocks:['zmienna „poziom”','jeżeli [punkty > …] to','następne tło','zwiększanie szybkości / trudności'], show:'stworzeniem progresji w grze'}
+  {
+    title: "Animowane przywitanie",
+    goal: "Ćwiczenie sekwencji zdarzeń, kolejności poleceń i prostej animacji.",
+    blocks: [
+      "kiedy kliknięto zieloną flagę",
+      "powiedz … przez … sek.",
+      "czekaj … sek.",
+      "idź do x: y:",
+      "pokaż",
+      "ukryj"
+    ],
+    show: "estetyką animacji, poprawną kolejnością działań i pomysłowym przywitaniem",
+    description: "Utwórz krótką scenkę powitalną. Po kliknięciu zielonej flagi duszek ma pojawić się w wybranym miejscu na scenie, przywitać się z użytkownikiem, powiedzieć co najmniej 2–3 krótkie kwestie, odczekać chwilę, a następnie zniknąć. Możesz dodać zmianę położenia, aby wyglądało to bardziej jak animacja."
+  },
+  {
+    title: "Duszek sterowany strzałkami",
+    goal: "Ćwiczenie sterowania z klawiatury i reagowania programu na działania użytkownika.",
+    blocks: [
+      "zawsze",
+      "jeżeli … to",
+      "klawisz … naciśnięty?",
+      "zmień x o …",
+      "zmień y o …"
+    ],
+    show: "płynnością sterowania, poprawnym działaniem wszystkich kierunków i wygodą poruszania postacią",
+    description: "Stwórz postać, którą można poruszać po planszy za pomocą klawiszy strzałek. Po naciśnięciu strzałki w lewo duszek ma przesuwać się w lewo, po naciśnięciu strzałki w prawo — w prawo, po naciśnięciu strzałki w górę — do góry, a po naciśnięciu strzałki w dół — w dół."
+  },
+  {
+    title: "Odbijająca się piłka",
+    goal: "Ćwiczenie automatycznego ruchu obiektu i odbijania od krawędzi.",
+    blocks: [
+      "idź … kroków",
+      "jeżeli na krawędzi, odbij się",
+      "ustaw kierunek na …",
+      "zawsze"
+    ],
+    show: "dobraniem prędkości, kierunku ruchu i poprawnym odbijaniem piłki",
+    description: "Utwórz piłkę, która po uruchomieniu programu sama zaczyna się poruszać po ekranie. Gdy dotknie krawędzi sceny, ma się odbić i poruszać dalej. Dobierz taki kierunek i szybkość ruchu, aby animacja była czytelna."
+  },
+  {
+    title: "Labirynt",
+    goal: "Ćwiczenie wykrywania koloru, sterowania postacią i cofania po błędzie.",
+    blocks: [
+      "dotyka koloru …?",
+      "jeżeli … to",
+      "idź do x: y:",
+      "sterowanie klawiszami",
+      "tło jako labirynt"
+    ],
+    show: "pomysłowym układem planszy, działaniem labiryntu i czytelnym wyznaczeniem startu oraz mety",
+    description: "Przygotuj tło przedstawiające prosty labirynt. Następnie stwórz duszka, którego gracz będzie prowadził do mety za pomocą klawiszy. Jeśli duszek dotknie ściany labiryntu w określonym kolorze, powinien wrócić na start lub do ustalonego punktu."
+  },
+  {
+    title: "Quiz z 5 pytaniami",
+    goal: "Ćwiczenie pobierania danych od użytkownika, warunków i liczenia punktów.",
+    blocks: [
+      "zapytaj … i czekaj",
+      "odpowiedź",
+      "jeżeli … to / w przeciwnym razie",
+      "zmienna „punkty”"
+    ],
+    show: "poprawnym zadawaniem pytań, sprawdzaniem odpowiedzi i liczeniem punktów",
+    description: "Przygotuj quiz składający się z 5 pytań. Program ma zadawać pytania jedno po drugim, sprawdzać odpowiedzi użytkownika i przyznawać punkt za każdą poprawną odpowiedź. Na końcu quizu powinien wyświetlić wynik."
+  },
+  {
+    title: "Kalkulator dodawania",
+    goal: "Ćwiczenie pracy ze zmiennymi i wykonywania prostych obliczeń.",
+    blocks: [
+      "zapytaj … i czekaj",
+      "zmienne",
+      "ustaw [zmienna] na …",
+      "operator +",
+      "powiedz …"
+    ],
+    show: "poprawnym pobieraniem danych, zapisywaniem ich do zmiennych i obliczaniem sumy",
+    description: "Stwórz prosty kalkulator, który zapyta użytkownika o dwie liczby, zapisze je do zmiennych, doda je do siebie i wyświetli wynik na ekranie w formie komunikatu."
+  },
+  {
+    title: "Losowanie liczby i zgadywanie",
+    goal: "Ćwiczenie losowości, porównań i pętli działającej do skutku.",
+    blocks: [
+      "ustaw [liczba] na losuj od … do …",
+      "powtarzaj aż",
+      "zapytaj … i czekaj",
+      "porównania =, <, >"
+    ],
+    show: "logiką programu, poprawnym działaniem podpowiedzi „za mało / za dużo” i zakończeniem gry po trafieniu",
+    description: "Program ma wylosować liczbę od 1 do 20. Następnie użytkownik ma próbować ją odgadnąć. Po każdej błędnej odpowiedzi program powinien podpowiadać, czy podana liczba jest za mała, czy za duża. Gra trwa aż do momentu poprawnego odgadnięcia liczby."
+  },
+  {
+    title: "Licznik czasu 10 sekund",
+    goal: "Ćwiczenie pętli z licznikiem i pracy na zmiennej.",
+    blocks: [
+      "zmienna „czas”",
+      "powtarzaj",
+      "zmień [czas] o -1",
+      "czekaj 1 sek.",
+      "jeżeli … to"
+    ],
+    show: "czytelnym przebiegiem odliczania, poprawnym zmniejszaniem zmiennej i komunikatem końcowym",
+    description: "Stwórz program, który odlicza czas od 10 do 0. Co sekundę liczba ma się zmieniać, a po dojściu do zera powinien pojawić się komunikat końcowy, na przykład „Koniec czasu!”."
+  },
+  {
+    title: "Instrument muzyczny",
+    goal: "Ćwiczenie dźwięku i reakcji programu na naciśnięcie klawiszy.",
+    blocks: [
+      "kiedy klawisz … naciśnięty",
+      "zagraj dźwięk …",
+      "zagraj nutę … przez … taktów"
+    ],
+    show: "doborem dźwięków, pomysłowym układem instrumentu i poprawnym działaniem klawiszy",
+    description: "Stwórz prosty instrument muzyczny. Po naciśnięciu różnych klawiszy klawiatury mają odtwarzać się różne dźwięki lub nuty. Możesz przygotować kilka dźwięków, aby użytkownik mógł zagrać prostą melodię."
+  },
+  {
+    title: "Taniec z przebieraniem",
+    goal: "Ćwiczenie zmiany kostiumów, rytmu i prostego układu choreograficznego.",
+    blocks: [
+      "następny kostium",
+      "powtarzaj",
+      "obrót o … stopni",
+      "czekaj … sek.",
+      "dźwięk lub muzyka"
+    ],
+    show: "synchronizacją ruchów, płynnością animacji i dopasowaniem tańca do rytmu",
+    description: "Duszek ma wykonać krótki taniec. W czasie tańca powinien zmieniać kostiumy, obracać się lub poruszać, a całość może odbywać się przy muzyce lub dźwięku. Ruchy powinny tworzyć rytmiczny układ."
+  },
+  {
+    title: "Klikacz punktów",
+    goal: "Ćwiczenie obsługi myszy, punktacji i losowego ustawiania obiektu.",
+    blocks: [
+      "kiedy ten duszek kliknięty",
+      "zmienna „punkty”",
+      "zmień [punkty] o 1",
+      "idź do losowego położenia"
+    ],
+    show: "dynamiką gry, poprawnym liczeniem punktów i ciekawym tempem rozgrywki",
+    description: "Przygotuj grę, w której po kliknięciu duszka gracz zdobywa punkt. Po każdym kliknięciu duszek powinien pojawić się w innym, losowym miejscu na planszy, aby gra była bardziej dynamiczna."
+  },
+  {
+    title: "Gra „łap spadające przedmioty”",
+    goal: "Ćwiczenie współpracy dwóch duszków, ruchu w pionie i wykrywania dotknięcia.",
+    blocks: [
+      "dotyka [koszyk]?",
+      "powtarzaj aż",
+      "zmień y o …",
+      "idź do losowego położenia",
+      "zmienna „wynik”"
+    ],
+    show: "działaniem gry, dobrym tempem spadania i poprawnym naliczaniem punktów",
+    description: "Stwórz grę, w której z góry ekranu spadają przedmioty, a gracz steruje koszykiem i próbuje je łapać. Gdy przedmiot dotknie koszyka, gracz otrzymuje punkt. Po złapaniu lub spadnięciu przedmiot powinien wrócić na górę w losowe miejsce."
+  },
+  {
+    title: "Historyjka z komunikatami",
+    goal: "Ćwiczenie współpracy między duszkami i synchronizacji działań.",
+    blocks: [
+      "nadaj komunikat …",
+      "kiedy otrzymam …",
+      "powiedz …",
+      "czekaj … sek."
+    ],
+    show: "dobrą synchronizacją scenki, logiczną rozmową i czytelnym przebiegiem dialogu",
+    description: "Stwórz krótką scenkę z udziałem dwóch duszków. Duszki mają rozmawiać ze sobą w odpowiedniej kolejności, a przejście od jednej wypowiedzi do drugiej ma odbywać się przy użyciu komunikatów."
+  },
+  {
+    title: "Rysowanie figur",
+    goal: "Ćwiczenie powtarzania czynności, ruchu i obrotu przy użyciu pisaka.",
+    blocks: [
+      "przyłóż pisak",
+      "podnieś pisak",
+      "powtórz",
+      "idź … kroków",
+      "obróć o … stopni"
+    ],
+    show: "dokładnością rysunku, prawidłowym kątem obrotu i starannością wykonania figury",
+    description: "Przy użyciu rozszerzenia Pisak przygotuj program, w którym duszek rysuje wybraną figurę, na przykład kwadrat, trójkąt lub gwiazdę. Rysunek powinien być wykonany automatycznie po uruchomieniu programu."
+  },
+  {
+    title: "Symulator sygnalizacji świetlnej",
+    goal: "Ćwiczenie zmian stanu, sekwencji działań i powtarzania cyklu.",
+    blocks: [
+      "następne tło albo kostiumy",
+      "czekaj … sek.",
+      "zawsze",
+      "ukryj/pokaż"
+    ],
+    show: "poprawną kolejnością świateł, logicznym cyklem działania i czytelnością sygnalizacji",
+    description: "Stwórz prosty model sygnalizacji świetlnej. Światła czerwone, żółte i zielone powinny zapalać się w odpowiedniej kolejności i zmieniać się w regularnych odstępach czasu."
+  },
+  {
+    title: "Prosta gra z życiami",
+    goal: "Ćwiczenie używania kilku zmiennych i warunku przegranej.",
+    blocks: [
+      "zmienna „życia”",
+      "jeżeli dotyka … to",
+      "zmień [życia] o -1",
+      "jeżeli [życia = 0] to",
+      "zatrzymaj wszystko"
+    ],
+    show: "logiką odejmowania żyć, poprawnym wykrywaniem końca gry i czytelną informacją o przegranej",
+    description: "Przygotuj prostą grę, w której gracz ma 3 życia. Gdy postać dotknie przeszkody, traci jedno życie. Kiedy liczba żyć spadnie do zera, gra powinna się zakończyć komunikatem lub zatrzymaniem programu."
+  },
+  {
+    title: "Generator śmiesznych zdań",
+    goal: "Ćwiczenie list, losowania i łączenia tekstu.",
+    blocks: [
+      "listy lub zmienne",
+      "losuj od … do …",
+      "połącz … z …",
+      "powiedz …"
+    ],
+    show: "kreatywnością, poprawnym łączeniem słów i pomysłowością zdań",
+    description: "Stwórz program, który losuje po jednym słowie z kilku przygotowanych grup, na przykład: kto?, co robi?, gdzie? Następnie program ma połączyć je w jedno zabawne zdanie i wyświetlić użytkownikowi."
+  },
+  {
+    title: "Teleporty na planszy",
+    goal: "Ćwiczenie wielu warunków, pracy z kolorem i koordynatami.",
+    blocks: [
+      "jeżeli dotyka koloru … to",
+      "idź do x: y:",
+      "sterowanie klawiszami",
+      "zawsze"
+    ],
+    show: "dobrze zaprojektowanym działaniem teleportów, czytelnością planszy i poprawnym przenoszeniem duszka",
+    description: "Przygotuj planszę, po której porusza się duszek sterowany klawiszami. W wybranych miejscach mają znajdować się teleporty. Gdy duszek dotknie wskazanego koloru lub pola, powinien zostać przeniesiony do innego miejsca na planszy."
+  },
+  {
+    title: "Reakcja na głośność lub mikrofon",
+    goal: "Ćwiczenie wykorzystania czujników i danych z otoczenia.",
+    blocks: [
+      "głośność",
+      "jeżeli … to",
+      "zmień rozmiar o …",
+      "zmień y o …"
+    ],
+    show: "ciekawym wykorzystaniem dźwięku z otoczenia i widoczną reakcją programu",
+    description: "Stwórz duszka, który reaguje na dźwięk z otoczenia. Na przykład może podskakiwać, rosnąć albo zmieniać zachowanie, gdy ktoś klaszcze, mówi głośniej albo wydaje dźwięk do mikrofonu."
+  },
+  {
+    title: "Mini-gra z poziomami",
+    goal: "Ćwiczenie przechodzenia do kolejnego etapu i zwiększania trudności gry.",
+    blocks: [
+      "zmienna „poziom”",
+      "jeżeli [punkty > …] to",
+      "następne tło",
+      "zwiększanie szybkości / trudności"
+    ],
+    show: "stworzeniem progresji w grze, logicznym przechodzeniem między poziomami i rosnącą trudnością",
+    description: "Przygotuj prostą grę, w której po zdobyciu określonej liczby punktów gracz przechodzi na kolejny poziom. Poziom może zmieniać tło, zwiększać szybkość przeciwników, tempo gry albo wprowadzać dodatkową trudność."
+  }
 ];
 let lastScratchTask = null;
 
@@ -260,8 +489,9 @@ function openScratchTask(){
   const body = document.getElementById('scratchModalBody');
   title.textContent = '🎲 ' + task.title;
   body.innerHTML = `
-    <div class="scratchGoal"><strong>Cel</strong><p>${task.goal}</p></div>
-    <div class="scratchBlocks"><strong>Musi użyć bloczków</strong><ul>${task.blocks.map(b=>`<li>${b}</li>`).join('')}</ul></div>
+    <div class="scratchGoal"><strong>Pełny opis zadania</strong><p>${task.description}</p></div>
+    <div class="scratchGoal"><strong>Cel zadania</strong><p>${task.goal}</p></div>
+    <div class="scratchBlocks"><strong>Uczeń musi użyć bloczków</strong><ul>${task.blocks.map(b=>`<li>${b}</li>`).join('')}</ul></div>
     <div class="scratchShow"><strong>Na czym ma się wykazać</strong><p>${task.show}</p></div>
   `;
   const mini = document.getElementById('scratchLastTask');
