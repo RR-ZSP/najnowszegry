@@ -45,6 +45,37 @@
     .dots{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}.dot{width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid var(--border);cursor:pointer}.dot.active{background:#fff}
     footer{padding:12px 18px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
     .hint{color:var(--muted);font-size:13px;font-weight:800}
+    
+    .bigAction{padding:16px 20px;border-radius:18px;font-size:20px;font-weight:1000}
+    .scratchMini{margin-top:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.10);border:1px solid var(--border);font-weight:900}
+    .overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.72);
+      display:none; place-items:center; padding:18px; z-index:50;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .modal{
+      width:min(860px,100%); max-height:90vh; overflow:hidden;
+      border-radius:24px; background:#f8fbff; color:#123;
+      border:1px solid rgba(255,255,255,.25); box-shadow:0 24px 80px rgba(0,0,0,.48);
+      display:flex; flex-direction:column;
+    }
+    .modalTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:18px 18px 10px}
+    .modalBody{padding:0 18px 16px;overflow:auto}
+    .modalTitle{margin:0;font-size:clamp(22px,3vw,30px);line-height:1.1;color:#123}
+    .modalSub{margin:6px 0 0;color:#456;font-size:14px;font-weight:900}
+    .closeBtn{border:1px solid #d7e6f7;background:#fff;color:#123;padding:10px 12px;border-radius:14px;cursor:pointer;font-weight:1000}
+    .scratchGoal,.scratchShow{
+      margin-top:12px; border-radius:18px; padding:14px 16px; border:2px solid #cfe2ff; background:#eef6ff; color:#123;
+    }
+    .scratchBlocks{
+      margin-top:12px; border-radius:18px; padding:14px 16px; border:2px solid #f0cf62; background:#fff7cc; color:#3b2f00;
+    }
+    .scratchGoal strong,.scratchBlocks strong,.scratchShow strong{
+      display:block; margin-bottom:8px; font-size:18px;
+    }
+    .scratchBlocks ul{margin:0;padding-left:22px;color:#3b2f00;font-size:17px;line-height:1.35;font-weight:800}
+    .scratchGoal p,.scratchShow p{margin:0;font-size:17px;line-height:1.35;font-weight:800}
+
     @media (max-width: 860px){.content,.scoreBar{grid-template-columns:1fr}.slide{min-height:min(600px,calc(100vh - 250px))}.memoryGrid{grid-template-columns:1fr 1fr}}
   </style>
 </head>
@@ -67,7 +98,7 @@
   <section class="scoreBar">
     <div class="pill">⭐ Punkty: <span id="points">0</span></div>
     <div class="pill">🏅 Odznaki: <span id="badgesCount">0</span></div>
-    <div class="pill">🎯 Ukończone misje: <span id="missionsCount">0</span>/6</div>
+    <div class="pill">🎯 Ukończone misje: <span id="missionsCount">0</span>/7</div>
   </section>
 
   <main class="stage"><section class="slide" id="slide"></section></main>
@@ -81,7 +112,63 @@
     <div class="hint">Tu dziecko może się wykazać: wyborem, uzasadnieniem, pamięcią i refleksem.</div>
   </footer>
 </div>
+
+<div class="overlay" id="scratchOverlay" role="dialog" aria-modal="true" aria-label="Wylosowane zadanie Scratch">
+  <div class="modal">
+    <div class="modalTop">
+      <div>
+        <h3 class="modalTitle" id="scratchTaskTitle">Zadanie Scratch</h3>
+        <div class="modalSub">Losowanie zadania dla ucznia</div>
+      </div>
+      <button class="closeBtn" id="scratchClose">✕ Zamknij</button>
+    </div>
+    <div class="modalBody" id="scratchModalBody"></div>
+  </div>
+</div>
+
 <script>
+const scratchTasks = [
+  {title:'Animowane przywitanie', goal:'Sekwencja zdarzeń i prosta animacja.', blocks:['kiedy kliknięto zieloną flagę','powiedz … przez … sek.','czekaj … sek.','idź do x: y:','pokaż / ukryj'], show:'estetyką animacji i kolejnością działań'},
+  {title:'Duszek sterowany strzałkami', goal:'Sterowanie z klawiatury.', blocks:['zawsze','jeżeli … to','klawisz … naciśnięty?','zmień x o …','zmień y o …'], show:'płynnością sterowania'},
+  {title:'Odbijająca się piłka', goal:'Ruch automatyczny.', blocks:['idź … kroków','jeżeli na krawędzi, odbij się','ustaw kierunek na …','zawsze'], show:'dobraniem prędkości i kierunku'},
+  {title:'Labirynt', goal:'Wykrywanie koloru i cofanie po błędzie.', blocks:['dotyka koloru …?','jeżeli … to','idź do x: y:','sterowanie klawiszami','tło jako labirynt'], show:'pomysłowym układem planszy'},
+  {title:'Quiz z 5 pytaniami', goal:'Dane od użytkownika i warunki.', blocks:['zapytaj … i czekaj','odpowiedź','jeżeli … to / w przeciwnym razie','zmienna „punkty”'], show:'poprawnym liczeniem punktów'},
+  {title:'Kalkulator dodawania', goal:'Operacje na danych.', blocks:['zapytaj … i czekaj','zmienne','ustaw [zmienna] na …','operator +','powiedz …'], show:'poprawnym pobieraniem i wykorzystaniem danych'},
+  {title:'Losowanie liczby i zgadywanie', goal:'Losowość i pętla do skutku.', blocks:['ustaw [liczba] na losuj od … do …','powtarzaj aż','zapytaj … i czekaj','porównania =, <, >'], show:'logiką podpowiedzi „za mało / za dużo”'},
+  {title:'Licznik czasu 10 sekund', goal:'Pętla z licznikiem.', blocks:['zmienna „czas”','powtarzaj','zmień [czas] o -1','czekaj 1 sek.','jeżeli … to'], show:'czytelnym przebiegiem odliczania'},
+  {title:'Instrument muzyczny', goal:'Dźwięk i interakcja.', blocks:['kiedy klawisz … naciśnięty','zagraj dźwięk …','lub zagraj nutę … przez … taktów'], show:'doborem dźwięków i układem instrumentu'},
+  {title:'Taniec z przebieraniem', goal:'Kostiumy i rytm.', blocks:['następny kostium','powtarzaj','obrót o … stopni','czekaj … sek.','dźwięk lub muzyka'], show:'synchronizacją ruchów'},
+  {title:'Klikacz punktów', goal:'Obsługa myszy i punktacja.', blocks:['kiedy ten duszek kliknięty','zmienna „punkty”','zmień [punkty] o 1','idź do losowego położenia'], show:'dynamiką gry'},
+  {title:'Gra „łap spadające przedmioty”', goal:'Współpraca dwóch duszków i wykrywanie dotknięcia.', blocks:['dotyka [koszyk]?','powtarzaj aż','zmień y o …','idź do losowego położenia','zmienna „wynik”'], show:'działaniem gry i tempem rozgrywki'},
+  {title:'Historyjka z komunikatami', goal:'Współpraca między duszkami.', blocks:['nadaj komunikat …','kiedy otrzymam …','powiedz …','czekaj … sek.'], show:'dobrą synchronizacją scenki'},
+  {title:'Rysowanie figur', goal:'Użycie rozszerzenia Pisak.', blocks:['przyłóż pisak','podnieś pisak','powtórz','idź … kroków','obróć o … stopni'], show:'dokładnością rysunku'},
+  {title:'Symulator sygnalizacji świetlnej', goal:'Zmiany stanu i logika sekwencji.', blocks:['następne tło albo kostiumy','czekaj … sek.','zawsze','ukryj/pokaż'], show:'poprawną kolejnością sygnałów'},
+  {title:'Prosta gra z życiami', goal:'Kilka zmiennych i warunek przegranej.', blocks:['zmienna „życia”','jeżeli dotyka … to','zmień [życia] o -1','jeżeli [życia = 0] to','zatrzymaj wszystko'], show:'logiką zakończenia gry'},
+  {title:'Generator śmiesznych zdań', goal:'Listy lub losowanie z przygotowanych zestawów.', blocks:['listy lub zmienne','losuj od … do …','połącz … z …','powiedz …'], show:'kreatywnością i poprawnym łączeniem tekstu'},
+  {title:'Teleporty na planszy', goal:'Wiele warunków i koordynaty.', blocks:['jeżeli dotyka koloru … to','idź do x: y:','sterowanie klawiszami','zawsze'], show:'zaprojektowaniem działania teleportów'},
+  {title:'Reakcja na głośność lub mikrofon', goal:'Wykorzystanie czujników.', blocks:['głośność','jeżeli … to','zmień rozmiar o … lub zmień y o …'], show:'ciekawym wykorzystaniem wejścia z otoczenia'},
+  {title:'Mini-gra z poziomami', goal:'Przejście do kolejnego etapu.', blocks:['zmienna „poziom”','jeżeli [punkty > …] to','następne tło','zwiększanie szybkości / trudności'], show:'stworzeniem progresji w grze'}
+];
+let lastScratchTask = null;
+function openScratchTask(){
+  const task = scratchTasks[Math.floor(Math.random()*scratchTasks.length)];
+  lastScratchTask = task;
+  const title = document.getElementById('scratchTaskTitle');
+  const body = document.getElementById('scratchModalBody');
+  title.textContent = '🎲 ' + task.title;
+  body.innerHTML = `
+    <div class="scratchGoal"><strong>Cel</strong><p>${task.goal}</p></div>
+    <div class="scratchBlocks"><strong>Musi użyć bloczków</strong><ul>${task.blocks.map(b=>`<li>${b}</li>`).join('')}</ul></div>
+    <div class="scratchShow"><strong>Na czym ma się wykazać</strong><p>${task.show}</p></div>
+  `;
+  const mini = document.getElementById('scratchLastTask');
+  if(mini) mini.textContent = 'Ostatnio wylosowano: ' + task.title;
+  document.getElementById('scratchOverlay').style.display = 'grid';
+}
+function closeScratchTask(){
+  document.getElementById('scratchOverlay').style.display = 'none';
+}
+
 const slides = [
   {
     kicker:'START', title:'Misja: zostań Cyberbohaterem', emoji:'🦸',
@@ -142,6 +229,12 @@ const slides = [
     subtitle:'Uczeń dostaje krótkie zagadki na myślenie i może sam podać odpowiedź ustnie.',
     leftTitle:'Pytania dla eksperta', bullets:['Co zrobisz, gdy ktoś obcy chce twoje hasło?','Dlaczego trzeba pytać o zgodę na zdjęcie?','Co jest lepsze: szybkie kliknięcie czy spokojne myślenie?'],
     type:'expert', badge:'Ekspert Bezpieczeństwa'
+  },
+  {
+    kicker:'BONUS KOŃCOWY', title:'Losowanie zadania Scratch', emoji:'🎲',
+    subtitle:'Na końcu można wylosować zadanie do Scratcha i przejść dalej do AI albo Scratcha.',
+    leftTitle:'Co tu można zrobić?', bullets:['Wylosować zadanie Scratch','Zobaczyć je w pop-upie','Przejść do AI','Przejść do Scratcha'],
+    type:'scratch_final'
   },
   {
     kicker:'FINAŁ', title:'Wynik Cyberbohatera', emoji:'⭐',
@@ -252,6 +345,25 @@ function renderExpert(){
   </div>`;
 }
 
+
+function renderScratchFinal(){
+  return `
+  <div class="card">
+    <h3><span class="emoji">🎮</span>Wylosuj zadanie i wybierz dalszą drogę</h3>
+    <div class="bullets" style="padding-left:20px">
+      <li>Kliknij i wylosuj zadanie do Scratcha</li>
+      <li>Zadanie pokaże się w wygodnym oknie pop-up</li>
+      <li>Potem możesz przejść do AI albo do Scratcha</li>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn bigAction" id="drawScratch">🎲 Wylosuj zadanie Scratch</button>
+      <button class="btn bigAction" id="goAiFinal">➡️ Przejdź do AI</button>
+      <button class="btn bigAction" id="goScratchFinal">🟧 Przejdź do Scratcha</button>
+    </div>
+    <div class="scratchMini" id="scratchLastTask">Jeszcze nic nie wylosowano.</div>
+  </div>`;
+}
+
 function renderSummary(){
   const title = points >= 10 ? 'Super Cyberbohater!' : points >= 6 ? 'Dobry Strażnik Sieci!' : 'Młody Odkrywca Bezpieczeństwa!';
   return `
@@ -279,6 +391,7 @@ function render(){
   if(s.type==='mission') right = renderMission();
   if(s.type==='memory') right = renderMemory();
   if(s.type==='expert') right = renderExpert();
+  if(s.type==='scratch_final') right = renderScratchFinal();
   if(s.type==='summary') right = renderSummary();
 
   slideEl.innerHTML = `
@@ -351,6 +464,14 @@ function bindInteractions(){
     const btn = document.getElementById('expertDone');
     if(btn) btn.addEventListener('click', ()=>{ if(!answered[idx]){ answered[idx]=true; addBadge(s.badge); markMission(idx); btn.textContent='✅ Odznaka przyznana'; btn.disabled=true; } });
   }
+  if(s.type==='scratch_final'){
+    const draw = document.getElementById('drawScratch');
+    const goAiFinal = document.getElementById('goAiFinal');
+    const goScratchFinal = document.getElementById('goScratchFinal');
+    if(draw) draw.addEventListener('click', openScratchTask);
+    if(goAiFinal) goAiFinal.addEventListener('click', ()=>{ window.location.href = 'ai.html'; });
+    if(goScratchFinal) goAiFinal && goScratchFinal.addEventListener('click', ()=>{ window.location.href = 'https://scratch.mit.edu/'; });
+  }
   if(s.type==='summary'){
     const goAi = document.getElementById('goAi');
     if(goAi) goAi.addEventListener('click', ()=>{ window.location.href = 'ai.html'; });
@@ -363,7 +484,13 @@ document.getElementById('resetAll').onclick=()=>{
   idx=0; points=0; badges=[]; missionsDone=new Set(); answered={}; memoryState={open:[], matched:[]}; shuffledMemory=[...memoryCards].sort(()=>Math.random()-0.5); updateTop(); render();
 };
 document.getElementById('fullscreenBtn').onclick=()=>{ if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); } else { document.exitFullscreen?.(); } };
-document.addEventListener('keydown', e=>{ if(e.key==='ArrowRight' && idx<slides.length-1){idx++;render()} if(e.key==='ArrowLeft'&&idx>0){idx--;render()} });
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape') closeScratchTask();
+  if(e.key==='ArrowRight' && idx<slides.length-1){idx++;render()}
+  if(e.key==='ArrowLeft'&&idx>0){idx--;render()}
+});
+document.getElementById('scratchClose').onclick = closeScratchTask;
+document.getElementById('scratchOverlay').addEventListener('click', (e)=>{ if(e.target.id==='scratchOverlay') closeScratchTask(); });
 updateTop(); render();
 </script>
 </body>
